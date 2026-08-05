@@ -10,21 +10,21 @@ const propertyCollections = [
         location: "Paquera, Costa Rica",
         description:
           "A peaceful tropical retreat near Isla Tortuga, Curu Wildlife Refuge, and the famous Bioluminescence Tour. Perfect for couples and small families looking to experience Costa Rica's natural beauty.",
-        gradient: "from-[#2a3d2e] via-[#3d5a42] to-[#5a7a5e]",
+        image: "/images/properties/cozy-cabin.jpg",
       },
       {
         name: "Tropical Cabin",
         location: "Paquera, Costa Rica",
         description:
           "A modern tropical escape surrounded by lush gardens with access to the shared pool. Minutes from Isla Tortuga, Curu Wildlife Refuge, and incredible bioluminescence tours.",
-        gradient: "from-[#1a3a4a] via-[#2d5a6b] to-[#4a8a9a]",
+        image: "/images/properties/tropical-cabin.jpg",
       },
       {
         name: "Casa Nuvo",
         location: "Paquera, Costa Rica",
         description:
           "Our signature home featuring spacious accommodations, modern comforts, and easy access to Costa Rica's best beaches, wildlife, and outdoor adventures.",
-        gradient: "from-[#1e4a3a] via-[#2d6a52] to-[#4a9a7a]",
+        image: "/images/properties/casa-nuvo.jpg",
       },
     ],
   },
@@ -36,16 +36,43 @@ const propertyCollections = [
         location: "Fountain Square, Indianapolis",
         description:
           "A stylish modern home inspired by contemporary art, located minutes from Fountain Square and Downtown Indianapolis.",
-        gradient: "from-[#3d3528] via-[#5a4d3a] to-[#8a7355]",
+        image: "/images/properties/banksy-house.jpg",
       },
       {
         name: "Gallery House",
         location: "Fountain Square, Indianapolis",
         description:
           "A beautifully designed modern home that combines comfort, style, and an excellent location for exploring Indianapolis.",
-        gradient: "from-[#2a2a32] via-[#3d3d4a] to-[#5a5a6a]",
+        image: "/images/properties/gallery-house.jpg",
       },
     ],
+  },
+];
+
+const aboutBadges = [
+  {
+    label: "Professionally Managed",
+    icon: (
+      <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+      </svg>
+    ),
+  },
+  {
+    label: "Thoughtfully Designed",
+    icon: (
+      <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456z" />
+      </svg>
+    ),
+  },
+  {
+    label: "Direct Booking Benefits",
+    icon: (
+      <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 8.25h19.5M2.25 12h19.5m-19.5 3.75h19.5M3.75 6.75h16.5a1.5 1.5 0 011.5 1.5v10.5a1.5 1.5 0 01-1.5 1.5H3.75a1.5 1.5 0 01-1.5-1.5V8.25a1.5 1.5 0 011.5-1.5z" />
+      </svg>
+    ),
   },
 ];
 
@@ -262,26 +289,29 @@ export default function Home() {
                   {collection.properties.map((property) => (
                     <article
                       key={property.name}
-                      className="group cursor-pointer overflow-hidden rounded-2xl bg-white shadow-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-xl"
+                      className="group relative h-[520px] cursor-pointer overflow-hidden rounded-2xl shadow-md transition-shadow duration-500 hover:shadow-2xl"
                     >
-                      <div
-                        className={`relative aspect-[4/5] bg-gradient-to-br ${property.gradient}`}
-                      >
-                        <div className="absolute inset-0 bg-black/10 transition-opacity duration-500 group-hover:bg-black/0" />
-                        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
-                          <p className="text-xs uppercase tracking-[0.2em] text-white/70">
-                            {property.location}
-                          </p>
-                        </div>
+                      <div className="absolute inset-0 overflow-hidden">
+                        <Image
+                          src={property.image}
+                          alt={property.name}
+                          fill
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                          className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                        />
                       </div>
-                      <div className="p-6">
-                        <h4 className="font-serif text-2xl font-light">
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/45 to-black/20" />
+                      <div className="relative flex h-full flex-col justify-end p-8 text-white">
+                        <h4 className="font-serif text-3xl font-light tracking-tight">
                           {property.name}
                         </h4>
-                        <p className="mt-3 text-sm leading-relaxed text-[#111111]/60">
+                        <p className="mt-2 text-xs uppercase tracking-[0.2em] text-white/70">
+                          {property.location}
+                        </p>
+                        <p className="mt-4 max-w-md text-sm leading-relaxed text-white/85">
                           {property.description}
                         </p>
-                        <span className="mt-4 inline-block text-sm tracking-wide text-[#C69C6D] transition-colors group-hover:text-[#111111]">
+                        <span className="mt-6 inline-flex items-center text-sm font-medium tracking-wide text-[#C69C6D] transition-colors duration-300 group-hover:text-white">
                           View Property &rarr;
                         </span>
                       </div>
@@ -418,6 +448,71 @@ export default function Home() {
         </div>
       </section>
 
+      {/* About */}
+      <section id="about" className="bg-white px-6 py-24 md:py-32 lg:px-10">
+        <div className="mx-auto max-w-7xl">
+          <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
+            <div className="relative order-1 aspect-[4/5] overflow-hidden rounded-2xl shadow-lg lg:order-2">
+              <Image
+                src="/images/sunsetgrl.jpg"
+                alt="Guest enjoying a sunset on the beach in Costa Rica"
+                fill
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="object-cover"
+              />
+            </div>
+
+            <div className="order-2 lg:order-1">
+              <p className="mb-4 text-xs uppercase tracking-[0.3em] text-[#C69C6D]">
+                About
+              </p>
+              <h2 className="font-serif text-4xl font-light tracking-tight md:text-5xl">
+                About NuvoHauz
+              </h2>
+              <div className="mt-8 space-y-6 text-base leading-relaxed text-[#111111]/70">
+                <p>
+                  NuvoHauz was created from a passion for travel, thoughtful
+                  design, and unforgettable guest experiences.
+                </p>
+                <p>
+                  What began with a single vacation home has grown into a
+                  carefully curated collection of properties in Costa Rica and
+                  Indianapolis. Every home is personally selected, professionally
+                  managed, and designed to feel warm, modern, and welcoming.
+                </p>
+                <p>
+                  Whether you&apos;re relaxing beside the tropical beaches of
+                  Costa Rica or exploring the vibrant neighborhoods of
+                  Indianapolis, our goal is simple:
+                </p>
+                <p className="font-serif text-lg font-light italic text-[#111111]">
+                  Help every guest feel at home while creating memories that
+                  last long after checkout.
+                </p>
+                <p>
+                  We believe every stay should be comfortable, beautifully
+                  designed, and effortlessly memorable.
+                </p>
+              </div>
+
+              <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:flex-wrap">
+                {aboutBadges.map((badge) => (
+                  <div
+                    key={badge.label}
+                    className="inline-flex items-center gap-3 rounded-full border border-[#111111]/10 bg-[#F8F6F2] px-5 py-3"
+                  >
+                    <span className="text-[#C69C6D]">{badge.icon}</span>
+                    <span className="text-sm font-medium tracking-wide">
+                      {badge.label}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Final CTA */}
       <section id="contact" className="px-6 py-24 md:py-32 lg:px-10">
         <div className="mx-auto max-w-4xl rounded-3xl bg-[#111111] px-8 py-20 text-center md:px-16 md:py-24">
@@ -438,7 +533,7 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer id="about" className="border-t border-[#111111]/5 px-6 py-12 lg:px-10">
+      <footer className="border-t border-[#111111]/5 px-6 py-12 lg:px-10">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-6 md:flex-row">
           <p className="text-xs tracking-[0.35em] text-[#111111]/80">NUVOHAUZ</p>
           <p className="text-xs text-[#111111]/40">
