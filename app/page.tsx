@@ -1,26 +1,51 @@
 import Image from "next/image";
 import Navbar from "./components/Navbar";
 
-const featuredProperties = [
+const propertyCollections = [
   {
-    name: "Casa Banksy",
-    location: "Paquera, Costa Rica",
-    description:
-      "Modern tropical villa surrounded by lush gardens with a private pool and indoor-outdoor living.",
-    gradient: "from-[#1a3a4a] via-[#2d5a6b] to-[#4a8a9a]",
+    destination: "Costa Rica",
+    properties: [
+      {
+        name: "Cozy Cabin",
+        location: "Paquera, Costa Rica",
+        description:
+          "A peaceful tropical retreat near Isla Tortuga, Curu Wildlife Refuge, and the famous Bioluminescence Tour. Perfect for couples and small families looking to experience Costa Rica's natural beauty.",
+        gradient: "from-[#2a3d2e] via-[#3d5a42] to-[#5a7a5e]",
+      },
+      {
+        name: "Tropical Cabin",
+        location: "Paquera, Costa Rica",
+        description:
+          "A modern tropical escape surrounded by lush gardens with access to the shared pool. Minutes from Isla Tortuga, Curu Wildlife Refuge, and incredible bioluminescence tours.",
+        gradient: "from-[#1a3a4a] via-[#2d5a6b] to-[#4a8a9a]",
+      },
+      {
+        name: "Casa Nuvo",
+        location: "Paquera, Costa Rica",
+        description:
+          "Our signature home featuring spacious accommodations, modern comforts, and easy access to Costa Rica's best beaches, wildlife, and outdoor adventures.",
+        gradient: "from-[#1e4a3a] via-[#2d6a52] to-[#4a9a7a]",
+      },
+    ],
   },
   {
-    name: "Cozy Cabin",
-    location: "Costa Rica",
-    description: "A peaceful retreat immersed in nature.",
-    gradient: "from-[#2a3d2e] via-[#3d5a42] to-[#5a7a5e]",
-  },
-  {
-    name: "Indianapolis Collection",
-    location: "Indianapolis, Indiana",
-    description:
-      "Professionally managed homes for families, business travelers, and extended stays.",
-    gradient: "from-[#3d3528] via-[#5a4d3a] to-[#8a7355]",
+    destination: "Indianapolis",
+    properties: [
+      {
+        name: "Banksy House",
+        location: "Fountain Square, Indianapolis",
+        description:
+          "A stylish modern home inspired by contemporary art, located minutes from Fountain Square and Downtown Indianapolis.",
+        gradient: "from-[#3d3528] via-[#5a4d3a] to-[#8a7355]",
+      },
+      {
+        name: "Gallery House",
+        location: "Fountain Square, Indianapolis",
+        description:
+          "A beautifully designed modern home that combines comfort, style, and an excellent location for exploring Indianapolis.",
+        gradient: "from-[#2a2a32] via-[#3d3d4a] to-[#5a5a6a]",
+      },
+    ],
   },
 ];
 
@@ -135,7 +160,7 @@ const bookingBenefits = [
 const testimonials = [
   {
     quote:
-      "Casa Banksy was everything we hoped for — stunning design, a gorgeous pool, and the gardens felt like our own private paradise.",
+      "Cozy Cabin was everything we hoped for — peaceful, surrounded by nature, and the perfect base for exploring Isla Tortuga and the bioluminescence tour.",
     author: "Sarah & James M.",
     location: "Paquera, Costa Rica",
   },
@@ -147,7 +172,7 @@ const testimonials = [
   },
   {
     quote:
-      "Our Indianapolis stay was perfect for a extended business trip — clean, comfortable, and exactly as described. We'll be back.",
+      "Banksy House was the perfect stay in Fountain Square — stylish, comfortable, and walking distance to everything downtown.",
     author: "David & Priya K.",
     location: "Indianapolis",
   },
@@ -174,13 +199,14 @@ export default function Home() {
 
         <div className="relative z-10 mx-auto max-w-5xl px-6 text-center">
           <h1 className="animate-fade-in-up font-serif text-5xl font-light leading-[1.1] tracking-tight text-white sm:text-6xl md:text-7xl lg:text-8xl">
-            Extraordinary Stays
+            Stay Different.
             <br />
-            <span className="italic">Hidden in Paradise</span>
+            <span className="italic">Stay NuvoHauz.</span>
           </h1>
           <p className="animate-fade-in-up-delay-1 mx-auto mt-8 max-w-2xl text-lg font-light leading-relaxed text-white/85 sm:text-xl">
-            Boutique vacation homes in Costa Rica and Indianapolis designed for
-            unforgettable escapes.
+            Discover thoughtfully designed vacation homes in Costa Rica and
+            Indianapolis. Every stay is professionally managed, uniquely
+            designed, and created to feel like your home away from home.
           </p>
           <div className="animate-fade-in-up-delay-2 mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <a
@@ -208,46 +234,61 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Featured Properties */}
+      {/* Our Collection */}
       <section id="stays" className="px-6 py-24 md:py-32 lg:px-10">
         <div className="mx-auto max-w-7xl">
           <div className="mb-16 text-center md:mb-20">
             <p className="mb-4 text-xs uppercase tracking-[0.3em] text-[#C69C6D]">
-              Featured Properties
+              Our Collection
             </p>
             <h2 className="font-serif text-4xl font-light tracking-tight md:text-5xl lg:text-6xl">
-              Our Collection
+              Curated Stays, Unforgettable Destinations
             </h2>
           </div>
 
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {featuredProperties.map((property) => (
-              <article
-                key={property.name}
-                className="group cursor-pointer overflow-hidden rounded-2xl bg-white shadow-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-xl"
-              >
+          <div className="space-y-20 md:space-y-28">
+            {propertyCollections.map((collection) => (
+              <div key={collection.destination}>
+                <h3 className="mb-10 font-serif text-3xl font-light tracking-tight text-[#111111] md:text-4xl">
+                  {collection.destination}
+                </h3>
                 <div
-                  className={`relative aspect-[4/5] bg-gradient-to-br ${property.gradient}`}
+                  className={`grid gap-8 ${
+                    collection.properties.length === 2
+                      ? "md:grid-cols-2"
+                      : "md:grid-cols-2 lg:grid-cols-3"
+                  }`}
                 >
-                  <div className="absolute inset-0 bg-black/10 transition-opacity duration-500 group-hover:bg-black/0" />
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
-                    <p className="text-xs uppercase tracking-[0.2em] text-white/70">
-                      {property.location}
-                    </p>
-                  </div>
+                  {collection.properties.map((property) => (
+                    <article
+                      key={property.name}
+                      className="group cursor-pointer overflow-hidden rounded-2xl bg-white shadow-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-xl"
+                    >
+                      <div
+                        className={`relative aspect-[4/5] bg-gradient-to-br ${property.gradient}`}
+                      >
+                        <div className="absolute inset-0 bg-black/10 transition-opacity duration-500 group-hover:bg-black/0" />
+                        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
+                          <p className="text-xs uppercase tracking-[0.2em] text-white/70">
+                            {property.location}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="p-6">
+                        <h4 className="font-serif text-2xl font-light">
+                          {property.name}
+                        </h4>
+                        <p className="mt-3 text-sm leading-relaxed text-[#111111]/60">
+                          {property.description}
+                        </p>
+                        <span className="mt-4 inline-block text-sm tracking-wide text-[#C69C6D] transition-colors group-hover:text-[#111111]">
+                          View Property &rarr;
+                        </span>
+                      </div>
+                    </article>
+                  ))}
                 </div>
-                <div className="p-6">
-                  <h3 className="font-serif text-2xl font-light">
-                    {property.name}
-                  </h3>
-                  <p className="mt-3 text-sm leading-relaxed text-[#111111]/60">
-                    {property.description}
-                  </p>
-                  <span className="mt-4 inline-block text-sm tracking-wide text-[#C69C6D] transition-colors group-hover:text-[#111111]">
-                    View Property &rarr;
-                  </span>
-                </div>
-              </article>
+              </div>
             ))}
           </div>
         </div>
