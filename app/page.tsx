@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Navbar from "./components/Navbar";
 
 const featuredProperties = [
@@ -159,11 +160,14 @@ export default function Home() {
 
       {/* Hero */}
       <section className="relative flex h-screen items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 overflow-hidden">
-          <img
+        <div className="absolute inset-0">
+          <Image
             src="/images/hero/hero1.jpg"
             alt=""
-            className="animate-ken-burns absolute inset-[-5%] h-[110%] w-[110%] max-w-none object-cover will-change-transform"
+            fill
+            priority
+            sizes="100vw"
+            className="animate-ken-burns object-cover object-center will-change-transform"
           />
         </div>
         <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/45 to-black/55" />
