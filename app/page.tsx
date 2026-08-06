@@ -207,7 +207,7 @@ const testimonials = [
 
 export default function Home() {
   return (
-    <main className="bg-[#F8F6F2] text-[#111111]">
+    <main className="w-full overflow-x-hidden bg-[#F8F6F2] text-[#111111]">
       <Navbar />
 
       {/* Hero */}
@@ -262,34 +262,28 @@ export default function Home() {
       </section>
 
       {/* Our Collection */}
-      <section id="stays" className="px-6 py-24 md:py-32 lg:px-10">
-        <div className="mx-auto max-w-7xl">
+      <section id="stays" className="box-border w-full max-w-full overflow-hidden py-24 md:py-32">
+        <div className="mx-auto box-border w-full max-w-7xl min-w-0 px-6 lg:px-10">
           <div className="mb-16 text-center md:mb-20">
             <p className="mb-4 text-xs uppercase tracking-[0.3em] text-[#C69C6D]">
               Our Collection
             </p>
-            <h2 className="font-serif text-4xl font-light tracking-tight md:text-5xl lg:text-6xl">
-              Curated Stays, Unforgettable Destinations
+            <h2 className="mx-auto max-w-full px-2 font-serif text-3xl font-light tracking-tight break-words text-balance sm:text-4xl md:text-5xl lg:text-6xl">
+              Curated Stays, Unforgettable Moments
             </h2>
           </div>
 
           <div className="space-y-20 md:space-y-28">
             {propertyCollections.map((collection) => (
-              <div key={collection.destination}>
+              <div key={collection.destination} className="min-w-0">
                 <h3 className="mb-10 font-serif text-3xl font-light tracking-tight text-[#111111] md:text-4xl">
                   {collection.destination}
                 </h3>
-                <div
-                  className={`grid gap-8 ${
-                    collection.properties.length === 2
-                      ? "md:grid-cols-2"
-                      : "md:grid-cols-2 lg:grid-cols-3"
-                  }`}
-                >
+                <div className="grid w-full min-w-0 grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
                   {collection.properties.map((property) => (
                     <article
                       key={property.name}
-                      className="group relative h-[520px] cursor-pointer overflow-hidden rounded-2xl shadow-md transition-shadow duration-500 hover:shadow-2xl"
+                      className="group relative box-border h-[520px] w-full min-w-0 cursor-pointer overflow-hidden rounded-2xl shadow-md transition-shadow duration-500 hover:shadow-2xl"
                     >
                       <div className="absolute inset-0 overflow-hidden">
                         <Image
@@ -297,18 +291,18 @@ export default function Home() {
                           alt={property.name}
                           fill
                           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                          className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                          className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
                         />
                       </div>
                       <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/45 to-black/20" />
-                      <div className="relative flex h-full flex-col justify-end p-8 text-white">
-                        <h4 className="font-serif text-3xl font-light tracking-tight">
+                      <div className="relative flex h-full flex-col justify-end p-6 text-white sm:p-8">
+                        <h4 className="font-serif text-2xl font-light tracking-tight sm:text-3xl">
                           {property.name}
                         </h4>
                         <p className="mt-2 text-xs uppercase tracking-[0.2em] text-white/70">
                           {property.location}
                         </p>
-                        <p className="mt-4 max-w-md text-sm leading-relaxed text-white/85">
+                        <p className="mt-4 max-w-full text-sm leading-relaxed text-white/85">
                           {property.description}
                         </p>
                         <span className="mt-6 inline-flex items-center text-sm font-medium tracking-wide text-[#C69C6D] transition-colors duration-300 group-hover:text-white">
