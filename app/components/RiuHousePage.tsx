@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo } from "react";
 import { useLanguage } from "../context/LanguageContext";
-import { riuHouseGallery } from "../data/riu-house-gallery";
+import { riuHouseGallerySections, riuHouseHero } from "../data/riu-house-gallery";
 import { getRiuHouseTranslations } from "../i18n/riu-house";
 import { buildWhatsAppUrl } from "../lib/whatsapp";
 import Navbar from "./Navbar";
@@ -41,9 +41,6 @@ export default function RiuHousePage() {
   const { locale, t } = useLanguage();
   const rt = useMemo(() => getRiuHouseTranslations(locale), [locale]);
 
-  const leadImage = riuHouseGallery[0];
-  const galleryImages = riuHouseGallery.slice(1);
-
   const navLinks = [
     { label: t.nav.stays, href: "/#stays" },
     { label: t.nav.discover, href: "/#discover" },
@@ -73,8 +70,8 @@ export default function RiuHousePage() {
       <section className="relative flex min-h-[55vh] items-end overflow-hidden sm:min-h-[65vh] md:min-h-[70vh]">
         <div className="absolute inset-0">
           <Image
-            src={leadImage.src}
-            alt={rt.galleryAlts[leadImage.altKey]}
+            src={riuHouseHero.src}
+            alt={riuHouseHero.alt}
             fill
             priority
             sizes="100vw"
@@ -105,21 +102,42 @@ export default function RiuHousePage() {
         </div>
       </section>
 
-      {galleryImages.length > 0 && (
-        <section className="px-4 py-10 sm:px-6 sm:py-14 lg:px-10">
-          <div className="mx-auto grid max-w-7xl grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
-            {galleryImages.map((image) => (
+      {riuHouseGallerySections.length > 0 && (
+        <section
+          aria-label="Riu House photo gallery"
+          className="px-4 py-10 sm:px-6 sm:py-14 lg:px-10"
+        >
+          <div className="mx-auto max-w-7xl space-y-12">
+            {riuHouseGallerySections.map((section) => (
               <div
-                key={image.src}
-                className="relative aspect-[4/3] overflow-hidden rounded-2xl shadow-md"
+                key={
+                  section.labelKey ??
+                  section.images[0]?.src ??
+                  "gallery-section"
+                }
               >
-                <Image
-                  src={image.src}
-                  alt={rt.galleryAlts[image.altKey]}
-                  fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  className="object-cover"
-                />
+                {section.labelKey && (
+                  <h3 className="mb-6 font-serif text-xl font-light tracking-tight text-[#111111] sm:text-2xl md:text-3xl">
+                    {rt.gallerySections[section.labelKey]}
+                  </h3>
+                )}
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
+                  {section.images.map((image) => (
+                    <figure
+                      key={image.src}
+                      className="overflow-hidden rounded-2xl bg-[#111111]/5 shadow-md"
+                    >
+                      <Image
+                        src={image.src}
+                        alt={image.alt}
+                        width={image.width}
+                        height={image.height}
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        className="h-auto w-full object-cover"
+                      />
+                    </figure>
+                  ))}
+                </div>
               </div>
             ))}
           </div>

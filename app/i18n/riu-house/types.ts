@@ -1,6 +1,8 @@
 export interface RiuHouseGalleryImage {
   src: string;
-  altKey: keyof RiuHouseTranslations["galleryAlts"];
+  alt: string;
+  width: number;
+  height: number;
 }
 
 export interface RiuHouseTranslations {
@@ -32,8 +34,8 @@ export interface RiuHouseTranslations {
   inquireButton: string;
   whatsappMessage: string;
   whatsappAriaLabel: string;
-  galleryAlts: {
-    exterior: string;
+  gallerySections: {
+    mainBedroomBathroom: string;
   };
   backToCollection: string;
 }

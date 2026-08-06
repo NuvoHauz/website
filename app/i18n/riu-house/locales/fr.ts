@@ -87,9 +87,8 @@ Le salon ouvert bénéficie de grandes portes vitrées, d'une lumière naturelle
     "Bonjour Sandy ! Je suis intéressé(e) par un séjour à Riu House. Pouvez-vous m'aider à vérifier les disponibilités ?",
   whatsappAriaLabel:
     "Contacter Sandy sur WhatsApp pour des informations sur Riu House",
-  galleryAlts: {
-    exterior:
-      "Extérieur de Riu House, une maison tropicale moderne entourée de jardins luxuriants à Paquera, Costa Rica",
+  gallerySections: {
+    mainBedroomBathroom: "Chambre Principale et Salle de Bain Privée",
   },
   backToCollection: "Retour à Notre Collection",
 };

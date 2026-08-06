@@ -19,7 +19,7 @@ export const propertyCollections: PropertyCollectionData[] = [
     properties: [
       {
         key: "riuHouse",
-        image: "/images/properties/casa-nuvo.jpg",
+        image: "/images/properties/riu-house/hero/pool.jpg",
         detailPath: "/properties/riu-house",
       },
       {

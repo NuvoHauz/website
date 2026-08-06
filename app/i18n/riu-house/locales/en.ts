@@ -86,9 +86,8 @@ Outside, guests can relax among tropical gardens, enjoy the covered terraces, an
   whatsappMessage:
     "Hi Sandy! I'm interested in staying at Riu House. Can you help me check availability?",
   whatsappAriaLabel: "Contact Sandy on WhatsApp to inquire about Riu House",
-  galleryAlts: {
-    exterior:
-      "Exterior of Riu House, a modern tropical home surrounded by lush gardens in Paquera, Costa Rica",
+  gallerySections: {
+    mainBedroomBathroom: "Main Bedroom & Private Bathroom",
   },
   backToCollection: "Back to Our Collection",
 };

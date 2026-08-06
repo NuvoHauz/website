@@ -87,9 +87,8 @@ Im Außenbereich können Gäste in tropischen Gärten entspannen, die überdacht
     "Hallo Sandy! Ich interessiere mich für einen Aufenthalt in Riu House. Können Sie mir bei der Verfügbarkeit helfen?",
   whatsappAriaLabel:
     "Sandy über WhatsApp kontaktieren, um Riu House anzufragen",
-  galleryAlts: {
-    exterior:
-      "Außenansicht von Riu House, einem modernen tropischen Zuhause inmitten üppiger Gärten in Paquera, Costa Rica",
+  gallerySections: {
+    mainBedroomBathroom: "Hauptschlafzimmer und Privates Badezimmer",
   },
   backToCollection: "Zurück zur Kollektion",
 };

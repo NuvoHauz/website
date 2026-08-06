@@ -14,8 +14,8 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/images/properties/casa-nuvo.jpg",
-        alt: "Exterior of Riu House in Paquera, Costa Rica",
+        url: "/images/properties/riu-house/hero/pool.jpg",
+        alt: "Shared swimming pool surrounded by tropical gardens at Riu House in Paquera, Costa Rica",
       },
     ],
   },

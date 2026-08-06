@@ -86,9 +86,8 @@ Al aire libre, los huéspedes pueden relajarse entre jardines tropicales, disfru
   whatsappMessage:
     "¡Hola Sandy! Me interesa hospedarme en Riu House. ¿Puedes ayudarme a verificar disponibilidad?",
   whatsappAriaLabel: "Contactar a Sandy por WhatsApp para consultar sobre Riu House",
-  galleryAlts: {
-    exterior:
-      "Exterior de Riu House, una casa tropical moderna rodeada de jardines exuberantes en Paquera, Costa Rica",
+  gallerySections: {
+    mainBedroomBathroom: "Dormitorio Principal y Baño Privado",
   },
   backToCollection: "Volver a Nuestra Colección",
 };
