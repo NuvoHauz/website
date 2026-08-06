@@ -5,6 +5,7 @@ export interface PropertyData {
   image: string;
   comingSoon?: boolean;
   airbnbUrl?: string;
+  detailPath?: string;
 }
 
 export interface PropertyCollectionData {
@@ -17,9 +18,9 @@ export const propertyCollections: PropertyCollectionData[] = [
     destinationKey: "costaRica",
     properties: [
       {
-        key: "mainHouse",
+        key: "riuHouse",
         image: "/images/properties/casa-nuvo.jpg",
-        comingSoon: true,
+        detailPath: "/properties/riu-house",
       },
       {
         key: "cabin1",

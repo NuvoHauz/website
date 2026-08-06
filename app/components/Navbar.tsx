@@ -13,9 +13,10 @@ export type NavLink = {
 
 type NavbarProps = {
   navLinks: NavLink[];
+  logoHref?: string;
 };
 
-export default function Navbar({ navLinks }: NavbarProps) {
+export default function Navbar({ navLinks, logoHref = "#" }: NavbarProps) {
   const { t } = useLanguage();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -44,7 +45,7 @@ export default function Navbar({ navLinks }: NavbarProps) {
     >
       <nav className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-4 sm:px-6 sm:py-5 lg:px-10">
         <a
-          href="#"
+          href={logoHref}
           className="shrink-0 text-xs font-medium tracking-[0.25em] text-white transition-colors duration-300 sm:text-sm sm:tracking-[0.35em]"
         >
           NUVOHAUZ

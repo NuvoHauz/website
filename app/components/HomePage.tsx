@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useLanguage } from "../context/LanguageContext";
 import { propertyCollections } from "../data/properties";
 import Navbar from "./Navbar";
@@ -108,6 +109,46 @@ export default function HomePage() {
                 <div className="grid w-full min-w-0 grid-cols-1 gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-3">
                   {collection.properties.map((property) => {
                     const copy = t.properties[property.key];
+
+                    if (property.detailPath) {
+                      return (
+                        <Link
+                          key={property.key}
+                          href={property.detailPath}
+                          aria-label={`${t.buttons.exploreRiuHouse}, ${copy.name}`}
+                          className="group relative box-border block min-h-[420px] w-full min-w-0 overflow-hidden rounded-2xl shadow-md transition-shadow duration-500 hover:shadow-2xl sm:h-[520px]"
+                        >
+                          <div className="absolute inset-0 overflow-hidden">
+                            <Image
+                              src={property.image}
+                              alt={copy.name}
+                              fill
+                              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                              className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                            />
+                          </div>
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/45 to-black/20" />
+                          <div className="relative flex h-full min-h-[420px] flex-col justify-end p-5 text-white sm:min-h-0 sm:p-6 md:p-8">
+                            <span className="mb-3 inline-flex w-fit items-center rounded-full border border-white/25 px-3 py-1 text-[10px] font-medium uppercase tracking-[0.25em] text-white/75">
+                              {t.buttons.nowAvailable}
+                            </span>
+                            <h4 className="font-serif text-xl font-light tracking-tight sm:text-2xl md:text-3xl">
+                              {copy.name}
+                            </h4>
+                            <p className="mt-2 text-[11px] uppercase tracking-[0.2em] text-white/70 sm:text-xs">
+                              {copy.location}
+                            </p>
+                            <p className="mt-3 max-w-full text-sm leading-relaxed text-white/85 sm:mt-4">
+                              {copy.description}
+                            </p>
+                            <span className="mt-5 inline-flex min-h-[44px] w-fit items-center text-sm font-medium tracking-wide text-[#C69C6D] transition-colors duration-300 group-hover:text-white sm:mt-6">
+                              {t.buttons.exploreRiuHouse} &rarr;
+                            </span>
+                          </div>
+                        </Link>
+                      );
+                    }
+
                     return (
                       <article
                         key={property.key}

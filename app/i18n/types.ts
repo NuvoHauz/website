@@ -2,7 +2,7 @@ export const LOCALES = ["en", "es", "fr", "de"] as const;
 export type Locale = (typeof LOCALES)[number];
 
 export type PropertyKey =
-  | "mainHouse"
+  | "riuHouse"
   | "cabin1"
   | "cabin2"
   | "banksyHouse"
@@ -42,7 +42,10 @@ export interface Translations {
   properties: Record<PropertyKey, PropertyTranslation>;
   buttons: {
     comingSoon: string;
+    nowAvailable: string;
     viewOnAirbnb: string;
+    viewProperty: string;
+    exploreRiuHouse: string;
     bookYourStay: string;
   };
   discover: {

@@ -27,11 +27,11 @@ const en: Translations = {
     indianapolis: "Indianapolis",
   },
   properties: {
-    mainHouse: {
-      name: "Main House",
+    riuHouse: {
+      name: "Riu House",
       location: "Paquera, Costa Rica",
       description:
-        "Our signature home featuring spacious accommodations, modern comforts, and easy access to Costa Rica's best beaches, wildlife, and outdoor adventures.",
+        "A modern tropical retreat with private bedroom suites, covered terraces, lush surroundings, and access to the shared pool.",
     },
     cabin1: {
       name: "Morpho House",
@@ -60,7 +60,10 @@ const en: Translations = {
   },
   buttons: {
     comingSoon: "Coming Soon",
+    nowAvailable: "Now Available",
     viewOnAirbnb: "View on Airbnb",
+    viewProperty: "View Property",
+    exploreRiuHouse: "Explore Riu House",
     bookYourStay: "Book Your Stay",
   },
   discover: {
