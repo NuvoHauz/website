@@ -1,16 +1,22 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useLanguage } from "../context/LanguageContext";
+import LanguageSelector from "./LanguageSelector";
+import WhatsAppLink from "./WhatsAppLink";
 
-const navLinks = [
-  { label: "Stays", href: "#stays" },
-  { label: "Discover", href: "#discover" },
-  { label: "Gallery", href: "#gallery" },
-  { label: "About", href: "#about" },
-  { label: "Contact", href: "#contact" },
-];
+export type NavLink = {
+  label: string;
+  href: string;
+  whatsapp?: boolean;
+};
 
-export default function Navbar() {
+type NavbarProps = {
+  navLinks: NavLink[];
+};
+
+export default function Navbar({ navLinks }: NavbarProps) {
+  const { t } = useLanguage();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -36,43 +42,55 @@ export default function Navbar() {
           : "bg-transparent"
       }`}
     >
-      <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 lg:px-10">
+      <nav className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-4 sm:px-6 sm:py-5 lg:px-10">
         <a
           href="#"
-          className={`text-sm font-medium tracking-[0.35em] transition-colors duration-300 ${
-            scrolled ? "text-white" : "text-white"
-          }`}
+          className="shrink-0 text-xs font-medium tracking-[0.25em] text-white transition-colors duration-300 sm:text-sm sm:tracking-[0.35em]"
         >
           NUVOHAUZ
         </a>
 
-        <ul className="hidden items-center gap-10 md:flex">
-          {navLinks.map((link) => (
-            <li key={link.label}>
-              <a
-                href={link.href}
-                className="text-sm tracking-wide text-white/80 transition-colors duration-300 hover:text-white"
-              >
-                {link.label}
-              </a>
-            </li>
-          ))}
+        <ul className="hidden items-center gap-8 lg:flex xl:gap-10">
+          {navLinks.map((link) =>
+            link.whatsapp ? (
+              <li key={link.label}>
+                <WhatsAppLink
+                  ariaLabel={t.whatsapp.ariaContactUs}
+                  className="inline-flex min-h-[44px] items-center gap-2 text-sm tracking-wide text-white/80 transition-colors duration-300 hover:text-white"
+                >
+                  {link.label}
+                </WhatsAppLink>
+              </li>
+            ) : (
+              <li key={link.label}>
+                <a
+                  href={link.href}
+                  className="inline-flex min-h-[44px] items-center text-sm tracking-wide text-white/80 transition-colors duration-300 hover:text-white"
+                >
+                  {link.label}
+                </a>
+              </li>
+            ),
+          )}
         </ul>
 
-        <div className="flex items-center gap-4">
-          <a
-            href="#contact"
-            className="hidden rounded-full bg-[#111111] px-6 py-2.5 text-sm font-medium text-white transition-all duration-300 hover:bg-[#333333] md:inline-block"
+        <div className="flex items-center gap-1.5 sm:gap-3">
+          <LanguageSelector variant="desktop" />
+          <LanguageSelector variant="mobile-header" />
+
+          <WhatsAppLink
+            ariaLabel={t.whatsapp.ariaBookDirect}
+            className="hidden min-h-[44px] items-center gap-2 rounded-full bg-[#111111] px-5 py-2.5 text-sm font-medium text-white transition-all duration-300 hover:bg-[#333333] md:inline-flex lg:px-6"
           >
-            Book Direct
-          </a>
+            {t.nav.bookDirect}
+          </WhatsAppLink>
 
           <button
             type="button"
             aria-label="Toggle menu"
             aria-expanded={menuOpen}
             onClick={() => setMenuOpen((open) => !open)}
-            className="flex flex-col gap-1.5 md:hidden"
+            className="inline-flex min-h-[44px] min-w-[44px] flex-col items-center justify-center gap-1.5 lg:hidden"
           >
             <span
               className={`block h-0.5 w-6 bg-white transition-transform duration-300 ${
@@ -94,30 +112,46 @@ export default function Navbar() {
       </nav>
 
       <div
-        className={`fixed inset-0 top-[72px] bg-[#111111]/95 backdrop-blur-lg transition-all duration-500 md:hidden ${
+        className={`fixed inset-0 top-[64px] bg-[#111111]/95 backdrop-blur-lg transition-all duration-500 sm:top-[72px] lg:hidden ${
           menuOpen ? "visible opacity-100" : "invisible opacity-0"
         }`}
       >
-        <ul className="flex flex-col items-center gap-8 pt-16">
+        <ul className="flex flex-col items-center gap-6 px-4 pt-10 sm:gap-8 sm:pt-16">
           {navLinks.map((link) => (
             <li key={link.label}>
-              <a
-                href={link.href}
-                onClick={() => setMenuOpen(false)}
-                className="text-lg tracking-wide text-white/90 transition-colors hover:text-white"
-              >
-                {link.label}
-              </a>
+              {link.whatsapp ? (
+                <WhatsAppLink
+                  ariaLabel={t.whatsapp.ariaContactUs}
+                  onClick={() => setMenuOpen(false)}
+                  className="inline-flex min-h-[44px] items-center gap-2 text-lg tracking-wide text-white/90 transition-colors hover:text-white"
+                >
+                  {link.label}
+                </WhatsAppLink>
+              ) : (
+                <a
+                  href={link.href}
+                  onClick={() => setMenuOpen(false)}
+                  className="inline-flex min-h-[44px] items-center text-lg tracking-wide text-white/90 transition-colors hover:text-white"
+                >
+                  {link.label}
+                </a>
+              )}
             </li>
           ))}
           <li>
-            <a
-              href="#contact"
+            <LanguageSelector
+              variant="mobile"
+              onSelect={() => setMenuOpen(false)}
+            />
+          </li>
+          <li>
+            <WhatsAppLink
+              ariaLabel={t.whatsapp.ariaBookDirect}
               onClick={() => setMenuOpen(false)}
-              className="mt-4 inline-block rounded-full bg-white px-8 py-3 text-sm font-medium text-[#111111]"
+              className="mt-2 inline-flex min-h-[44px] items-center gap-2 rounded-full bg-white px-8 py-3 text-sm font-medium text-[#111111]"
             >
-              Book Direct
-            </a>
+              {t.nav.bookDirect}
+            </WhatsAppLink>
           </li>
         </ul>
       </div>
