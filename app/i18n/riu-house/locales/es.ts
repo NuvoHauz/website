@@ -87,7 +87,13 @@ Al aire libre, los huéspedes pueden relajarse entre jardines tropicales, disfru
     "¡Hola Sandy! Me interesa hospedarme en Riu House. ¿Puedes ayudarme a verificar disponibilidad?",
   whatsappAriaLabel: "Contactar a Sandy por WhatsApp para consultar sobre Riu House",
   gallerySections: {
+    frontEntrance: "Frente de la Propiedad y Entrada",
+    poolOutdoor: "Piscina y Área Exterior",
+    livingArea: "Área de Estar",
+    kitchenDining: "Cocina y Comedor",
     mainBedroomBathroom: "Dormitorio Principal y Baño Privado",
+    backBedroomBathroom: "Dormitorio Trasero y Baño Privado",
+    frontBedroomBathroom: "Dormitorio Frontal y Baño Privado",
   },
   backToCollection: "Volver a Nuestra Colección",
 };

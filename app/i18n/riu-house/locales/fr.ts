@@ -88,7 +88,13 @@ Le salon ouvert bénéficie de grandes portes vitrées, d'une lumière naturelle
   whatsappAriaLabel:
     "Contacter Sandy sur WhatsApp pour des informations sur Riu House",
   gallerySections: {
+    frontEntrance: "Façade et Entrée de la Propriété",
+    poolOutdoor: "Piscine et Espace Extérieur",
+    livingArea: "Salon",
+    kitchenDining: "Cuisine et Salle à Manger",
     mainBedroomBathroom: "Chambre Principale et Salle de Bain Privée",
+    backBedroomBathroom: "Chambre Arrière et Salle de Bain Privée",
+    frontBedroomBathroom: "Chambre Avant et Salle de Bain Privée",
   },
   backToCollection: "Retour à Notre Collection",
 };

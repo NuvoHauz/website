@@ -87,7 +87,13 @@ Outside, guests can relax among tropical gardens, enjoy the covered terraces, an
     "Hi Sandy! I'm interested in staying at Riu House. Can you help me check availability?",
   whatsappAriaLabel: "Contact Sandy on WhatsApp to inquire about Riu House",
   gallerySections: {
+    frontEntrance: "Front of the Property & Entrance",
+    poolOutdoor: "Pool & Outdoor Area",
+    livingArea: "Living Area",
+    kitchenDining: "Kitchen & Dining Area",
     mainBedroomBathroom: "Main Bedroom & Private Bathroom",
+    backBedroomBathroom: "Back Bedroom & Private Bathroom",
+    frontBedroomBathroom: "Front Bedroom & Private Bathroom",
   },
   backToCollection: "Back to Our Collection",
 };

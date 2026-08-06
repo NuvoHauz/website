@@ -88,7 +88,13 @@ Im Außenbereich können Gäste in tropischen Gärten entspannen, die überdacht
   whatsappAriaLabel:
     "Sandy über WhatsApp kontaktieren, um Riu House anzufragen",
   gallerySections: {
+    frontEntrance: "Vorderseite und Eingang",
+    poolOutdoor: "Pool und Außenbereich",
+    livingArea: "Wohnbereich",
+    kitchenDining: "Küche und Essbereich",
     mainBedroomBathroom: "Hauptschlafzimmer und Privates Badezimmer",
+    backBedroomBathroom: "Hinteres Schlafzimmer und Privates Badezimmer",
+    frontBedroomBathroom: "Vorderes Schlafzimmer und Privates Badezimmer",
   },
   backToCollection: "Zurück zur Kollektion",
 };

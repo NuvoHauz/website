@@ -35,7 +35,13 @@ export interface RiuHouseTranslations {
   whatsappMessage: string;
   whatsappAriaLabel: string;
   gallerySections: {
+    frontEntrance: string;
+    poolOutdoor: string;
+    livingArea: string;
+    kitchenDining: string;
     mainBedroomBathroom: string;
+    backBedroomBathroom: string;
+    frontBedroomBathroom: string;
   };
   backToCollection: string;
 }

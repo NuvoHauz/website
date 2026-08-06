@@ -2,9 +2,13 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useLanguage } from "../context/LanguageContext";
-import { riuHouseGallerySections, riuHouseHero } from "../data/riu-house-gallery";
+import {
+  riuHouseGallerySections,
+  riuHouseHero,
+  type RiuHouseImage,
+} from "../data/riu-house-gallery";
 import { getRiuHouseTranslations } from "../i18n/riu-house";
 import { buildWhatsAppUrl } from "../lib/whatsapp";
 import Navbar from "./Navbar";
@@ -40,6 +44,9 @@ function BulletList({ items }: { items: string[] }) {
 export default function RiuHousePage() {
   const { locale, t } = useLanguage();
   const rt = useMemo(() => getRiuHouseTranslations(locale), [locale]);
+  const [lightboxImage, setLightboxImage] = useState<RiuHouseImage | null>(null);
+
+  const closeLightbox = useCallback(() => setLightboxImage(null), []);
 
   const navLinks = [
     { label: t.nav.stays, href: "/#stays" },
@@ -60,6 +67,24 @@ export default function RiuHousePage() {
   useEffect(() => {
     document.title = `${rt.fullName} | NuvoHauz`;
   }, [rt.fullName]);
+
+  useEffect(() => {
+    if (!lightboxImage) return;
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        closeLightbox();
+      }
+    };
+
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", onKeyDown);
+
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [lightboxImage, closeLightbox]);
 
   const whatsappHref = buildWhatsAppUrl(rt.whatsappMessage);
 
@@ -109,39 +134,65 @@ export default function RiuHousePage() {
         >
           <div className="mx-auto max-w-7xl space-y-12">
             {riuHouseGallerySections.map((section) => (
-              <div
-                key={
-                  section.labelKey ??
-                  section.images[0]?.src ??
-                  "gallery-section"
-                }
-              >
-                {section.labelKey && (
-                  <h3 className="mb-6 font-serif text-xl font-light tracking-tight text-[#111111] sm:text-2xl md:text-3xl">
-                    {rt.gallerySections[section.labelKey]}
-                  </h3>
-                )}
+              <div key={section.labelKey}>
+                <h3 className="mb-6 font-serif text-xl font-light tracking-tight text-[#111111] sm:text-2xl md:text-3xl">
+                  {rt.gallerySections[section.labelKey]}
+                </h3>
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
                   {section.images.map((image) => (
-                    <figure
+                    <button
                       key={image.src}
-                      className="overflow-hidden rounded-2xl bg-[#111111]/5 shadow-md"
+                      type="button"
+                      onClick={() => setLightboxImage(image)}
+                      aria-label={`Enlarge photo: ${image.alt}`}
+                      className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl shadow-md transition-shadow duration-300 hover:shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C69C6D]"
                     >
                       <Image
                         src={image.src}
                         alt={image.alt}
-                        width={image.width}
-                        height={image.height}
+                        fill
                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                        className="h-auto w-full object-cover"
+                        className="h-full w-full object-cover object-center"
                       />
-                    </figure>
+                    </button>
                   ))}
                 </div>
               </div>
             ))}
           </div>
         </section>
+      )}
+
+      {lightboxImage && (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 p-4 sm:p-8"
+          role="dialog"
+          aria-modal="true"
+          aria-label={lightboxImage.alt}
+          onClick={closeLightbox}
+        >
+          <button
+            type="button"
+            onClick={closeLightbox}
+            aria-label="Close enlarged photo"
+            className="absolute right-4 top-4 inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full bg-white/10 text-2xl leading-none text-white transition-colors hover:bg-white/20 sm:right-8 sm:top-8"
+          >
+            &times;
+          </button>
+          <div
+            className="relative max-h-[90vh] max-w-[min(90vw,1200px)]"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <Image
+              src={lightboxImage.src}
+              alt={lightboxImage.alt}
+              width={lightboxImage.width}
+              height={lightboxImage.height}
+              sizes="90vw"
+              className="h-auto max-h-[90vh] w-auto max-w-full object-contain"
+            />
+          </div>
+        </div>
       )}
 
       <section className="px-4 py-10 sm:px-6 sm:py-14 lg:px-10">
