@@ -63,20 +63,6 @@ export default function HomePage() {
           <p className="animate-fade-in-up-delay-1 mx-auto mt-6 max-w-2xl text-base font-light leading-relaxed text-white/85 sm:mt-8 sm:text-lg md:text-xl">
             {t.hero.subtitle}
           </p>
-          <div className="animate-fade-in-up-delay-2 mt-10 flex w-full max-w-md flex-col items-stretch justify-center gap-3 sm:mt-12 sm:max-w-none sm:flex-row sm:items-center sm:gap-4">
-            <a
-              href="#stays"
-              className="inline-flex min-h-[44px] items-center justify-center rounded-full bg-white px-8 py-3.5 text-sm font-medium tracking-wide text-[#111111] transition-all duration-300 hover:bg-white/90 hover:shadow-lg sm:px-10 sm:py-4"
-            >
-              {t.hero.exploreStays}
-            </a>
-            <a
-              href="#gallery"
-              className="inline-flex min-h-[44px] items-center justify-center rounded-full border border-white/40 px-8 py-3.5 text-sm font-medium tracking-wide text-white transition-all duration-300 hover:border-white hover:bg-white/10 sm:px-10 sm:py-4"
-            >
-              {t.hero.viewGallery}
-            </a>
-          </div>
         </div>
 
         <div className="absolute bottom-8 left-1/2 z-10 hidden -translate-x-1/2 sm:bottom-10 sm:block">
@@ -91,7 +77,10 @@ export default function HomePage() {
 
       <section id="stays" className="box-border w-full max-w-full overflow-hidden py-16 sm:py-24 md:py-32">
         <div className="mx-auto box-border w-full max-w-7xl min-w-0 px-4 sm:px-6 lg:px-10">
-          <div className="mb-12 text-center md:mb-20">
+          <div
+            id="our-collection"
+            className="mb-12 scroll-mt-24 text-center md:mb-20 md:scroll-mt-28"
+          >
             <p className="mb-4 text-xs uppercase tracking-[0.3em] text-[#C69C6D]">
               {t.collection.label}
             </p>
