@@ -11,13 +11,11 @@ const fr: RiuHouseTranslations = {
     bathrooms: "4 salles de bain",
     sleepsComfortably: "6 voyageurs confortablement",
     maxGuests: "Maximum 8 voyageurs avec approbation préalable",
-    introRate: "À partir de 250 $ par nuit",
   },
   sections: {
     about: "À propos de Riu House",
     amenities: "Équipements",
     sleeping: "Agencement des Chambres",
-    pricing: "Tarifs et Frais",
     houseRules: "Règlement Intérieur",
     arrival: "Arrivée et Transport",
   },
@@ -56,17 +54,6 @@ Le salon ouvert bénéficie de grandes portes vitrées, d'une lumière naturelle
     "Occupation standard : 6 voyageurs répartis dans les trois suites.",
     "Occupation maximale : 8 voyageurs avec approbation préalable. Les voyageurs 7 et 8 peuvent utiliser des matelas gonflables préparés par l'hôte.",
   ],
-  pricing: [
-    "Tarif introductif en semaine : 250 $ par nuit",
-    "Tarif introductif vendredi et samedi : 270 $ par nuit",
-    "Frais de ménage : 60 $ par réservation",
-    "Occupation standard : 6 voyageurs",
-    "Occupation maximale : 8 voyageurs avec approbation préalable",
-    "Voyageurs 7 et 8 : 25 $ par voyageur supplémentaire, par nuit",
-    "Séjour minimum standard : 2 nuits",
-    "Jours fériés et périodes de pointe sélectionnées : minimum 3 nuits",
-    "Les réservations d'une nuit ne sont pas disponibles via le site web.",
-  ],
   houseRules: [
     "Arrivée : 15 h",
     "Départ : 11 h",
@@ -82,7 +69,8 @@ Le salon ouvert bénéficie de grandes portes vitrées, d'une lumière naturelle
   ],
   arrival:
     "Riu House est située à Paquera, sur la péninsule de Nicoya au Costa Rica. Le temps de trajet depuis l'aéroport international Juan Santamaría varie selon la circulation et les horaires du ferry. Les voyageurs passant par Puntarenas doivent prévoir le temps pour l'enregistrement, l'embarquement et la traversée d'environ 70 à 80 minutes jusqu'à Paquera.",
-  inquireButton: "Demander des Informations sur Riu House",
+  checkAvailabilityButton: "Vérifier les disponibilités et demander des dates",
+  whatsappSecondaryLabel: "Vous préférez WhatsApp ? Contactez Sandy directement",
   whatsappMessage:
     "Bonjour Sandy ! Je suis intéressé(e) par un séjour à Riu House. Pouvez-vous m'aider à vérifier les disponibilités ?",
   whatsappAriaLabel:

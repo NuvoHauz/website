@@ -12,6 +12,7 @@ import {
 import { getRiuHouseTranslations } from "../i18n/riu-house";
 import { buildWhatsAppUrl } from "../lib/whatsapp";
 import Navbar from "./Navbar";
+import RiuHouseBookingSection from "./riu-house/RiuHouseBookingSection";
 import WhatsAppIcon from "./WhatsAppIcon";
 
 function SectionHeading({ label }: { label: string }) {
@@ -61,7 +62,6 @@ export default function RiuHousePage() {
     rt.stats.bathrooms,
     rt.stats.sleepsComfortably,
     rt.stats.maxGuests,
-    rt.stats.introRate,
   ];
 
   useEffect(() => {
@@ -195,7 +195,7 @@ export default function RiuHousePage() {
         </div>
       )}
 
-      <section className="px-4 py-10 sm:px-6 sm:py-14 lg:px-10">
+      <section id="riu-house-details" className="px-4 py-10 sm:px-6 sm:py-14 lg:px-10">
         <div className="mx-auto max-w-4xl">
           <div className="flex flex-wrap gap-3">
             {statItems.map((item) => (
@@ -208,18 +208,28 @@ export default function RiuHousePage() {
             ))}
           </div>
 
-          <a
-            href={whatsappHref}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={rt.whatsappAriaLabel}
-            className="mt-8 inline-flex min-h-[44px] w-full items-center justify-center gap-2 rounded-full bg-[#C69C6D] px-8 py-3.5 text-sm font-medium tracking-wide text-white transition-all duration-300 hover:bg-[#b58a5c] hover:shadow-lg sm:mt-10 sm:w-auto"
-          >
-            <WhatsAppIcon className="h-4 w-4 shrink-0" />
-            {rt.inquireButton}
-          </a>
+          <div className="mt-8 flex flex-col gap-4 sm:mt-10 sm:flex-row sm:flex-wrap sm:items-center">
+            <a
+              href="#booking"
+              className="inline-flex min-h-[44px] w-full items-center justify-center rounded-full bg-[#C69C6D] px-8 py-3.5 text-sm font-medium tracking-wide text-white transition-all duration-300 hover:bg-[#b58a5c] hover:shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C69C6D] sm:w-auto"
+            >
+              {rt.checkAvailabilityButton}
+            </a>
+            <a
+              href={whatsappHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={rt.whatsappAriaLabel}
+              className="inline-flex min-h-[44px] w-full items-center justify-center gap-2 rounded-full bg-[#C69C6D] px-8 py-3.5 text-sm font-medium tracking-wide text-white transition-all duration-300 hover:bg-[#b58a5c] hover:shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C69C6D] sm:w-auto"
+            >
+              <WhatsAppIcon className="h-4 w-4 shrink-0" />
+              {rt.whatsappSecondaryLabel}
+            </a>
+          </div>
         </div>
       </section>
+
+      <RiuHouseBookingSection />
 
       <section className="bg-white px-4 py-14 sm:px-6 sm:py-20 lg:px-10">
         <div className="mx-auto max-w-4xl">
@@ -248,13 +258,6 @@ export default function RiuHousePage() {
 
       <section className="px-4 py-14 sm:px-6 sm:py-20 lg:px-10">
         <div className="mx-auto max-w-4xl">
-          <SectionHeading label={rt.sections.pricing} />
-          <BulletList items={rt.pricing} />
-        </div>
-      </section>
-
-      <section className="bg-white px-4 py-14 sm:px-6 sm:py-20 lg:px-10">
-        <div className="mx-auto max-w-4xl">
           <SectionHeading label={rt.sections.houseRules} />
           <BulletList items={rt.houseRules} />
         </div>
@@ -272,20 +275,16 @@ export default function RiuHousePage() {
       <section className="px-4 py-16 sm:px-6 sm:py-24 lg:px-10">
         <div className="mx-auto max-w-4xl rounded-3xl bg-[#111111] px-5 py-14 text-center sm:px-8 sm:py-20 md:px-16">
           <h2 className="font-serif text-3xl font-light tracking-tight text-white sm:text-4xl">
-            {rt.inquireButton}
+            {rt.checkAvailabilityButton}
           </h2>
           <p className="mx-auto mt-6 max-w-lg text-base font-light leading-relaxed text-white/60">
             {rt.tagline}
           </p>
           <a
-            href={whatsappHref}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={rt.whatsappAriaLabel}
-            className="mt-10 inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full bg-[#C69C6D] px-8 py-3.5 text-sm font-medium tracking-wide text-white transition-all duration-300 hover:bg-[#b58a5c] hover:shadow-lg sm:px-12 sm:py-4"
+            href="#booking"
+            className="mt-10 inline-flex min-h-[44px] items-center justify-center rounded-full bg-[#C69C6D] px-8 py-3.5 text-sm font-medium tracking-wide text-white transition-all duration-300 hover:bg-[#b58a5c] hover:shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C69C6D] sm:px-12 sm:py-4"
           >
-            <WhatsAppIcon className="h-4 w-4 shrink-0" />
-            {rt.inquireButton}
+            {rt.checkAvailabilityButton}
           </a>
         </div>
       </section>

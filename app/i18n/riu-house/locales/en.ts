@@ -11,13 +11,11 @@ const en: RiuHouseTranslations = {
     bathrooms: "4 bathrooms",
     sleepsComfortably: "Sleeps 6 comfortably",
     maxGuests: "Maximum 8 guests with approval",
-    introRate: "From $250 per night",
   },
   sections: {
     about: "About Riu House",
     amenities: "Amenities",
     sleeping: "Sleeping Arrangements",
-    pricing: "Pricing & Fees",
     houseRules: "House Rules",
     arrival: "Arrival & Transportation",
   },
@@ -56,17 +54,6 @@ Outside, guests can relax among tropical gardens, enjoy the covered terraces, an
     "Standard occupancy: 6 guests across the three suites.",
     "Maximum occupancy: 8 guests with advance approval. Guests 7 and 8 may use inflatable mattresses arranged by the host.",
   ],
-  pricing: [
-    "Introductory weekday rate: $250 per night",
-    "Introductory Friday and Saturday rate: $270 per night",
-    "Cleaning fee: $60 per reservation",
-    "Standard occupancy: 6 guests",
-    "Maximum occupancy: 8 guests with advance approval",
-    "Guests 7 and 8: $25 per additional guest, per night",
-    "Standard minimum stay: 2 nights",
-    "Holidays and selected peak periods: 3-night minimum",
-    "One-night reservations are not available through the website.",
-  ],
   houseRules: [
     "Check-in: 3:00 p.m.",
     "Checkout: 11:00 a.m.",
@@ -82,7 +69,8 @@ Outside, guests can relax among tropical gardens, enjoy the covered terraces, an
   ],
   arrival:
     "Riu House is located in Paquera on Costa Rica's Nicoya Peninsula. Travel time from Juan Santamaría International Airport varies according to traffic and ferry schedules. Guests traveling through Puntarenas should allow time for ferry check-in, boarding, and the approximately 70-to-80-minute crossing to Paquera.",
-  inquireButton: "Inquire About Riu House",
+  checkAvailabilityButton: "Check Availability & Request Dates",
+  whatsappSecondaryLabel: "Prefer WhatsApp? Contact Sandy directly",
   whatsappMessage:
     "Hi Sandy! I'm interested in staying at Riu House. Can you help me check availability?",
   whatsappAriaLabel: "Contact Sandy on WhatsApp to inquire about Riu House",

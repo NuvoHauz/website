@@ -1,10 +1,3 @@
-export interface RiuHouseGalleryImage {
-  src: string;
-  alt: string;
-  width: number;
-  height: number;
-}
-
 export interface RiuHouseTranslations {
   fullName: string;
   tagline: string;
@@ -15,23 +8,21 @@ export interface RiuHouseTranslations {
     bathrooms: string;
     sleepsComfortably: string;
     maxGuests: string;
-    introRate: string;
   };
   sections: {
     about: string;
     amenities: string;
     sleeping: string;
-    pricing: string;
     houseRules: string;
     arrival: string;
   };
   description: string;
   amenities: string[];
   sleeping: string[];
-  pricing: string[];
   houseRules: string[];
   arrival: string;
-  inquireButton: string;
+  checkAvailabilityButton: string;
+  whatsappSecondaryLabel: string;
   whatsappMessage: string;
   whatsappAriaLabel: string;
   gallerySections: {

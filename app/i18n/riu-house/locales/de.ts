@@ -11,13 +11,11 @@ const de: RiuHouseTranslations = {
     bathrooms: "4 Badezimmer",
     sleepsComfortably: "Bequem für 6 Gäste",
     maxGuests: "Maximal 8 Gäste nach vorheriger Genehmigung",
-    introRate: "Ab $250 pro Nacht",
   },
   sections: {
     about: "Über Riu House",
     amenities: "Ausstattung",
     sleeping: "Schlafgelegenheiten",
-    pricing: "Preise & Gebühren",
     houseRules: "Hausregeln",
     arrival: "Anreise & Transport",
   },
@@ -56,17 +54,6 @@ Im Außenbereich können Gäste in tropischen Gärten entspannen, die überdacht
     "Standardbelegung: 6 Gäste in den drei Suiten.",
     "Maximale Belegung: 8 Gäste nach vorheriger Genehmigung. Gäste 7 und 8 können Luftmatratzen nutzen, die vom Gastgeber bereitgestellt werden.",
   ],
-  pricing: [
-    "Einführungspreis unter der Woche: $250 pro Nacht",
-    "Einführungspreis Freitag und Samstag: $270 pro Nacht",
-    "Reinigungsgebühr: $60 pro Reservierung",
-    "Standardbelegung: 6 Gäste",
-    "Maximale Belegung: 8 Gäste nach vorheriger Genehmigung",
-    "Gäste 7 und 8: $25 pro zusätzlichem Gast, pro Nacht",
-    "Standard-Mindestaufenthalt: 2 Nächte",
-    "Feiertage und ausgewählte Hochsaisonzeiten: 3 Nächte Minimum",
-    "Eine-Nacht-Reservierungen sind über die Website nicht möglich.",
-  ],
   houseRules: [
     "Check-in: 15:00 Uhr",
     "Checkout: 11:00 Uhr",
@@ -82,7 +69,8 @@ Im Außenbereich können Gäste in tropischen Gärten entspannen, die überdacht
   ],
   arrival:
     "Riu House befindet sich in Paquera auf der Nicoya-Halbinsel in Costa Rica. Die Fahrzeit vom internationalen Flughafen Juan Santamaría variiert je nach Verkehr und Fährplänen. Gäste, die über Puntarenas reisen, sollten Zeit für Check-in, Einschiffung und die etwa 70- bis 80-minütige Überfahrt nach Paquera einplanen.",
-  inquireButton: "Riu House Anfragen",
+  checkAvailabilityButton: "Verfügbarkeit prüfen und Daten anfragen",
+  whatsappSecondaryLabel: "Lieber WhatsApp? Sandy direkt kontaktieren",
   whatsappMessage:
     "Hallo Sandy! Ich interessiere mich für einen Aufenthalt in Riu House. Können Sie mir bei der Verfügbarkeit helfen?",
   whatsappAriaLabel:
