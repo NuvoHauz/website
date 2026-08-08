@@ -3,7 +3,7 @@ import type { RiuHouseBookingTranslations } from "../types";
 const de: RiuHouseBookingTranslations = {
   sectionTitle: "Verfügbarkeit prüfen und Daten anfragen",
   prototypeNotice:
-    "Die hier angezeigte Verfügbarkeit basiert auf Beispieldaten für diesen Prototyp und ist noch nicht mit dem live Reservierungskalender verbunden.",
+    "Die hier angezeigte Verfügbarkeit entspricht dem live Reservierungskalender. Jede Anfrage wird von Sandy persönlich geprüft, bevor Daten bestätigt werden.",
   stepIndicator: "Schritt {current} von {total}",
   step1Title: "Ihr Aufenthalt",
   step2Title: "Erzählen Sie uns von Ihrem Aufenthalt",
@@ -33,6 +33,10 @@ const de: RiuHouseBookingTranslations = {
     "Dies ist eine Buchungsanfrage, keine Sofortbuchung. Sandy prüft Ihre Anfrage persönlich und kontaktiert Sie per E-Mail oder WhatsApp. Ihre Daten sind erst nach Genehmigung und Zahlung bestätigt.",
   sendRequestButton: "Buchungsanfrage senden",
   submitting: "Wird gesendet…",
+  calendarLoading: "Verfügbarkeit wird geladen…",
+  availabilityLoadError:
+    "Die Verfügbarkeit konnte gerade nicht geladen werden. Bitte versuchen Sie es in Kürze erneut.",
+  availabilityRetryButton: "Erneut versuchen",
   calendarLegendAvailable: "Verfügbar",
   calendarLegendUnavailable: "Nicht verfügbar",
   calendarLegendSelected: "Ausgewählt",
@@ -83,6 +87,10 @@ const de: RiuHouseBookingTranslations = {
     houseRulesRequired: "Bitte bestätigen Sie die Haus- und Poolregeln.",
     requestAckRequired:
       "Bitte bestätigen Sie, dass Sie verstehen, dass dies eine Anfrage und keine bestätigte Reservierung ist.",
+    submitFailed:
+      "Ihre Anfrage konnte gerade nicht gesendet werden. Bitte versuchen Sie es in Kürze erneut.",
+    availabilityConflict:
+      "Diese Daten sind nicht mehr verfügbar. Bitte wählen Sie andere Daten und versuchen Sie es erneut.",
   },
   confirmation: {
     heading: "Ihre Anfrage wurde empfangen.",

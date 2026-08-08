@@ -3,7 +3,7 @@ import type { RiuHouseBookingTranslations } from "../types";
 const en: RiuHouseBookingTranslations = {
   sectionTitle: "Check Availability & Request Dates",
   prototypeNotice:
-    "Availability shown here uses sample prototype data and is not yet connected to the live reservation calendar.",
+    "Availability shown here reflects the live reservation calendar. Every request is reviewed personally by Sandy before dates are confirmed.",
   stepIndicator: "Step {current} of {total}",
   step1Title: "Your stay",
   step2Title: "Tell us about your stay",
@@ -33,6 +33,10 @@ const en: RiuHouseBookingTranslations = {
     "This is a booking request, not an instant reservation. Sandy will personally review your request and contact you by email or WhatsApp. Your dates are confirmed only after approval and payment.",
   sendRequestButton: "Send Booking Request",
   submitting: "Sending…",
+  calendarLoading: "Loading availability…",
+  availabilityLoadError:
+    "We could not load availability right now. Please try again in a moment.",
+  availabilityRetryButton: "Try again",
   calendarLegendAvailable: "Available",
   calendarLegendUnavailable: "Unavailable",
   calendarLegendSelected: "Selected",
@@ -83,6 +87,10 @@ const en: RiuHouseBookingTranslations = {
     houseRulesRequired: "Please confirm agreement to the house and pool rules.",
     requestAckRequired:
       "Please confirm that you understand this is a request, not a confirmed reservation.",
+    submitFailed:
+      "We could not send your request right now. Please try again in a moment.",
+    availabilityConflict:
+      "Those dates are no longer available. Please choose different dates and try again.",
   },
   confirmation: {
     heading: "Your request has been received.",

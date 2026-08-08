@@ -3,7 +3,7 @@ import type { RiuHouseBookingTranslations } from "../types";
 const fr: RiuHouseBookingTranslations = {
   sectionTitle: "Vérifier les disponibilités et demander des dates",
   prototypeNotice:
-    "Les disponibilités affichées ici proviennent de données d'exemple pour ce prototype et ne sont pas encore connectées au calendrier de réservation en direct.",
+    "Les disponibilités affichées ici reflètent le calendrier de réservation en direct. Chaque demande est examinée personnellement par Sandy avant confirmation des dates.",
   stepIndicator: "Étape {current} sur {total}",
   step1Title: "Votre séjour",
   step2Title: "Parlez-nous de votre séjour",
@@ -33,6 +33,10 @@ const fr: RiuHouseBookingTranslations = {
     "Il s'agit d'une demande de réservation, et non d'une réservation instantanée. Sandy examinera personnellement votre demande et vous contactera par e-mail ou WhatsApp. Vos dates ne sont confirmées qu'après approbation et paiement.",
   sendRequestButton: "Envoyer la demande de réservation",
   submitting: "Envoi en cours…",
+  calendarLoading: "Chargement des disponibilités…",
+  availabilityLoadError:
+    "Impossible de charger les disponibilités pour le moment. Veuillez réessayer dans un instant.",
+  availabilityRetryButton: "Réessayer",
   calendarLegendAvailable: "Disponible",
   calendarLegendUnavailable: "Indisponible",
   calendarLegendSelected: "Sélectionné",
@@ -84,6 +88,10 @@ const fr: RiuHouseBookingTranslations = {
       "Veuillez confirmer votre accord avec le règlement intérieur et les règles de la piscine.",
     requestAckRequired:
       "Veuillez confirmer que vous comprenez qu'il s'agit d'une demande et non d'une réservation confirmée.",
+    submitFailed:
+      "Impossible d'envoyer votre demande pour le moment. Veuillez réessayer dans un instant.",
+    availabilityConflict:
+      "Ces dates ne sont plus disponibles. Veuillez choisir d'autres dates et réessayer.",
   },
   confirmation: {
     heading: "Votre demande a bien été reçue.",

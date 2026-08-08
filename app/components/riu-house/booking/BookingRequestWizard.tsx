@@ -1,13 +1,13 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import type { Locale } from "../../../i18n/types";
 import type { RiuHouseBookingTranslations } from "../../../i18n/riu-house/booking/types";
 import type { OutsideVisitors, TripReason } from "../../../i18n/riu-house/booking/types";
 import { formatDisplayDate } from "../../../lib/booking/costa-rica-dates";
 import { isStayRangeValid } from "../../../lib/booking/availability";
+import { useAvailabilityBlocks } from "../../../lib/booking/use-availability-blocks";
 import {
-  generatePrototypeReference,
   isValidEmail,
   parseChildAges,
   validateGuestCounts,
@@ -48,7 +48,7 @@ export default function BookingRequestWizard({
 
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
-  const [adults, setAdults] = useState(2);
+  const [adults, setAdults] = useState(0);
   const [children, setChildren] = useState(0);
   const [childAgesInput, setChildAgesInput] = useState("");
 
@@ -61,6 +61,16 @@ export default function BookingRequestWizard({
   const [message, setMessage] = useState("");
   const [agreedHouseRules, setAgreedHouseRules] = useState(false);
   const [agreedRequest, setAgreedRequest] = useState(false);
+  const [honeypot, setHoneypot] = useState("");
+  const [submitError, setSubmitError] = useState("");
+  const idempotencyKeyRef = useRef(crypto.randomUUID());
+
+  const {
+    blocks: blockedRanges,
+    loading: availabilityLoading,
+    error: availabilityLoadError,
+    reload: reloadAvailability,
+  } = useAvailabilityBlocks();
 
   const stepLabel = useMemo(
     () => bt.stepIndicator.replace("{current}", String(step)).replace("{total}", "2"),
@@ -75,7 +85,7 @@ export default function BookingRequestWizard({
     setErrors({});
     setCheckIn("");
     setCheckOut("");
-    setAdults(2);
+    setAdults(0);
     setChildren(0);
     setChildAgesInput("");
     setFullName("");
@@ -87,7 +97,17 @@ export default function BookingRequestWizard({
     setMessage("");
     setAgreedHouseRules(false);
     setAgreedRequest(false);
+    setHoneypot("");
+    setSubmitError("");
+    idempotencyKeyRef.current = crypto.randomUUID();
   };
+
+  const canContinueStep1 =
+    !availabilityLoading &&
+    !availabilityLoadError &&
+    Boolean(checkIn) &&
+    Boolean(checkOut) &&
+    adults > 0;
 
   const validateStep1 = (): FormErrors => {
     const next: FormErrors = {};
@@ -96,9 +116,11 @@ export default function BookingRequestWizard({
     if (checkIn && checkOut && checkOut <= checkIn) {
       next.checkOut = bt.errors.checkOutAfterCheckIn;
     }
-    if (checkIn && checkOut && !isStayRangeValid(checkIn, checkOut)) {
+    if (checkIn && checkOut && !isStayRangeValid(checkIn, checkOut, blockedRanges)) {
       next.checkOut = bt.errors.invalidStayRange;
     }
+
+    if (adults === 0) next.adults = bt.errors.noAdults;
 
     const guestResult = validateGuestCounts(adults, children);
     if (guestResult === "noAdults") next.adults = bt.errors.noAdults;
@@ -139,6 +161,7 @@ export default function BookingRequestWizard({
   };
 
   const handleStep1Continue = () => {
+    if (availabilityLoading || availabilityLoadError) return;
     const nextErrors = validateStep1();
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length === 0) {
@@ -146,9 +169,10 @@ export default function BookingRequestWizard({
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (isSubmitting || submitted) return;
 
+    setSubmitError("");
     const step1Errors = validateStep1();
     const step2Errors = validateStep2();
     const merged = { ...step1Errors, ...step2Errors };
@@ -158,12 +182,83 @@ export default function BookingRequestWizard({
       return;
     }
 
+    if (availabilityLoadError) {
+      setSubmitError(bt.errors.submitFailed);
+      setStep(1);
+      return;
+    }
+
     setIsSubmitting(true);
-    window.setTimeout(() => {
-      setReference(generatePrototypeReference());
+
+    try {
+      const response = await fetch("/api/riu-house/booking-requests", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Idempotency-Key": idempotencyKeyRef.current,
+        },
+        body: JSON.stringify({
+          checkIn,
+          checkOut,
+          adults,
+          children,
+          childAgesInput,
+          fullName,
+          email,
+          phone,
+          country,
+          tripReason,
+          outsideVisitors,
+          message,
+          agreedHouseRules,
+          agreedRequest,
+          honeypot,
+        }),
+      });
+
+      const payload = (await response.json()) as {
+        success?: boolean;
+        requestReference?: string;
+        error?: string;
+        fields?: string[];
+      };
+
+      if (response.status === 409 || payload.fields?.includes("invalidStayRange")) {
+        setErrors({ checkOut: bt.errors.availabilityConflict });
+        setStep(1);
+        void reloadAvailability();
+        return;
+      }
+
+      if (response.status === 400 && payload.fields?.length) {
+        const nextErrors: FormErrors = {};
+        for (const field of payload.fields) {
+          const key = field as keyof typeof bt.errors;
+          if (key in bt.errors) {
+            nextErrors[field] = bt.errors[key as keyof typeof bt.errors];
+          }
+        }
+        setErrors(nextErrors);
+        if (payload.fields.some((field) =>
+          ["checkInRequired", "checkOutRequired", "checkOutAfterCheckIn", "invalidStayRange", "noAdults", "tooManyGuests", "childAgesRequired", "childAgesCountMismatch", "childAgesEmptyValue", "childAgesNonNumeric", "childAgesDecimal", "childAgesOutOfRange", "childAgesMustBeAdult"].includes(field),
+        )) {
+          setStep(1);
+        }
+        return;
+      }
+
+      if (!response.ok || !payload.success || !payload.requestReference) {
+        setSubmitError(bt.errors.submitFailed);
+        return;
+      }
+
+      setReference(payload.requestReference);
       setSubmitted(true);
+    } catch {
+      setSubmitError(bt.errors.submitFailed);
+    } finally {
       setIsSubmitting(false);
-    }, 400);
+    }
   };
 
   if (submitted) {
@@ -219,6 +314,10 @@ export default function BookingRequestWizard({
             locale={locale}
             checkIn={checkIn}
             checkOut={checkOut}
+            blockedRanges={blockedRanges}
+            loading={availabilityLoading}
+            loadError={availabilityLoadError}
+            onRetry={() => void reloadAvailability()}
             onSelectCheckIn={(date) => {
               setCheckIn(date);
               setCheckOut("");
@@ -262,10 +361,22 @@ export default function BookingRequestWizard({
               </label>
               <select
                 id="booking-adults"
-                value={adults}
-                onChange={(event) => setAdults(Number(event.target.value))}
+                value={adults === 0 ? "" : adults}
+                onChange={(event) => {
+                  const next = Number(event.target.value);
+                  setAdults(next);
+                  setErrors((prev) => {
+                    const updated = { ...prev };
+                    delete updated.adults;
+                    delete updated.guests;
+                    return updated;
+                  });
+                }}
                 className={inputClassName}
               >
+                <option value="" disabled>
+                  Select adults
+                </option>
                 {Array.from({ length: 8 }, (_, i) => i + 1).map((n) => (
                   <option key={n} value={n}>
                     {n}
@@ -335,7 +446,8 @@ export default function BookingRequestWizard({
           <button
             type="button"
             onClick={handleStep1Continue}
-            className="inline-flex min-h-[44px] w-full items-center justify-center rounded-full bg-[#C69C6D] px-8 py-3.5 text-sm font-medium tracking-wide text-white transition-all duration-300 hover:bg-[#b58a5c] hover:shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C69C6D] sm:w-auto"
+            disabled={!canContinueStep1}
+            className="inline-flex min-h-[44px] w-full items-center justify-center rounded-full bg-[#C69C6D] px-8 py-3.5 text-sm font-medium tracking-wide text-white transition-all duration-300 hover:bg-[#b58a5c] hover:shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C69C6D] disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto"
           >
             {bt.requestDatesButton}
           </button>
@@ -501,6 +613,22 @@ export default function BookingRequestWizard({
             />
           </div>
 
+          <div
+            aria-hidden="true"
+            className="absolute left-[-9999px] h-0 w-0 overflow-hidden"
+          >
+            <label htmlFor="booking-company">Company</label>
+            <input
+              id="booking-company"
+              name="company"
+              type="text"
+              tabIndex={-1}
+              autoComplete="off"
+              value={honeypot}
+              onChange={(event) => setHoneypot(event.target.value)}
+            />
+          </div>
+
           <p className="rounded-xl border border-[#111111]/10 bg-[#F8F6F2] px-4 py-3 text-sm leading-relaxed text-[#111111]/70">
             {bt.requestNotice}
           </p>
@@ -532,6 +660,12 @@ export default function BookingRequestWizard({
           {errors.requestAck && (
             <p className="text-sm text-red-700" role="alert">
               {errors.requestAck}
+            </p>
+          )}
+
+          {submitError && (
+            <p className="text-sm text-red-700" role="alert">
+              {submitError}
             </p>
           )}
 

@@ -35,6 +35,9 @@ export interface RiuHouseBookingTranslations {
   requestNotice: string;
   sendRequestButton: string;
   submitting: string;
+  calendarLoading: string;
+  availabilityLoadError: string;
+  availabilityRetryButton: string;
   calendarLegendAvailable: string;
   calendarLegendUnavailable: string;
   calendarLegendSelected: string;
@@ -79,6 +82,8 @@ export interface RiuHouseBookingTranslations {
     outsideVisitorsRequired: string;
     houseRulesRequired: string;
     requestAckRequired: string;
+    submitFailed: string;
+    availabilityConflict: string;
   };
   confirmation: {
     heading: string;

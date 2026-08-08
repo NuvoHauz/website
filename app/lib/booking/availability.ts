@@ -1,39 +1,39 @@
 import {
+  addDaysToIsoDate,
   compareIsoDates,
   getStayNights,
   getTodayInCostaRica,
 } from "./costa-rica-dates";
 import {
-  getPrototypeBlockedRanges,
-  getPrototypeHorizonEnd,
+  AVAILABILITY_HORIZON_DAYS,
+  type BlockedRange,
   isBlockedNight,
-  type PrototypeBlockedRange,
-} from "../../data/riu-house-booking.mock";
+} from "./blocked-ranges";
+
+export function getHorizonEnd(): string {
+  return addDaysToIsoDate(getTodayInCostaRica(), AVAILABILITY_HORIZON_DAYS);
+}
 
 export function isPastDate(iso: string): boolean {
   return compareIsoDates(iso, getTodayInCostaRica()) < 0;
 }
 
 export function isBeyondHorizon(iso: string): boolean {
-  return compareIsoDates(iso, getPrototypeHorizonEnd()) > 0;
+  return compareIsoDates(iso, getHorizonEnd()) > 0;
 }
 
 export function isDateSelectable(iso: string): boolean {
   return !isPastDate(iso) && !isBeyondHorizon(iso);
 }
 
-/** A calendar night cannot be the first night of a stay if it is blocked. */
-export function canCheckInOn(
-  date: string,
-  ranges: PrototypeBlockedRange[] = getPrototypeBlockedRanges(),
-): boolean {
+export function canCheckInOn(date: string, ranges: BlockedRange[]): boolean {
   return isDateSelectable(date) && !isBlockedNight(date, ranges);
 }
 
 export function isStayRangeValid(
   checkIn: string,
   checkOut: string,
-  ranges: PrototypeBlockedRange[] = getPrototypeBlockedRanges(),
+  ranges: BlockedRange[],
 ): boolean {
   if (!checkIn || !checkOut) return false;
   if (compareIsoDates(checkOut, checkIn) <= 0) return false;
@@ -43,3 +43,5 @@ export function isStayRangeValid(
   const nights = getStayNights(checkIn, checkOut);
   return nights.every((night) => !isBlockedNight(night, ranges));
 }
+
+export type { BlockedRange };

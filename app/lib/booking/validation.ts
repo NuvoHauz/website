@@ -72,8 +72,3 @@ export function parseChildAges(input: string, expectedCount: number): ChildAgePa
 export function isValidEmail(value: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
 }
-
-export function generatePrototypeReference(): string {
-  const suffix = Math.random().toString(36).slice(2, 8).toUpperCase();
-  return `RH-${suffix}`;
-}

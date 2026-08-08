@@ -3,7 +3,7 @@ import type { RiuHouseBookingTranslations } from "../types";
 const es: RiuHouseBookingTranslations = {
   sectionTitle: "Consultar disponibilidad y solicitar fechas",
   prototypeNotice:
-    "La disponibilidad mostrada aquí utiliza datos de ejemplo del prototipo y aún no está conectada al calendario de reservas en vivo.",
+    "La disponibilidad mostrada aquí refleja el calendario de reservas en vivo. Sandy revisa personalmente cada solicitud antes de confirmar las fechas.",
   stepIndicator: "Paso {current} de {total}",
   step1Title: "Su estancia",
   step2Title: "Cuéntenos sobre su estancia",
@@ -33,6 +33,10 @@ const es: RiuHouseBookingTranslations = {
     "Esta es una solicitud de reserva, no una reservación instantánea. Sandy revisará personalmente su solicitud y se comunicará por correo electrónico o WhatsApp. Sus fechas se confirman solo después de la aprobación y el pago.",
   sendRequestButton: "Enviar solicitud de reserva",
   submitting: "Enviando…",
+  calendarLoading: "Cargando disponibilidad…",
+  availabilityLoadError:
+    "No pudimos cargar la disponibilidad en este momento. Inténtelo de nuevo en un momento.",
+  availabilityRetryButton: "Intentar de nuevo",
   calendarLegendAvailable: "Disponible",
   calendarLegendUnavailable: "No disponible",
   calendarLegendSelected: "Seleccionado",
@@ -83,6 +87,10 @@ const es: RiuHouseBookingTranslations = {
     houseRulesRequired: "Confirme que acepta las reglas de la casa y la piscina.",
     requestAckRequired:
       "Confirme que entiende que esto es una solicitud, no una reserva confirmada.",
+    submitFailed:
+      "No pudimos enviar su solicitud en este momento. Inténtelo de nuevo en un momento.",
+    availabilityConflict:
+      "Esas fechas ya no están disponibles. Elija otras fechas e inténtelo de nuevo.",
   },
   confirmation: {
     heading: "Su solicitud ha sido recibida.",
