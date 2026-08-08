@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { Locale } from "../../../i18n/types";
 import type { RiuHouseBookingTranslations } from "../../../i18n/riu-house/booking/types";
 import type { OutsideVisitors, TripReason } from "../../../i18n/riu-house/booking/types";
@@ -64,6 +64,18 @@ export default function BookingRequestWizard({
   const [honeypot, setHoneypot] = useState("");
   const [submitError, setSubmitError] = useState("");
   const idempotencyKeyRef = useRef(crypto.randomUUID());
+  const confirmationPanelRef = useRef<HTMLDivElement>(null);
+  const confirmationHeadingRef = useRef<HTMLHeadingElement>(null);
+
+  useEffect(() => {
+    if (!submitted || !reference) return;
+
+    confirmationPanelRef.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+    confirmationHeadingRef.current?.focus({ preventScroll: true });
+  }, [reference, submitted]);
 
   const {
     blocks: blockedRanges,
@@ -263,8 +275,15 @@ export default function BookingRequestWizard({
 
   if (submitted) {
     return (
-      <div className="rounded-2xl border border-[#111111]/10 bg-white p-6 sm:p-8">
-        <h3 className="font-serif text-2xl font-light tracking-tight text-[#111111] sm:text-3xl">
+      <div
+        ref={confirmationPanelRef}
+        className="rounded-2xl border border-[#111111]/10 bg-white p-6 sm:p-8"
+      >
+        <h3
+          ref={confirmationHeadingRef}
+          tabIndex={-1}
+          className="font-serif text-2xl font-light tracking-tight text-[#111111] sm:text-3xl"
+        >
           {bt.confirmation.heading}
         </h3>
         <p className="mt-4 text-sm text-[#111111]/70">
