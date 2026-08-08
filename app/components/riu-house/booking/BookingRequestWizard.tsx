@@ -70,11 +70,29 @@ export default function BookingRequestWizard({
   useEffect(() => {
     if (!submitted || !reference) return;
 
-    confirmationPanelRef.current?.scrollIntoView({
-      behavior: "smooth",
-      block: "start",
+    let rafId = 0;
+
+    const scrollConfirmationIntoView = () => {
+      const panel = confirmationPanelRef.current;
+      if (!panel) return;
+
+      const headerHeight =
+        document.querySelector("header")?.getBoundingClientRect().height ?? 0;
+      const panelTop =
+        panel.getBoundingClientRect().top + window.scrollY;
+
+      window.scrollTo({
+        top: Math.max(0, panelTop - headerHeight - 16),
+        behavior: "smooth",
+      });
+      confirmationHeadingRef.current?.focus({ preventScroll: true });
+    };
+
+    rafId = requestAnimationFrame(() => {
+      requestAnimationFrame(scrollConfirmationIntoView);
     });
-    confirmationHeadingRef.current?.focus({ preventScroll: true });
+
+    return () => cancelAnimationFrame(rafId);
   }, [reference, submitted]);
 
   const {
