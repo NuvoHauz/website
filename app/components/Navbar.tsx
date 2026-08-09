@@ -37,16 +37,16 @@ export default function Navbar({ navLinks, logoHref = "#" }: NavbarProps) {
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
+      className={`fixed inset-x-0 top-0 z-50 w-full max-w-full overflow-x-hidden transition-all duration-500 ${
         scrolled
           ? "border-b border-white/[0.08] bg-black/25 shadow-sm backdrop-blur-2xl backdrop-saturate-150"
           : "bg-transparent"
       }`}
     >
-      <nav className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-4 sm:px-6 sm:py-5 lg:px-10">
+      <nav className="mx-auto flex w-full max-w-7xl min-w-0 items-center justify-between gap-1.5 px-3 py-3.5 sm:gap-2 sm:px-4 sm:py-4 lg:gap-3 lg:px-10 lg:py-5">
         <a
           href={logoHref}
-          className="shrink-0 text-xs font-medium tracking-[0.25em] text-white transition-colors duration-300 sm:text-sm sm:tracking-[0.35em]"
+          className="shrink-0 text-[10px] font-medium tracking-[0.16em] text-white transition-colors duration-300 max-[359px]:tracking-[0.12em] sm:text-xs sm:tracking-[0.25em] lg:text-sm lg:tracking-[0.35em]"
         >
           NUVOHAUZ
         </a>
@@ -75,13 +75,20 @@ export default function Navbar({ navLinks, logoHref = "#" }: NavbarProps) {
           )}
         </ul>
 
-        <div className="flex items-center gap-1.5 sm:gap-3">
+        <div className="flex min-w-0 shrink items-center gap-1 sm:gap-1.5 lg:gap-3">
           <LanguageSelector variant="desktop" />
           <LanguageSelector variant="mobile-header" />
 
           <WhatsAppLink
             ariaLabel={t.whatsapp.ariaBookDirect}
-            className="hidden min-h-[44px] items-center gap-2 rounded-full bg-[#111111] px-5 py-2.5 text-sm font-medium text-white transition-all duration-300 hover:bg-[#333333] md:inline-flex lg:px-6"
+            className="inline-flex min-h-[44px] shrink-0 items-center whitespace-nowrap rounded-full bg-[#111111] py-2 pl-2.5 pr-3 text-xs font-medium text-white transition-all duration-300 hover:bg-[#333333] max-[374px]:px-2.5 sm:gap-1.5 sm:pl-3 sm:pr-3.5 sm:text-sm md:gap-2 md:px-4 lg:hidden"
+          >
+            <span className="hidden min-[375px]:inline">{t.nav.bookDirect}</span>
+          </WhatsAppLink>
+
+          <WhatsAppLink
+            ariaLabel={t.whatsapp.ariaBookDirect}
+            className="hidden min-h-[44px] items-center gap-2 whitespace-nowrap rounded-full bg-[#111111] px-5 py-2.5 text-sm font-medium text-white transition-all duration-300 hover:bg-[#333333] lg:inline-flex lg:px-6"
           >
             {t.nav.bookDirect}
           </WhatsAppLink>
@@ -91,7 +98,7 @@ export default function Navbar({ navLinks, logoHref = "#" }: NavbarProps) {
             aria-label="Toggle menu"
             aria-expanded={menuOpen}
             onClick={() => setMenuOpen((open) => !open)}
-            className="inline-flex min-h-[44px] min-w-[44px] flex-col items-center justify-center gap-1.5 lg:hidden"
+            className="inline-flex min-h-[44px] min-w-[44px] shrink-0 flex-col items-center justify-center gap-1.5 lg:hidden"
           >
             <span
               className={`block h-0.5 w-6 bg-white transition-transform duration-300 ${

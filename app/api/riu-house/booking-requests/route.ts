@@ -15,6 +15,8 @@ import {
 import { getSupabaseAdmin } from "../../../lib/supabase/server";
 import { getTodayInCostaRica } from "../../../lib/booking/costa-rica-dates";
 import { getAvailabilityHorizonEnd } from "../../../lib/booking/server-validation";
+import { maybeSendBookingNotification } from "../../../lib/notifications/booking-notification-service";
+import type { SupabaseClient } from "@supabase/supabase-js";
 
 export const dynamic = "force-dynamic";
 
@@ -31,6 +33,20 @@ function successResponse(requestReference: string) {
     success: true,
     requestReference,
   });
+}
+
+async function respondWithSavedReference(
+  supabase: SupabaseClient,
+  idempotencyKey: string,
+  requestReference: string,
+) {
+  try {
+    await maybeSendBookingNotification(supabase, idempotencyKey);
+  } catch {
+    console.error("booking notification operation failed", requestReference);
+  }
+
+  return successResponse(requestReference);
 }
 
 function isAllowedOrigin(request: NextRequest): boolean {
@@ -103,7 +119,11 @@ export async function POST(request: NextRequest) {
     }
 
     if (existing?.request_reference) {
-      return successResponse(existing.request_reference);
+      return respondWithSavedReference(
+        supabase,
+        idempotencyKey,
+        existing.request_reference,
+      );
     }
 
     const blockedRanges = await loadBlockedRanges();
@@ -164,7 +184,11 @@ export async function POST(request: NextRequest) {
           .maybeSingle();
 
         if (raced?.request_reference) {
-          return successResponse(raced.request_reference);
+          return respondWithSavedReference(
+            supabase,
+            idempotencyKey,
+            raced.request_reference,
+          );
         }
       }
 
@@ -177,7 +201,11 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "submit_failed" }, { status: 503 });
     }
 
-    return successResponse(inserted.request_reference);
+    return respondWithSavedReference(
+      supabase,
+      idempotencyKey,
+      inserted.request_reference,
+    );
   } catch {
     console.error("booking-requests route error");
     return NextResponse.json({ error: "submit_failed" }, { status: 503 });

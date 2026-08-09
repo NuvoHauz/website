@@ -16,9 +16,9 @@ export default function LanguageSelector({
 
   const baseClass =
     variant === "desktop"
-      ? "hidden items-center gap-1 rounded-full border border-white/20 bg-white/10 p-1 backdrop-blur-sm md:flex"
+      ? "hidden items-center gap-1 rounded-full border border-white/20 bg-white/10 p-1 backdrop-blur-sm lg:flex"
       : variant === "mobile-header"
-        ? "flex items-center gap-0.5 rounded-full border border-white/20 bg-white/10 p-0.5 backdrop-blur-sm md:hidden"
+        ? "flex shrink-0 items-center gap-px rounded-full border border-white/20 bg-white/10 p-px backdrop-blur-sm lg:hidden"
         : "flex items-center justify-center gap-2";
 
   return (
@@ -47,7 +47,7 @@ export default function LanguageSelector({
                       : "text-white/80 hover:bg-white/10 hover:text-white"
                   }`
                 : variant === "mobile-header"
-                  ? `min-h-[44px] min-w-[40px] rounded-full px-1.5 py-1 text-[10px] font-medium tracking-wide transition-all duration-300 sm:px-2 sm:text-[11px] ${
+                  ? `min-h-[40px] min-w-[32px] rounded-full px-1 py-1 text-[10px] font-medium tracking-wide transition-all duration-300 max-[359px]:min-h-[36px] max-[359px]:min-w-[28px] max-[359px]:px-0.5 max-[359px]:text-[9px] sm:min-h-[44px] sm:min-w-[36px] sm:px-1.5 sm:text-[11px] ${
                       active
                         ? "bg-white text-[#111111]"
                         : "text-white/80 hover:bg-white/10 hover:text-white"

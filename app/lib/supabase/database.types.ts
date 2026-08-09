@@ -31,12 +31,24 @@ export interface BookingRequestInsert {
   acknowledged_request_only: boolean;
 }
 
+export type BookingNotificationStatus =
+  | "pending"
+  | "sending"
+  | "sent"
+  | "failed";
+
 export interface BookingRequestRow extends BookingRequestInsert {
   id: string;
   request_reference: string;
   status: string;
   created_at: string;
   updated_at: string;
+  notification_status: BookingNotificationStatus;
+  notification_sent_at: string | null;
+  notification_claimed_at: string | null;
+  notification_attempts: number;
+  notification_last_error_code: string | null;
+  notification_provider_id: string | null;
 }
 
 export type BookingTripReason =
