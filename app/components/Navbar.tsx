@@ -37,16 +37,16 @@ export default function Navbar({ navLinks, logoHref = "#" }: NavbarProps) {
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 w-full max-w-full overflow-x-hidden transition-all duration-500 ${
+      className={`fixed inset-x-0 top-0 z-50 w-full max-w-full transition-all duration-500 ${
         scrolled
           ? "border-b border-white/[0.08] bg-black/25 shadow-sm backdrop-blur-2xl backdrop-saturate-150"
           : "bg-transparent"
       }`}
     >
-      <nav className="mx-auto flex w-full max-w-7xl min-w-0 items-center justify-between gap-1.5 px-3 py-3.5 sm:gap-2 sm:px-4 sm:py-4 lg:gap-3 lg:px-10 lg:py-5">
+      <nav className="mx-auto box-border flex w-full max-w-7xl min-w-0 items-center justify-between gap-1 px-2.5 py-3.5 sm:gap-1.5 sm:px-3 sm:py-4 lg:gap-3 lg:px-10 lg:py-5">
         <a
           href={logoHref}
-          className="shrink-0 text-[10px] font-medium tracking-[0.16em] text-white transition-colors duration-300 max-[359px]:tracking-[0.12em] sm:text-xs sm:tracking-[0.25em] lg:text-sm lg:tracking-[0.35em]"
+          className="min-w-0 shrink-0 truncate text-[10px] font-medium tracking-[0.14em] text-white transition-colors duration-300 max-[359px]:tracking-[0.1em] sm:text-xs sm:tracking-[0.22em] lg:text-sm lg:tracking-[0.35em]"
         >
           NUVOHAUZ
         </a>
@@ -75,22 +75,15 @@ export default function Navbar({ navLinks, logoHref = "#" }: NavbarProps) {
           )}
         </ul>
 
-        <div className="flex min-w-0 shrink items-center gap-1 sm:gap-1.5 lg:gap-3">
+        <div className="flex min-w-0 items-center justify-end gap-1 sm:gap-1.5 lg:gap-3">
           <LanguageSelector variant="desktop" />
           <LanguageSelector variant="mobile-header" />
 
           <WhatsAppLink
             ariaLabel={t.whatsapp.ariaBookDirect}
-            className="inline-flex min-h-[44px] shrink-0 items-center whitespace-nowrap rounded-full bg-[#111111] py-2 pl-2.5 pr-3 text-xs font-medium text-white transition-all duration-300 hover:bg-[#333333] max-[374px]:px-2.5 sm:gap-1.5 sm:pl-3 sm:pr-3.5 sm:text-sm md:gap-2 md:px-4 lg:hidden"
+            className="inline-flex min-h-[44px] shrink-0 items-center gap-1 whitespace-nowrap rounded-full bg-[#111111] py-2 pl-2 pr-2.5 text-[11px] font-medium text-white transition-all duration-300 hover:bg-[#333333] min-[375px]:gap-1.5 min-[375px]:pl-2.5 min-[375px]:pr-3 min-[375px]:text-xs sm:pl-3 sm:pr-3.5 sm:text-sm lg:gap-2 lg:px-6 lg:py-2.5 lg:text-sm"
           >
             <span className="hidden min-[375px]:inline">{t.nav.bookDirect}</span>
-          </WhatsAppLink>
-
-          <WhatsAppLink
-            ariaLabel={t.whatsapp.ariaBookDirect}
-            className="hidden min-h-[44px] items-center gap-2 whitespace-nowrap rounded-full bg-[#111111] px-5 py-2.5 text-sm font-medium text-white transition-all duration-300 hover:bg-[#333333] lg:inline-flex lg:px-6"
-          >
-            {t.nav.bookDirect}
           </WhatsAppLink>
 
           <button

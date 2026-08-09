@@ -1,12 +1,27 @@
 import "server-only";
 
-import type { SupabaseClient } from "@supabase/supabase-js";
+import type { PostgrestError, SupabaseClient } from "@supabase/supabase-js";
 import type { BookingRequestRow } from "../supabase/database.types";
 import {
   sendBookingNotificationEmail,
 } from "./booking-notification-email";
 
 const STALE_SENDING_MS = 10 * 60 * 1000;
+
+function logSanitizedSupabaseError(
+  context: string,
+  requestReference: string,
+  error: PostgrestError,
+): void {
+  console.error(
+    context,
+    requestReference,
+    error.code ?? "unknown",
+    error.message ?? "unknown",
+    error.details ?? "",
+    error.hint ?? "",
+  );
+}
 
 function isStaleSendingClaim(row: BookingRequestRow): boolean {
   if (row.notification_status !== "sending" || !row.notification_claimed_at) {
@@ -33,7 +48,11 @@ export async function maybeSendBookingNotification(
 
   if (fetchError || !row) {
     if (fetchError) {
-      console.error("booking notification row lookup failed");
+      logSanitizedSupabaseError(
+        "booking notification row lookup failed",
+        idempotencyKey,
+        fetchError,
+      );
     }
     return;
   }
@@ -57,9 +76,10 @@ export async function maybeSendBookingNotification(
   );
 
   if (claimError) {
-    console.error(
+    logSanitizedSupabaseError(
       "booking notification claim failed",
       bookingRow.request_reference,
+      claimError,
     );
     return;
   }
@@ -118,7 +138,11 @@ async function finalizeNotificationAttempt(
     .select("id");
 
   if (updateError) {
-    console.error("booking notification finalization skipped", requestReference);
+    logSanitizedSupabaseError(
+      "booking notification finalization skipped",
+      requestReference,
+      updateError,
+    );
     return;
   }
 
