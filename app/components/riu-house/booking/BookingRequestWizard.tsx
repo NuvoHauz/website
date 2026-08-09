@@ -66,6 +66,8 @@ export default function BookingRequestWizard({
   const idempotencyKeyRef = useRef(crypto.randomUUID());
   const confirmationPanelRef = useRef<HTMLDivElement>(null);
   const confirmationHeadingRef = useRef<HTMLHeadingElement>(null);
+  const guestInformationStepRef = useRef<HTMLDivElement>(null);
+  const shouldScrollToGuestStepRef = useRef(false);
 
   useEffect(() => {
     if (!submitted || !reference) return;
@@ -94,6 +96,35 @@ export default function BookingRequestWizard({
 
     return () => cancelAnimationFrame(rafId);
   }, [reference, submitted]);
+
+  useEffect(() => {
+    if (step !== 2 || !shouldScrollToGuestStepRef.current) return;
+
+    shouldScrollToGuestStepRef.current = false;
+
+    let rafId = 0;
+
+    const scrollToGuestInformationStep = () => {
+      const panel = guestInformationStepRef.current;
+      if (!panel) return;
+
+      const headerHeight =
+        document.querySelector("header")?.getBoundingClientRect().height ?? 0;
+      const stepTop =
+        panel.getBoundingClientRect().top + window.scrollY;
+
+      window.scrollTo({
+        top: Math.max(0, stepTop - headerHeight - 16),
+        behavior: "smooth",
+      });
+    };
+
+    rafId = requestAnimationFrame(() => {
+      requestAnimationFrame(scrollToGuestInformationStep);
+    });
+
+    return () => cancelAnimationFrame(rafId);
+  }, [step]);
 
   const {
     blocks: blockedRanges,
@@ -195,6 +226,10 @@ export default function BookingRequestWizard({
     const nextErrors = validateStep1();
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length === 0) {
+      shouldScrollToGuestStepRef.current = true;
+      if (document.activeElement instanceof HTMLElement) {
+        document.activeElement.blur();
+      }
       setStep(2);
     }
   };
@@ -339,12 +374,13 @@ export default function BookingRequestWizard({
 
   return (
     <div className="rounded-2xl border border-[#111111]/10 bg-white p-6 sm:p-8">
-      <p className="text-xs uppercase tracking-[0.25em] text-[#C69C6D]">{stepLabel}</p>
-      <h3 className="mt-2 font-serif text-2xl font-light tracking-tight text-[#111111] sm:text-3xl">
-        {step === 1 ? bt.step1Title : bt.step2Title}
-      </h3>
-
       {step === 1 ? (
+        <>
+          <p className="text-xs uppercase tracking-[0.25em] text-[#C69C6D]">{stepLabel}</p>
+          <h3 className="mt-2 font-serif text-2xl font-light tracking-tight text-[#111111] sm:text-3xl">
+            {bt.step1Title}
+          </h3>
+
         <div className="mt-8 space-y-8">
           <AvailabilityCalendar
             bt={bt}
@@ -489,7 +525,14 @@ export default function BookingRequestWizard({
             {bt.requestDatesButton}
           </button>
         </div>
+        </>
       ) : (
+        <div ref={guestInformationStepRef}>
+          <p className="text-xs uppercase tracking-[0.25em] text-[#C69C6D]">{stepLabel}</p>
+          <h3 className="mt-2 font-serif text-2xl font-light tracking-tight text-[#111111] sm:text-3xl">
+            {bt.step2Title}
+          </h3>
+
         <div className="mt-8 space-y-6">
           <div className="rounded-xl bg-[#F8F6F2] px-4 py-3 text-sm text-[#111111]/70">
             {checkIn && checkOut && (
@@ -723,6 +766,7 @@ export default function BookingRequestWizard({
               {isSubmitting ? bt.submitting : bt.sendRequestButton}
             </button>
           </div>
+        </div>
         </div>
       )}
     </div>
