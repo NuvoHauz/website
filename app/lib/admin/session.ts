@@ -2,6 +2,7 @@ import "server-only";
 
 import { createHmac, timingSafeEqual } from "node:crypto";
 import { cookies } from "next/headers";
+import { readServerEnv } from "../server-env";
 import type { AdminSessionPayload, OwnerName } from "./reservation-types";
 import { OWNER_NAMES } from "./reservation-types";
 
@@ -20,7 +21,7 @@ function normalizeEnvValue(value: string): string {
 }
 
 function getSessionSecret(): string {
-  const secret = normalizeEnvValue(process.env.OWNER_SESSION_SECRET ?? "");
+  const secret = normalizeEnvValue(readServerEnv("OWNER_SESSION_SECRET"));
   if (!secret || secret.length < 32) {
     throw new AdminAuthConfigError(
       "OWNER_SESSION_SECRET is missing or too short in the server environment (minimum 32 characters).",
@@ -30,7 +31,7 @@ function getSessionSecret(): string {
 }
 
 function getDashboardPassword(): string {
-  const password = normalizeEnvValue(process.env.OWNER_DASHBOARD_PASSWORD ?? "");
+  const password = normalizeEnvValue(readServerEnv("OWNER_DASHBOARD_PASSWORD"));
   if (!password || password.length < 12) {
     throw new AdminAuthConfigError(
       "OWNER_DASHBOARD_PASSWORD is missing or too short in the server environment (minimum 12 characters).",
@@ -40,7 +41,7 @@ function getDashboardPassword(): string {
 }
 
 export function isPreviewModeEnabled(): boolean {
-  return process.env.NUVOHAUZ_PREVIEW_MODE === "1";
+  return readServerEnv("NUVOHAUZ_PREVIEW_MODE") === "1";
 }
 
 export function constantTimeEqual(left: string, right: string): boolean {

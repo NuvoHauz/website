@@ -3,6 +3,7 @@ import {
   ADMIN_NO_STORE_HEADERS,
   isAllowedAdminOrigin,
 } from "../../../lib/admin/auth";
+import { readServerEnv } from "../../../lib/server-env";
 import {
   AdminAuthConfigError,
   assertOwnerName,
@@ -17,12 +18,8 @@ import {
 export const dynamic = "force-dynamic";
 
 function readAdminEnvStatus() {
-  const password = (process.env.OWNER_DASHBOARD_PASSWORD ?? "")
-    .replace(/\r/g, "")
-    .trim();
-  const secret = (process.env.OWNER_SESSION_SECRET ?? "")
-    .replace(/\r/g, "")
-    .trim();
+  const password = readServerEnv("OWNER_DASHBOARD_PASSWORD");
+  const secret = readServerEnv("OWNER_SESSION_SECRET");
 
   return {
     dashboardPassword: password.length >= 12,
