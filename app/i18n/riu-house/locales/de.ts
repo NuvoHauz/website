@@ -5,7 +5,7 @@ const de: RiuHouseTranslations = {
   tagline: "Ein modernes tropisches Refugium am Fluss",
   location: "Paquera, Puntarenas, Costa Rica",
   metaDescription:
-    "Riu House ist ein modernes tropisches Refugium in Paquera, Costa Rica, mit drei Queen-Suiten, gemeinsamem Swimmingpool und Blick auf den Fluss. Erkundigen Sie sich direkt bei NuvoHauz.",
+    "Riu House ist ein modernes tropisches Refugium in Paquera, Costa Rica, mit drei Suiten: King-Bett im Hauptschlafzimmer und Queen-Betten in den beiden anderen Schlafzimmern, gemeinsamem Swimmingpool und Blick auf den Fluss. Erkundigen Sie sich direkt bei NuvoHauz.",
   stats: {
     bedrooms: "3 Schlafzimmer",
     bathrooms: "4 Badezimmer",
@@ -21,14 +21,14 @@ const de: RiuHouseTranslations = {
   },
   description: `Willkommen in Riu House, einem modernen tropischen Refugium inmitten der natürlichen Schönheit von Paquera, Costa Rica. Das Haus wurde für Familien und Gruppen konzipiert, die gemeinsam reisen, und verbindet zeitgenössische Architektur, warme individuelle Ausstattung und komfortables Indoor-Outdoor-Wohnen.
 
-Riu House verfügt über drei private Queen-Suiten. Jedes Schlafzimmer hat ein eigenes En-Suite-Badezimmer, individuelle Klimaanlage, Fernseher, eingebauten Stauraum, Ankleidebereich und direkten Zugang zu einer überdachten Terrasse oder einem Balkon. Das Haus bietet bequem Platz für sechs Gäste, mit Möglichkeit für bis zu zwei zusätzliche Gäste auf Luftmatratzen nach vorheriger Genehmigung.
+Riu House verfügt über drei private Suiten mit einem King-Bett im Hauptschlafzimmer und Queen-Betten in den beiden anderen Schlafzimmern. Jedes Schlafzimmer hat ein eigenes En-Suite-Badezimmer, individuelle Klimaanlage, Fernseher, eingebauten Stauraum, Ankleidebereich und direkten Zugang zu einer überdachten Terrasse oder einem Balkon. Das Haus bietet bequem Platz für sechs Gäste, mit Möglichkeit für bis zu zwei zusätzliche Gäste auf Luftmatratzen nach vorheriger Genehmigung.
 
 Der offene Wohnbereich bietet große Glastüren, viel natürliches Licht, einen großen Fernseher, bequeme Sitzgelegenheiten und einen friedlichen Blick auf die tropische Landschaft. Gäste können Mahlzeiten in der voll ausgestatteten Küche zubereiten, sich an der großen Kücheninsel versammeln oder im Innendining-Bereich gemeinsam speisen.
 
 Im Außenbereich können Gäste in tropischen Gärten entspannen, die überdachten Terrassen genießen und den Swimmingpool nutzen, der mit den beiden benachbarten NuvoHauz-Cabins geteilt wird. Riu House bietet eine ruhige Umgebung für Gäste, die Komfort, Privatsphäre und eine engere Verbindung zur Natur Costa Ricas suchen.`,
   amenities: [
     "WLAN",
-    "Drei Queen-Suiten",
+    "Drei Suiten: King-Bett im Hauptschlafzimmer, Queen-Betten in den anderen beiden",
     "Vier Badezimmer",
     "Privates En-Suite-Badezimmer für jedes Schlafzimmer",
     "Individuelle Klimaanlage in jedem Schlafzimmer",
@@ -50,7 +50,7 @@ Im Außenbereich können Gäste in tropischen Gärten entspannen, die überdacht
     "Bettwäsche und Handtücher",
   ],
   sleeping: [
-    "Drei private Queen-Suiten, jeweils mit En-Suite-Badezimmer, individueller Klimaanlage, Fernseher, eingebautem Stauraum, Ankleidebereich und Terrassen- oder Balkonzugang.",
+    "Drei private Suiten mit King-Bett im Hauptschlafzimmer und Queen-Betten in den beiden anderen Schlafzimmern, jeweils mit En-Suite-Badezimmer, individueller Klimaanlage, Fernseher, eingebautem Stauraum, Ankleidebereich und Terrassen- oder Balkonzugang.",
     "Standardbelegung: 6 Gäste in den drei Suiten.",
     "Maximale Belegung: 8 Gäste nach vorheriger Genehmigung. Gäste 7 und 8 können Luftmatratzen nutzen, die vom Gastgeber bereitgestellt werden.",
   ],
@@ -80,6 +80,7 @@ Im Außenbereich können Gäste in tropischen Gärten entspannen, die überdacht
     poolOutdoor: "Pool und Außenbereich",
     livingArea: "Wohnbereich",
     kitchenDining: "Küche und Essbereich",
+    downstairsFullBathroom: "Vollständiges Badezimmer im Erdgeschoss",
     mainBedroomBathroom: "Hauptschlafzimmer und Privates Badezimmer",
     backBedroomBathroom: "Hinteres Schlafzimmer und Privates Badezimmer",
     frontBedroomBathroom: "Vorderes Schlafzimmer und Privates Badezimmer",

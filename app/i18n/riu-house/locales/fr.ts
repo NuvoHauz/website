@@ -5,7 +5,7 @@ const fr: RiuHouseTranslations = {
   tagline: "Une retraite tropicale moderne au bord de la rivière",
   location: "Paquera, Puntarenas, Costa Rica",
   metaDescription:
-    "Riu House est une retraite tropicale moderne à Paquera, Costa Rica, avec trois suites queen, une piscine partagée et des vues sur la rivière. Renseignez-vous directement auprès de NuvoHauz.",
+    "Riu House est une retraite tropicale moderne à Paquera, Costa Rica, avec trois suites : lit king dans la chambre principale et lits queen dans les deux autres chambres, piscine partagée et vues sur la rivière. Renseignez-vous directement auprès de NuvoHauz.",
   stats: {
     bedrooms: "3 chambres",
     bathrooms: "4 salles de bain",
@@ -21,14 +21,14 @@ const fr: RiuHouseTranslations = {
   },
   description: `Bienvenue à Riu House, une retraite tropicale moderne entourée par la beauté naturelle de Paquera, Costa Rica. Conçue pour les familles et les groupes voyageant ensemble, la maison allie architecture contemporaine, finitions chaleureuses sur mesure et un confortable art de vivre intérieur-extérieur.
 
-Riu House comprend trois suites privées avec lits queen. Chaque chambre dispose de sa salle de bain attenante, climatisation individuelle, télévision, rangements intégrés, coiffeuse et accès direct à une terrasse couverte ou un balcon. La maison accueille confortablement six voyageurs, avec la possibilité d'accueillir jusqu'à deux voyageurs supplémentaires sur matelas gonflables avec approbation préalable.
+Riu House comprend trois suites privées, avec un lit king dans la chambre principale et des lits queen dans les deux autres chambres. Chaque chambre dispose de sa salle de bain attenante, climatisation individuelle, télévision, rangements intégrés, coiffeuse et accès direct à une terrasse couverte ou un balcon. La maison accueille confortablement six voyageurs, avec la possibilité d'accueillir jusqu'à deux voyageurs supplémentaires sur matelas gonflables avec approbation préalable.
 
 Le salon ouvert bénéficie de grandes portes vitrées, d'une lumière naturelle abondante, d'une grande télévision, de sièges confortables et de vues paisibles sur le paysage tropical environnant. Les voyageurs peuvent préparer leurs repas dans la cuisine entièrement équipée, se retrouver autour du grand îlot ou dîner dans l'espace repas intérieur.
 
 À l'extérieur, les voyageurs peuvent se détendre parmi les jardins tropicaux, profiter des terrasses couvertes et utiliser la piscine partagée avec les deux cabanes voisines de NuvoHauz. Riu House offre un cadre paisible pour ceux qui recherchent confort, intimité et un lien plus proche avec la nature du Costa Rica.`,
   amenities: [
     "Wi-Fi",
-    "Trois suites avec lits queen",
+    "Trois suites : lit king dans la chambre principale et lits queen dans les deux autres",
     "Quatre salles de bain",
     "Salle de bain attenante privée pour chaque chambre",
     "Climatisation individuelle dans chaque chambre",
@@ -50,7 +50,7 @@ Le salon ouvert bénéficie de grandes portes vitrées, d'une lumière naturelle
     "Linge de lit et serviettes de bain",
   ],
   sleeping: [
-    "Trois suites privées avec lits queen, chacune avec salle de bain attenante, climatisation individuelle, télévision, rangements intégrés, coiffeuse et accès terrasse ou balcon.",
+    "Trois suites privées avec un lit king dans la chambre principale et des lits queen dans les deux autres chambres, chacune avec salle de bain attenante, climatisation individuelle, télévision, rangements intégrés, coiffeuse et accès terrasse ou balcon.",
     "Occupation standard : 6 voyageurs répartis dans les trois suites.",
     "Occupation maximale : 8 voyageurs avec approbation préalable. Les voyageurs 7 et 8 peuvent utiliser des matelas gonflables préparés par l'hôte.",
   ],
@@ -80,6 +80,7 @@ Le salon ouvert bénéficie de grandes portes vitrées, d'une lumière naturelle
     poolOutdoor: "Piscine et Espace Extérieur",
     livingArea: "Salon",
     kitchenDining: "Cuisine et Salle à Manger",
+    downstairsFullBathroom: "Salle de bain complète au rez-de-chaussée",
     mainBedroomBathroom: "Chambre Principale et Salle de Bain Privée",
     backBedroomBathroom: "Chambre Arrière et Salle de Bain Privée",
     frontBedroomBathroom: "Chambre Avant et Salle de Bain Privée",

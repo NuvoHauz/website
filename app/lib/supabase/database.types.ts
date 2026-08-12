@@ -7,6 +7,9 @@ export interface AvailabilityBlockRow {
   block_type: string;
   status: string;
   internal_note: string | null;
+  booking_request_id: string | null;
+  block_expires_at: string | null;
+  created_by: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -43,6 +46,9 @@ export interface BookingRequestRow extends BookingRequestInsert {
   status: string;
   created_at: string;
   updated_at: string;
+  hold_expires_at: string | null;
+  reviewed_at: string | null;
+  reviewed_by: string | null;
   notification_status: BookingNotificationStatus;
   notification_sent_at: string | null;
   notification_claimed_at: string | null;

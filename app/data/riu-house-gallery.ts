@@ -10,6 +10,7 @@ export type RiuHouseGallerySectionKey =
   | "poolOutdoor"
   | "livingArea"
   | "kitchenDining"
+  | "downstairsFullBathroom"
   | "mainBedroomBathroom"
   | "backBedroomBathroom"
   | "frontBedroomBathroom";
@@ -235,21 +236,26 @@ export const riuHouseGallerySections: RiuHouseGallerySection[] = [
         width: 5868,
         height: 3917,
       },
+    ],
+  },
+  {
+    labelKey: "downstairsFullBathroom",
+    images: [
       {
         src: `${GALLERY}/dwnbath.jpg`,
-        alt: "Main-floor bathroom with vanity near the living areas",
+        alt: "Ground-floor full bathroom with teal herringbone tile",
         width: 4016,
         height: 6016,
       },
       {
         src: `${GALLERY}/dwnbath2.jpg`,
-        alt: "Main-floor bathroom shower and vanity",
+        alt: "Ground-floor full bathroom shower and vanity with teal herringbone tile",
         width: 4016,
         height: 6016,
       },
       {
         src: `${GALLERY}/dwnbath3.jpg`,
-        alt: "Main-floor bathroom with modern fixtures",
+        alt: "Ground-floor full bathroom with teal herringbone tile and modern fixtures",
         width: 3799,
         height: 5691,
       },
@@ -260,7 +266,7 @@ export const riuHouseGallerySections: RiuHouseGallerySection[] = [
     images: [
       {
         src: `${GALLERY}/MainBed.jpg`,
-        alt: "Main bedroom queen suite with warm custom finishes",
+        alt: "Main bedroom king suite with warm custom finishes",
         width: 6016,
         height: 4016,
       },
@@ -278,7 +284,7 @@ export const riuHouseGallerySections: RiuHouseGallerySection[] = [
       },
       {
         src: `${GALLERY}/mainbed4.jpg`,
-        alt: "Main bedroom with queen bed and private suite details",
+        alt: "Main bedroom with king bed and private suite details",
         width: 6016,
         height: 4016,
       },

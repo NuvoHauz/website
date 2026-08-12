@@ -30,6 +30,7 @@ export interface RiuHouseTranslations {
     poolOutdoor: string;
     livingArea: string;
     kitchenDining: string;
+    downstairsFullBathroom: string;
     mainBedroomBathroom: string;
     backBedroomBathroom: string;
     frontBedroomBathroom: string;

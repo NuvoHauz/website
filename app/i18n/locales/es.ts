@@ -20,7 +20,7 @@ const es: Translations = {
   },
   collection: {
     label: "Nuestra Colección",
-    heading: "Estancias Curadas, Momentos Inolvidables",
+    heading: "Espacios con alma, momentos inolvidables",
   },
   destinations: {
     costaRica: "Costa Rica",

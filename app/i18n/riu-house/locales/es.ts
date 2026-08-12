@@ -5,7 +5,7 @@ const es: RiuHouseTranslations = {
   tagline: "Un refugio tropical moderno junto al río",
   location: "Paquera, Puntarenas, Costa Rica",
   metaDescription:
-    "Riu House es un refugio tropical moderno en Paquera, Costa Rica, con tres suites con camas queen, piscina compartida y vistas al río. Consulte disponibilidad directamente con NuvoHauz.",
+    "Riu House es un refugio tropical moderno en Paquera, Costa Rica, con tres suites: cama king en el dormitorio principal y camas queen en las otras dos habitaciones, piscina compartida y vistas al río. Consulte disponibilidad directamente con NuvoHauz.",
   stats: {
     bedrooms: "3 habitaciones",
     bathrooms: "4 baños",
@@ -21,14 +21,14 @@ const es: RiuHouseTranslations = {
   },
   description: `Bienvenido a Riu House, un refugio tropical moderno rodeado de la belleza natural de Paquera, Costa Rica. Diseñada para familias y grupos que viajan juntos, la casa combina arquitectura contemporánea, acabados cálidos a medida y una cómoda vida interior-exterior.
 
-Riu House cuenta con tres suites privadas con camas queen. Cada habitación tiene su propio baño en suite, aire acondicionado individual, televisión, almacenamiento empotrado, área de tocador y acceso directo a una terraza cubierta o balcón. La casa aloja cómodamente a seis huéspedes, con espacio para hasta dos huéspedes adicionales en colchones inflables con aprobación previa.
+Riu House cuenta con tres suites privadas, con cama king en el dormitorio principal y camas queen en las otras dos habitaciones. Cada habitación tiene su propio baño en suite, aire acondicionado individual, televisión, almacenamiento empotrado, área de tocador y acceso directo a una terraza cubierta o balcón. La casa aloja cómodamente a seis huéspedes, con espacio para hasta dos huéspedes adicionales en colchones inflables con aprobación previa.
 
 La sala de concepto abierto cuenta con amplias puertas de vidrio, abundante luz natural, una televisión grande, asientos cómodos y vistas tranquilas del paisaje tropical circundante. Los huéspedes pueden preparar comidas en la cocina totalmente equipada, reunirse alrededor de la isla central o disfrutar de las comidas en el comedor interior.
 
 Al aire libre, los huéspedes pueden relajarse entre jardines tropicales, disfrutar de las terrazas cubiertas y usar la piscina compartida con las dos cabañas vecinas de NuvoHauz. Riu House ofrece un entorno tranquilo para quienes buscan comodidad, privacidad y una conexión más cercana con la naturaleza de Costa Rica.`,
   amenities: [
     "Wi-Fi",
-    "Tres suites con camas queen",
+    "Tres suites: cama king en dormitorio principal y camas queen en las otras dos",
     "Cuatro baños",
     "Baño en suite privado en cada habitación",
     "Aire acondicionado individual en cada habitación",
@@ -50,7 +50,7 @@ Al aire libre, los huéspedes pueden relajarse entre jardines tropicales, disfru
     "Ropa de cama y toallas de baño",
   ],
   sleeping: [
-    "Tres suites privadas con camas queen, cada una con baño en suite, aire acondicionado individual, televisión, almacenamiento empotrado, área de tocador y acceso a terraza o balcón.",
+    "Tres suites privadas con cama king en el dormitorio principal y camas queen en las otras dos habitaciones, cada una con baño en suite, aire acondicionado individual, televisión, almacenamiento empotrado, área de tocador y acceso a terraza o balcón.",
     "Ocupación estándar: 6 huéspedes en las tres suites.",
     "Ocupación máxima: 8 huéspedes con aprobación previa. Los huéspedes 7 y 8 pueden usar colchones inflables preparados por el anfitrión.",
   ],
@@ -62,7 +62,7 @@ Al aire libre, los huéspedes pueden relajarse entre jardines tropicales, disfru
     "Prohibido fumar",
     "No se permiten fiestas ni eventos",
     "Los visitantes externos requieren aprobación previa del anfitrión",
-    "Los visitantes no pueden pernoctar a menos que se agreguen a la reservación",
+    "Los visitantes que deseen pasar la noche deben añadirse previamente a la reservación",
     "Se prohíben huéspedes no registrados durante la noche",
     "No se puede exceder la ocupación aprobada de la propiedad",
     "La piscina y las instalaciones de lavandería se comparten con las dos cabañas vecinas",
@@ -79,9 +79,10 @@ Al aire libre, los huéspedes pueden relajarse entre jardines tropicales, disfru
     poolOutdoor: "Piscina y Área Exterior",
     livingArea: "Espacios",
     kitchenDining: "Cocina y Comedor",
+    downstairsFullBathroom: "Baño completo en planta baja",
     mainBedroomBathroom: "Dormitorio Principal y Baño Privado",
-    backBedroomBathroom: "Habitación y Baño Privado",
-    frontBedroomBathroom: "Habitación y Baño Privado",
+    backBedroomBathroom: "Habitación 2 y Baño Privado",
+    frontBedroomBathroom: "Habitación 3 y Baño Privado",
   },
   backToCollection: "Volver a Nuestra Colección",
 };

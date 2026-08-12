@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useLanguage } from "../context/LanguageContext";
 import {
+  riuHouseGallery,
   riuHouseGallerySections,
   riuHouseHero,
   type RiuHouseImage,
@@ -45,9 +46,30 @@ function BulletList({ items }: { items: string[] }) {
 export default function RiuHousePage() {
   const { locale, t } = useLanguage();
   const rt = useMemo(() => getRiuHouseTranslations(locale), [locale]);
-  const [lightboxImage, setLightboxImage] = useState<RiuHouseImage | null>(null);
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const lightboxImage =
+    lightboxIndex !== null ? riuHouseGallery[lightboxIndex] ?? null : null;
 
-  const closeLightbox = useCallback(() => setLightboxImage(null), []);
+  const closeLightbox = useCallback(() => setLightboxIndex(null), []);
+
+  const openLightbox = useCallback((image: RiuHouseImage) => {
+    const index = riuHouseGallery.findIndex((item) => item.src === image.src);
+    setLightboxIndex(index >= 0 ? index : 0);
+  }, []);
+
+  const showPreviousImage = useCallback(() => {
+    setLightboxIndex((current) => {
+      if (current === null || riuHouseGallery.length === 0) return null;
+      return (current - 1 + riuHouseGallery.length) % riuHouseGallery.length;
+    });
+  }, []);
+
+  const showNextImage = useCallback(() => {
+    setLightboxIndex((current) => {
+      if (current === null || riuHouseGallery.length === 0) return null;
+      return (current + 1) % riuHouseGallery.length;
+    });
+  }, []);
 
   const navLinks = [
     { label: t.nav.stays, href: "/#stays" },
@@ -69,11 +91,17 @@ export default function RiuHousePage() {
   }, [rt.fullName]);
 
   useEffect(() => {
-    if (!lightboxImage) return;
+    if (lightboxIndex === null) return;
 
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         closeLightbox();
+      } else if (event.key === "ArrowLeft") {
+        event.preventDefault();
+        showPreviousImage();
+      } else if (event.key === "ArrowRight") {
+        event.preventDefault();
+        showNextImage();
       }
     };
 
@@ -84,7 +112,7 @@ export default function RiuHousePage() {
       document.body.style.overflow = "";
       window.removeEventListener("keydown", onKeyDown);
     };
-  }, [lightboxImage, closeLightbox]);
+  }, [lightboxIndex, closeLightbox, showPreviousImage, showNextImage]);
 
   const whatsappHref = buildWhatsAppUrl(rt.whatsappMessage);
 
@@ -143,7 +171,7 @@ export default function RiuHousePage() {
                     <button
                       key={image.src}
                       type="button"
-                      onClick={() => setLightboxImage(image)}
+                      onClick={() => openLightbox(image)}
                       aria-label={`Enlarge photo: ${image.alt}`}
                       className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl shadow-md transition-shadow duration-300 hover:shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C69C6D]"
                     >
@@ -163,7 +191,7 @@ export default function RiuHousePage() {
         </section>
       )}
 
-      {lightboxImage && (
+      {lightboxImage && lightboxIndex !== null && (
         <div
           className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 p-4 sm:p-8"
           role="dialog"
@@ -175,13 +203,60 @@ export default function RiuHousePage() {
             type="button"
             onClick={closeLightbox}
             aria-label="Close enlarged photo"
-            className="absolute right-4 top-4 inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full bg-white/10 text-2xl leading-none text-white transition-colors hover:bg-white/20 sm:right-8 sm:top-8"
+            className="absolute right-4 top-4 z-10 inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full bg-white/10 text-2xl leading-none text-white transition-colors hover:bg-white/20 sm:right-8 sm:top-8"
           >
             &times;
           </button>
+
+          {riuHouseGallery.length > 1 ? (
+            <>
+              <button
+                type="button"
+                onClick={(event) => {
+                  event.stopPropagation();
+                  showPreviousImage();
+                }}
+                aria-label="Previous photo"
+                className="absolute left-2 top-1/2 z-10 inline-flex min-h-[44px] min-w-[44px] -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-3xl leading-none text-white transition-colors hover:bg-white/20 sm:left-6"
+              >
+                &#8249;
+              </button>
+              <button
+                type="button"
+                onClick={(event) => {
+                  event.stopPropagation();
+                  showNextImage();
+                }}
+                aria-label="Next photo"
+                className="absolute right-2 top-1/2 z-10 inline-flex min-h-[44px] min-w-[44px] -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-3xl leading-none text-white transition-colors hover:bg-white/20 sm:right-6"
+              >
+                &#8250;
+              </button>
+            </>
+          ) : null}
+
           <div
             className="relative max-h-[90vh] max-w-[min(90vw,1200px)]"
             onClick={(event) => event.stopPropagation()}
+            onTouchStart={(event) => {
+              const touch = event.touches[0];
+              if (!touch) return;
+              event.currentTarget.dataset.touchStartX = String(touch.clientX);
+            }}
+            onTouchEnd={(event) => {
+              const startX = Number(event.currentTarget.dataset.touchStartX);
+              const touch = event.changedTouches[0];
+              if (!touch || Number.isNaN(startX)) return;
+
+              const deltaX = touch.clientX - startX;
+              if (Math.abs(deltaX) < 48) return;
+
+              if (deltaX > 0) {
+                showPreviousImage();
+              } else {
+                showNextImage();
+              }
+            }}
           >
             <Image
               src={lightboxImage.src}
@@ -189,8 +264,11 @@ export default function RiuHousePage() {
               width={lightboxImage.width}
               height={lightboxImage.height}
               sizes="90vw"
-              className="h-auto max-h-[90vh] w-auto max-w-full object-contain"
+              className="h-auto max-h-[85vh] w-auto max-w-full object-contain"
             />
+            <p className="mt-3 text-center text-sm text-white/70">
+              {lightboxIndex + 1} / {riuHouseGallery.length}
+            </p>
           </div>
         </div>
       )}

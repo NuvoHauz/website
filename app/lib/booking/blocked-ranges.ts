@@ -2,6 +2,7 @@ import { compareIsoDates } from "./costa-rica-dates";
 
 export const RIU_HOUSE_PROPERTY_SLUG = "riu-house";
 export const ACTIVE_BLOCK_STATUS = "active";
+export const INACTIVE_BLOCK_STATUS = "inactive";
 export const AVAILABILITY_HORIZON_DAYS = 90;
 
 export interface BlockedRange {

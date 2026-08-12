@@ -5,7 +5,7 @@ const en: RiuHouseTranslations = {
   tagline: "A modern tropical retreat by the river",
   location: "Paquera, Puntarenas, Costa Rica",
   metaDescription:
-    "Riu House is a modern tropical retreat in Paquera, Costa Rica with three queen-bedroom suites, a shared swimming pool, and river-facing views. Inquire directly with NuvoHauz.",
+    "Riu House is a modern tropical retreat in Paquera, Costa Rica with three bedroom suites—a king bed in the main suite and queen beds in the other two—a shared swimming pool, and river-facing views. Inquire directly with NuvoHauz.",
   stats: {
     bedrooms: "3 bedrooms",
     bathrooms: "4 bathrooms",
@@ -21,14 +21,14 @@ const en: RiuHouseTranslations = {
   },
   description: `Welcome to Riu House, a modern tropical retreat surrounded by the natural beauty of Paquera, Costa Rica. Designed for families and groups traveling together, the home combines contemporary architecture, warm custom finishes, and comfortable indoor-outdoor living.
 
-Riu House features three private queen-bedroom suites. Each bedroom has its own en-suite bathroom, individual air conditioning, television, built-in storage, vanity area, and direct access to a covered terrace or balcony. The home accommodates six guests comfortably, with space for up to two additional guests on inflatable mattresses with advance approval.
+Riu House features three private bedroom suites, with a king bed in the main suite and queen beds in the other two. Each bedroom has its own en-suite bathroom, individual air conditioning, television, built-in storage, vanity area, and direct access to a covered terrace or balcony. The home accommodates six guests comfortably, with space for up to two additional guests on inflatable mattresses with advance approval.
 
 The open-concept living area features expansive glass doors, abundant natural light, a large television, comfortable seating, and peaceful views of the surrounding tropical landscape. Guests can prepare meals in the fully equipped kitchen, gather around the large island, or enjoy meals together in the indoor dining area.
 
 Outside, guests can relax among tropical gardens, enjoy the covered terraces, and use the swimming pool shared with the two neighboring NuvoHauz cabins. Riu House offers a peaceful setting for guests seeking comfort, privacy, and a closer connection with Costa Rica's natural surroundings.`,
   amenities: [
     "Wi-Fi",
-    "Three queen-bedroom suites",
+    "Three bedroom suites: king in main, queen in other two",
     "Four bathrooms",
     "Private en-suite bathroom for each bedroom",
     "Individual bedroom air conditioning",
@@ -50,7 +50,7 @@ Outside, guests can relax among tropical gardens, enjoy the covered terraces, an
     "Bed linens and bath towels",
   ],
   sleeping: [
-    "Three private queen-bedroom suites, each with an en-suite bathroom, individual air conditioning, television, built-in storage, vanity area, and terrace or balcony access.",
+    "Three private bedroom suites with a king bed in the main suite and queen beds in the other two, each with an en-suite bathroom, individual air conditioning, television, built-in storage, vanity area, and terrace or balcony access.",
     "Standard occupancy: 6 guests across the three suites.",
     "Maximum occupancy: 8 guests with advance approval. Guests 7 and 8 may use inflatable mattresses arranged by the host.",
   ],
@@ -79,6 +79,7 @@ Outside, guests can relax among tropical gardens, enjoy the covered terraces, an
     poolOutdoor: "Pool & Outdoor Area",
     livingArea: "Living Area",
     kitchenDining: "Kitchen & Dining Area",
+    downstairsFullBathroom: "Full Bathroom on Ground Floor",
     mainBedroomBathroom: "Main Bedroom & Private Bathroom",
     backBedroomBathroom: "Back Bedroom & Private Bathroom",
     frontBedroomBathroom: "Front Bedroom & Private Bathroom",
