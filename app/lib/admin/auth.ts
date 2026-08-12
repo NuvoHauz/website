@@ -12,6 +12,10 @@ export async function requireOwnerSession(): Promise<AdminSessionPayload> {
   return session;
 }
 
+function normalizeSiteHost(host: string): string {
+  return host.trim().toLowerCase().replace(/^www\./, "");
+}
+
 export function isAllowedAdminOrigin(request: NextRequest): boolean {
   const origin = request.headers.get("origin");
   if (!origin) return true;
@@ -19,7 +23,9 @@ export function isAllowedAdminOrigin(request: NextRequest): boolean {
   if (!host) return false;
 
   try {
-    return new URL(origin).host === host;
+    return (
+      normalizeSiteHost(new URL(origin).host) === normalizeSiteHost(host)
+    );
   } catch {
     return false;
   }

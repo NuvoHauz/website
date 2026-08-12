@@ -23,7 +23,7 @@ function getSessionSecret(): string {
   const secret = normalizeEnvValue(process.env.OWNER_SESSION_SECRET ?? "");
   if (!secret || secret.length < 32) {
     throw new AdminAuthConfigError(
-      "OWNER_SESSION_SECRET must be set locally with at least 32 characters.",
+      "OWNER_SESSION_SECRET is missing or too short in the server environment (minimum 32 characters).",
     );
   }
   return secret;
@@ -33,7 +33,7 @@ function getDashboardPassword(): string {
   const password = normalizeEnvValue(process.env.OWNER_DASHBOARD_PASSWORD ?? "");
   if (!password || password.length < 12) {
     throw new AdminAuthConfigError(
-      "OWNER_DASHBOARD_PASSWORD must be set locally with at least 12 characters.",
+      "OWNER_DASHBOARD_PASSWORD is missing or too short in the server environment (minimum 12 characters).",
     );
   }
   return password;

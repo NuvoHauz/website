@@ -16,6 +16,20 @@ import {
 
 export const dynamic = "force-dynamic";
 
+function readAdminEnvStatus() {
+  const password = (process.env.OWNER_DASHBOARD_PASSWORD ?? "")
+    .replace(/\r/g, "")
+    .trim();
+  const secret = (process.env.OWNER_SESSION_SECRET ?? "")
+    .replace(/\r/g, "")
+    .trim();
+
+  return {
+    dashboardPassword: password.length >= 12,
+    sessionSecret: secret.length >= 32,
+  };
+}
+
 function configErrorResponse(error: AdminAuthConfigError) {
   return NextResponse.json(
     { error: "admin_not_configured", message: error.message },
@@ -24,18 +38,33 @@ function configErrorResponse(error: AdminAuthConfigError) {
 }
 
 export async function GET() {
+  const configured = readAdminEnvStatus();
+
   try {
     const session = await getOwnerSession();
     return NextResponse.json(
-      { authenticated: Boolean(session), owner: session?.owner ?? null },
+      {
+        authenticated: Boolean(session),
+        owner: session?.owner ?? null,
+        configured,
+      },
       { headers: ADMIN_NO_STORE_HEADERS },
     );
   } catch (error) {
     if (error instanceof AdminAuthConfigError) {
-      return configErrorResponse(error);
+      return NextResponse.json(
+        {
+          authenticated: false,
+          owner: null,
+          configured,
+          error: "admin_not_configured",
+          message: error.message,
+        },
+        { status: 503, headers: ADMIN_NO_STORE_HEADERS },
+      );
     }
     return NextResponse.json(
-      { error: "session_unavailable" },
+      { error: "session_unavailable", configured },
       { status: 503, headers: ADMIN_NO_STORE_HEADERS },
     );
   }
