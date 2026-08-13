@@ -24,6 +24,9 @@ function readAdminEnvStatus() {
   return {
     dashboardPassword: password.length >= 12,
     sessionSecret: secret.length >= 32,
+    ownerRelatedEnvKeys: Object.keys(process.env)
+      .filter((key) => /OWNER|NUVOHAUZ|DASHBOARD|SESSION_SECRET/i.test(key))
+      .sort(),
   };
 }
 
