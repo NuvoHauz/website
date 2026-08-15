@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Geist } from "next/font/google";
 import { LanguageProvider } from "./context/LanguageContext";
+import VercelAnalytics from "./components/VercelAnalytics";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -56,6 +57,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="min-h-full flex flex-col">
         <LanguageProvider>{children}</LanguageProvider>
+        <VercelAnalytics />
       </body>
     </html>
   );
