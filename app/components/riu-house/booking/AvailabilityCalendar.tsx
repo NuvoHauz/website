@@ -14,12 +14,16 @@ import {
 } from "../../../lib/booking/costa-rica-dates";
 import {
   canCheckInOn,
+  getEarliestCheckoutFromDays,
   getHorizonEnd,
+  getMinimumStayForCheckInFromDays,
+  isCheckoutAllowed,
   isDateSelectable,
   isPastDate,
-  isStayRangeValid,
   type BlockedRange,
 } from "../../../lib/booking/availability";
+import type { CalendarDayAvailability } from "../../../lib/booking/use-availability-blocks";
+import { formatCentsAsUsd } from "../../../lib/pricing/engine";
 
 type AvailabilityCalendarProps = {
   bt: RiuHouseBookingTranslations;
@@ -27,22 +31,33 @@ type AvailabilityCalendarProps = {
   checkIn: string;
   checkOut: string;
   blockedRanges: BlockedRange[];
+  calendarDays: CalendarDayAvailability[];
   loading?: boolean;
   loadError?: boolean;
   onRetry?: () => void;
   onSelectCheckIn: (date: string) => void;
   onSelectCheckOut: (date: string) => void;
-  onRangeError?: () => void;
+  onRangeError?: (message?: string) => void;
 };
+
+function getDayPricing(
+  iso: string,
+  calendarDays: CalendarDayAvailability[],
+): CalendarDayAvailability | undefined {
+  return calendarDays.find((day) => day.date === iso);
+}
 
 function getDayState(
   iso: string,
   checkIn: string,
   checkOut: string,
   blockedRanges: BlockedRange[],
-): "past" | "unavailable" | "available" | "selected" {
+  calendarDays: CalendarDayAvailability[],
+): "past" | "unavailable" | "available" | "selected" | "holiday" {
   if (isPastDate(iso)) return "past";
   if (!isDateSelectable(iso)) return "unavailable";
+
+  const dayPricing = getDayPricing(iso, calendarDays);
 
   if (
     checkIn &&
@@ -55,14 +70,19 @@ function getDayState(
   if (checkIn && !checkOut && iso === checkIn) return "selected";
 
   if (!checkIn) {
-    return canCheckInOn(iso, blockedRanges) ? "available" : "unavailable";
+    if (!canCheckInOn(iso, blockedRanges)) return "unavailable";
+    return dayPricing?.holidayName ? "holiday" : "available";
   }
 
   if (compareIsoDates(iso, checkIn) <= 0) {
     return canCheckInOn(iso, blockedRanges) ? "available" : "unavailable";
   }
 
-  return "available";
+  if (!isCheckoutAllowed(checkIn, iso, blockedRanges, calendarDays)) {
+    return "unavailable";
+  }
+
+  return dayPricing?.holidayName ? "holiday" : "available";
 }
 
 export default function AvailabilityCalendar({
@@ -71,6 +91,7 @@ export default function AvailabilityCalendar({
   checkIn,
   checkOut,
   blockedRanges,
+  calendarDays,
   loading = false,
   loadError = false,
   onRetry,
@@ -95,6 +116,19 @@ export default function AvailabilityCalendar({
   const canGoNext =
     compareIsoDates(getMonthStart(addMonthsToMonthStart(monthStart, 1)), horizonEnd) <= 0;
 
+  const minimumStayMessage = useMemo(() => {
+    if (!checkIn || checkOut) return null;
+    const minimumNights = getMinimumStayForCheckInFromDays(checkIn, calendarDays);
+    if (minimumNights <= 1) return null;
+
+    const weekday = getWeekdayIndex(checkIn);
+    if (weekday === 4) return bt.minimumStayThursday;
+    if (weekday === 5) return bt.minimumStayFriday;
+    if (weekday === 6) return bt.minimumStaySaturday;
+
+    return bt.minimumStayGeneric.replace("{nights}", String(minimumNights));
+  }, [bt, calendarDays, checkIn, checkOut]);
+
   const handleDayClick = useCallback(
     (iso: string) => {
       if (loading || loadError) return;
@@ -112,14 +146,25 @@ export default function AvailabilityCalendar({
         return;
       }
 
-      if (isStayRangeValid(checkIn, iso, blockedRanges)) {
+      if (isCheckoutAllowed(checkIn, iso, blockedRanges, calendarDays)) {
         onSelectCheckOut(iso);
       } else {
-        onRangeError?.();
+        const minimumNights = getMinimumStayForCheckInFromDays(checkIn, calendarDays);
+        if (minimumNights > 1) {
+          const weekday = getWeekdayIndex(checkIn);
+          if (weekday === 4) onRangeError?.(bt.minimumStayThursday);
+          else if (weekday === 5) onRangeError?.(bt.minimumStayFriday);
+          else if (weekday === 6) onRangeError?.(bt.minimumStaySaturday);
+          else onRangeError?.(bt.minimumStayGeneric.replace("{nights}", String(minimumNights)));
+        } else {
+          onRangeError?.();
+        }
       }
     },
     [
       blockedRanges,
+      bt,
+      calendarDays,
       checkIn,
       checkOut,
       loadError,
@@ -133,13 +178,18 @@ export default function AvailabilityCalendar({
   const dayButtons = useMemo(() => {
     const buttons = [];
     for (let i = 0; i < firstWeekday; i += 1) {
-      buttons.push(<div key={`pad-${i}`} aria-hidden className="h-10" />);
+      buttons.push(<div key={`pad-${i}`} aria-hidden className="h-12" />);
     }
     for (let day = 1; day <= daysInMonth; day += 1) {
       const iso = `${y}-${String(m).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
-      const state = getDayState(iso, checkIn, checkOut, blockedRanges);
+      const state = getDayState(iso, checkIn, checkOut, blockedRanges, calendarDays);
+      const dayPricing = getDayPricing(iso, calendarDays);
       const disabled =
         loading || loadError || state === "past" || state === "unavailable";
+      const priceLabel =
+        dayPricing?.nightlyRateCents != null
+          ? formatCentsAsUsd(dayPricing.nightlyRateCents)
+          : null;
 
       buttons.push(
         <button
@@ -147,25 +197,41 @@ export default function AvailabilityCalendar({
           type="button"
           disabled={disabled}
           onClick={() => handleDayClick(iso)}
-          aria-label={formatDisplayDate(iso, locale)}
+          aria-label={
+            priceLabel
+              ? `${formatDisplayDate(iso, locale)}, ${priceLabel} per night`
+              : formatDisplayDate(iso, locale)
+          }
           aria-pressed={state === "selected"}
-          className={`flex h-10 min-w-[2.5rem] items-center justify-center rounded-lg text-sm transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C69C6D] ${
+          className={`flex min-h-12 min-w-[2.5rem] flex-col items-center justify-center rounded-lg px-0.5 py-1 text-sm transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C69C6D] ${
             state === "past"
               ? "cursor-not-allowed text-[#111111]/25"
               : state === "unavailable"
                 ? "cursor-not-allowed bg-[#111111]/5 text-[#111111]/35 line-through"
                 : state === "selected"
                   ? "bg-[#C69C6D] font-medium text-white"
-                  : "text-[#111111]/80 hover:bg-[#111111]/5"
+                  : state === "holiday"
+                    ? "bg-[#C69C6D]/10 text-[#111111]/85 ring-1 ring-[#C69C6D]/25 hover:bg-[#C69C6D]/15"
+                    : "text-[#111111]/80 hover:bg-[#111111]/5"
           }`}
         >
-          {day}
+          <span>{day}</span>
+          {priceLabel && state !== "past" && state !== "unavailable" ? (
+            <span
+              className={`mt-0.5 text-[10px] leading-none ${
+                state === "selected" ? "text-white/90" : "text-[#111111]/55"
+              }`}
+            >
+              {priceLabel}
+            </span>
+          ) : null}
         </button>,
       );
     }
     return buttons;
   }, [
     blockedRanges,
+    calendarDays,
     checkIn,
     checkOut,
     daysInMonth,
@@ -189,6 +255,12 @@ export default function AvailabilityCalendar({
               ? bt.calendarSelectCheckOut
               : `${formatDisplayDate(checkIn, locale)} → ${formatDisplayDate(checkOut, locale)}`}
       </p>
+
+      {minimumStayMessage ? (
+        <p className="mt-2 text-sm text-[#111111]/70" role="status">
+          {minimumStayMessage}
+        </p>
+      ) : null}
 
       {loadError && (
         <div className="mt-4 rounded-xl border border-[#111111]/10 bg-[#F8F6F2] px-4 py-3 text-sm text-[#111111]/70">
@@ -237,7 +309,7 @@ export default function AvailabilityCalendar({
 
       {loading ? (
         <div
-          className="mt-1 h-[280px] animate-pulse rounded-xl bg-[#111111]/5"
+          className="mt-1 h-[320px] animate-pulse rounded-xl bg-[#111111]/5"
           aria-busy="true"
           aria-live="polite"
         />
@@ -262,7 +334,13 @@ export default function AvailabilityCalendar({
           <span className="h-3 w-3 rounded bg-[#111111]/10" />
           {bt.calendarLegendPast}
         </li>
+        <li className="flex items-center gap-2">
+          <span className="h-3 w-3 rounded bg-[#C69C6D]/10 ring-1 ring-[#C69C6D]/25" />
+          {bt.calendarLegendHoliday}
+        </li>
       </ul>
     </div>
   );
 }
+
+export { getEarliestCheckoutFromDays };

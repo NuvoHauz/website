@@ -11,6 +11,12 @@ import {
   parseChildAges,
   validateGuestCounts,
 } from "./validation";
+import type { MinimumStayContext } from "./stay-validation";
+import {
+  isStayDurationValid,
+  isStayRangeAvailable,
+  isStayRangeValidWithMinimumStay,
+} from "./stay-validation";
 
 export interface BookingRequestPayload {
   checkIn: string;
@@ -55,6 +61,7 @@ export type BookingValidationErrorCode =
   | "requestAckRequired"
   | "invalidTripReason"
   | "invalidOutsideVisitors"
+  | "minimumStayNotMet"
   | "spamDetected";
 
 export interface ValidatedBookingRequest {
@@ -108,11 +115,21 @@ export function isStayRangeValid(
   checkIn: string,
   checkOut: string,
   ranges: BlockedRange[],
+  minimumStayContext?: MinimumStayContext,
 ): boolean {
   if (!checkIn || !checkOut) return false;
   if (compareIsoDates(checkOut, checkIn) <= 0) return false;
   if (!canCheckInOn(checkIn, ranges)) return false;
   if (!isDateSelectable(checkOut)) return false;
+
+  if (minimumStayContext) {
+    return isStayRangeValidWithMinimumStay(
+      checkIn,
+      checkOut,
+      ranges,
+      minimumStayContext,
+    );
+  }
 
   const nights = getStayNights(checkIn, checkOut);
   return nights.every((night) => !isBlockedNight(night, ranges));
@@ -121,6 +138,7 @@ export function isStayRangeValid(
 export function validateBookingRequestPayload(
   payload: BookingRequestPayload,
   ranges: BlockedRange[],
+  minimumStayContext?: MinimumStayContext,
 ): { ok: true; data: ValidatedBookingRequest } | { ok: false; errors: BookingValidationErrorCode[] } {
   const errors: BookingValidationErrorCode[] = [];
 
@@ -138,12 +156,27 @@ export function validateBookingRequestPayload(
   ) {
     errors.push("checkOutAfterCheckIn");
   }
-  if (
-    payload.checkIn &&
-    payload.checkOut &&
-    !isStayRangeValid(payload.checkIn, payload.checkOut, ranges)
-  ) {
-    errors.push("invalidStayRange");
+  if (payload.checkIn && payload.checkOut) {
+    if (minimumStayContext) {
+      const durationValid = isStayDurationValid(
+        payload.checkIn,
+        payload.checkOut,
+        minimumStayContext,
+      );
+      const rangeAvailable = isStayRangeAvailable(
+        payload.checkIn,
+        payload.checkOut,
+        ranges,
+      );
+
+      if (!durationValid) {
+        errors.push("minimumStayNotMet");
+      } else if (!rangeAvailable) {
+        errors.push("invalidStayRange");
+      }
+    } else if (!isStayRangeValid(payload.checkIn, payload.checkOut, ranges)) {
+      errors.push("invalidStayRange");
+    }
   }
 
   const adults = Number(payload.adults);

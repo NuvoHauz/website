@@ -12,6 +12,12 @@ import {
   validateBookingRequestPayload,
   type BookingRequestPayload,
 } from "../../../lib/booking/server-validation";
+import {
+  resolveIdempotentBookingReference,
+  resolveServerBookingPricing,
+  type IgnoredClientPricingFields,
+} from "../../../lib/pricing/booking-pricing";
+import { loadPricingConfig } from "../../../lib/pricing/pricing-service";
 import { getSupabaseAdmin } from "../../../lib/supabase/server";
 import { getTodayInCostaRica } from "../../../lib/booking/costa-rica-dates";
 import { getAvailabilityHorizonEnd } from "../../../lib/booking/server-validation";
@@ -119,15 +125,29 @@ export async function POST(request: NextRequest) {
     }
 
     if (existing?.request_reference) {
-      return respondWithSavedReference(
-        supabase,
-        idempotencyKey,
-        existing.request_reference,
-      );
+      const idempotent = resolveIdempotentBookingReference(existing.request_reference);
+      if (idempotent.action === "return_existing") {
+        return respondWithSavedReference(
+          supabase,
+          idempotencyKey,
+          idempotent.reference,
+        );
+      }
     }
 
     const blockedRanges = await loadBlockedRanges();
-    const validation = validateBookingRequestPayload(body, blockedRanges);
+    const pricingConfig = await loadPricingConfig();
+    const minimumStayContext = {
+      minimumStayRules: pricingConfig.minimumStayRules,
+      holidayPeriods: pricingConfig.holidayPeriods,
+      nightlyOverrides: pricingConfig.nightlyOverrides,
+    };
+
+    const validation = validateBookingRequestPayload(
+      body,
+      blockedRanges,
+      minimumStayContext,
+    );
 
     if (!validation.ok) {
       if (validation.errors.includes("spamDetected")) {
@@ -141,11 +161,46 @@ export async function POST(request: NextRequest) {
 
     const data = validation.data;
 
-    if (!isStayRangeValid(data.checkIn, data.checkOut, blockedRanges)) {
+    if (
+      !isStayRangeValid(data.checkIn, data.checkOut, blockedRanges, minimumStayContext)
+    ) {
       return NextResponse.json(
         { error: "validation_failed", fields: ["invalidStayRange"] },
         { status: 409 },
       );
+    }
+
+    const clientPricing = body as BookingRequestPayload & IgnoredClientPricingFields;
+
+    const pricingResolution = resolveServerBookingPricing(
+      pricingConfig,
+      data.checkIn,
+      data.checkOut,
+      blockedRanges,
+      { adults: data.adults, children: data.children },
+      clientPricing,
+    );
+
+    if (!pricingResolution.ok) {
+      if (pricingResolution.error === "minimumStayNotMet") {
+        return NextResponse.json(
+          { error: "validation_failed", fields: ["minimumStayNotMet"] },
+          { status: 400 },
+        );
+      }
+      if (pricingResolution.error === "tooManyGuests") {
+        return NextResponse.json(
+          { error: "validation_failed", fields: ["tooManyGuests"] },
+          { status: 400 },
+        );
+      }
+      if (pricingResolution.error === "invalidStayRange") {
+        return NextResponse.json(
+          { error: "validation_failed", fields: ["invalidStayRange"] },
+          { status: 409 },
+        );
+      }
+      return NextResponse.json({ error: "pricing_unavailable" }, { status: 503 });
     }
 
     const insertRow = {
@@ -167,6 +222,7 @@ export async function POST(request: NextRequest) {
       guest_message: data.message,
       agreed_to_rules: data.agreedHouseRules,
       acknowledged_request_only: data.agreedRequest,
+      ...(pricingResolution.snapshot ?? {}),
     };
 
     const { data: inserted, error: insertError } = await supabase

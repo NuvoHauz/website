@@ -45,6 +45,26 @@ const en: RiuHouseBookingTranslations = {
   calendarNextMonth: "Next month",
   calendarSelectCheckIn: "Select your check-in date",
   calendarSelectCheckOut: "Select your check-out date",
+  calendarLegendHoliday: "Holiday pricing",
+  minimumStayThursday: "Two-night minimum for Thursday arrivals.",
+  minimumStayFriday: "Two-night minimum for Friday arrivals.",
+  minimumStaySaturday: "Two-night minimum for Saturday arrivals.",
+  minimumStayGeneric: "Minimum stay of {nights} nights for this check-in date.",
+  priceSummary: {
+    title: "Estimated stay total",
+    nightlyLine: "Nightly rate",
+    nightsCount: "{count} nights",
+    nightlySubtotal: "Nightly subtotal",
+    additionalGuests:
+      "Additional guests ({count} × {rate}/night × {nights} nights)",
+    cleaningFee: "Cleaning fee",
+    estimatedTotal: "Estimated total",
+    checkoutNotCharged: "Your checkout date is not charged as an occupied night.",
+    includedGuestsNote:
+      "The base nightly rate includes up to {count} guests.",
+    extraGuestsApprovalNote:
+      "Guests 7 and 8 require advance approval and are subject to host confirmation.",
+  },
   calendarWeekdays: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
   tripReasons: {
     vacation: "Vacation",
@@ -91,6 +111,8 @@ const en: RiuHouseBookingTranslations = {
       "We could not send your request right now. Please try again in a moment.",
     availabilityConflict:
       "Those dates are no longer available. Please choose different dates and try again.",
+    minimumStayNotMet:
+      "Your stay does not meet the minimum night requirement for the selected check-in date.",
   },
   confirmation: {
     heading: "Your request has been received.",

@@ -46,6 +46,23 @@ export interface RiuHouseBookingTranslations {
   calendarNextMonth: string;
   calendarSelectCheckIn: string;
   calendarSelectCheckOut: string;
+  calendarLegendHoliday: string;
+  minimumStayThursday: string;
+  minimumStayFriday: string;
+  minimumStaySaturday: string;
+  minimumStayGeneric: string;
+  priceSummary: {
+    title: string;
+    nightlyLine: string;
+    nightsCount: string;
+    nightlySubtotal: string;
+    additionalGuests: string;
+    cleaningFee: string;
+    estimatedTotal: string;
+    checkoutNotCharged: string;
+    includedGuestsNote: string;
+    extraGuestsApprovalNote: string;
+  };
   calendarWeekdays: [string, string, string, string, string, string, string];
   tripReasons: {
     vacation: string;
@@ -84,6 +101,7 @@ export interface RiuHouseBookingTranslations {
     requestAckRequired: string;
     submitFailed: string;
     availabilityConflict: string;
+    minimumStayNotMet: string;
   };
   confirmation: {
     heading: string;

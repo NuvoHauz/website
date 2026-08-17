@@ -32,6 +32,77 @@ export interface BookingRequestInsert {
   guest_message: string | null;
   agreed_to_rules: boolean;
   acknowledged_request_only: boolean;
+  pricing_currency?: string | null;
+  pricing_nights_count?: number | null;
+  pricing_nightly_subtotal_cents?: number | null;
+  pricing_cleaning_fee_cents?: number | null;
+  pricing_estimated_total_cents?: number | null;
+  pricing_nightly_breakdown?: Array<{
+    date: string;
+    rateCents: number;
+    source: string;
+    holidayName?: string;
+  }> | null;
+  pricing_calculated_at?: string | null;
+  pricing_included_guest_count?: number | null;
+  pricing_extra_guest_count?: number | null;
+  pricing_extra_guest_fee_cents?: number | null;
+  pricing_extra_guest_total_cents?: number | null;
+  pricing_maximum_guest_count?: number | null;
+  pricing_total_chargeable_guests?: number | null;
+}
+
+export interface PropertyPricingSettingsRow {
+  id: string;
+  property_slug: string;
+  currency: string;
+  mon_tue_wed_rate_cents: number | null;
+  thursday_rate_cents: number | null;
+  fri_sat_rate_cents: number | null;
+  sunday_rate_cents: number | null;
+  cleaning_fee_cents: number;
+  included_guest_count: number;
+  extra_guest_fee_cents: number;
+  maximum_guest_count: number;
+  active: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface PropertyMinimumStayRuleRow {
+  id: string;
+  property_slug: string;
+  check_in_day_of_week: number;
+  minimum_nights: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface PropertyHolidayPricingPeriodRow {
+  id: string;
+  property_slug: string;
+  name: string;
+  start_date: string;
+  end_date: string;
+  adjustment_type: "fixed_rate" | "percentage";
+  adjustment_value: number;
+  minimum_nights: number;
+  priority: number;
+  active: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface PropertyNightlyOverrideRow {
+  id: string;
+  property_slug: string;
+  override_date: string;
+  nightly_rate_cents: number;
+  minimum_nights: number | null;
+  internal_reason: string | null;
+  active: boolean;
+  created_at: string;
+  updated_at: string;
 }
 
 export type BookingNotificationStatus =
@@ -55,6 +126,24 @@ export interface BookingRequestRow extends BookingRequestInsert {
   notification_attempts: number;
   notification_last_error_code: string | null;
   notification_provider_id: string | null;
+  pricing_currency: string | null;
+  pricing_nights_count: number | null;
+  pricing_nightly_subtotal_cents: number | null;
+  pricing_cleaning_fee_cents: number | null;
+  pricing_estimated_total_cents: number | null;
+  pricing_nightly_breakdown: Array<{
+    date: string;
+    rateCents: number;
+    source: string;
+    holidayName?: string;
+  }> | null;
+  pricing_calculated_at: string | null;
+  pricing_included_guest_count: number | null;
+  pricing_extra_guest_count: number | null;
+  pricing_extra_guest_fee_cents: number | null;
+  pricing_extra_guest_total_cents: number | null;
+  pricing_maximum_guest_count: number | null;
+  pricing_total_chargeable_guests: number | null;
 }
 
 export type BookingTripReason =

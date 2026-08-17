@@ -45,6 +45,26 @@ const es: RiuHouseBookingTranslations = {
   calendarNextMonth: "Mes siguiente",
   calendarSelectCheckIn: "Seleccione su fecha de llegada",
   calendarSelectCheckOut: "Seleccione su fecha de salida",
+  calendarLegendHoliday: "Tarifa especial",
+  minimumStayThursday: "Estancia mínima de dos noches para llegadas en jueves.",
+  minimumStayFriday: "Estancia mínima de dos noches para llegadas en viernes.",
+  minimumStaySaturday: "Estancia mínima de dos noches para llegadas en sábado.",
+  minimumStayGeneric: "Estancia mínima de {nights} noches para esta fecha de llegada.",
+  priceSummary: {
+    title: "Total estimado de la estancia",
+    nightlyLine: "Tarifa nocturna",
+    nightsCount: "{count} noches",
+    nightlySubtotal: "Subtotal nocturno",
+    additionalGuests:
+      "Huéspedes adicionales ({count} × {rate}/noche × {nights} noches)",
+    cleaningFee: "Tarifa de limpieza",
+    estimatedTotal: "Total estimado",
+    checkoutNotCharged: "La fecha de salida no se cobra como noche ocupada.",
+    includedGuestsNote:
+      "La tarifa nocturna base incluye hasta {count} huéspedes.",
+    extraGuestsApprovalNote:
+      "Los huéspedes 7 y 8 requieren aprobación previa y están sujetos a confirmación del anfitrión.",
+  },
   calendarWeekdays: ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"],
   tripReasons: {
     vacation: "Vacaciones",
@@ -91,6 +111,8 @@ const es: RiuHouseBookingTranslations = {
       "No pudimos enviar su solicitud en este momento. Inténtelo de nuevo en un momento.",
     availabilityConflict:
       "Esas fechas ya no están disponibles. Elija otras fechas e inténtelo de nuevo.",
+    minimumStayNotMet:
+      "Su estancia no cumple la estancia mínima requerida para la fecha de llegada seleccionada.",
   },
   confirmation: {
     heading: "Su solicitud ha sido recibida.",

@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import AdminCalendar from "./AdminCalendar";
 import AdminManualBlockForm from "./AdminManualBlockForm";
 import AdminPendingRequests from "./AdminPendingRequests";
+import AdminPricingSection from "./AdminPricingSection";
 import { reservationPatchErrorMessage } from "../../lib/admin/rpc-errors";
 import type {
   AdminReservationsResponse,
@@ -214,6 +215,8 @@ export default function AdminDashboard({
             onRemove={handleRemoveBlock}
           />
         </div>
+
+        <AdminPricingSection />
       </main>
     </div>
   );

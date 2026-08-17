@@ -5,7 +5,10 @@ import type { Locale } from "../../../i18n/types";
 import type { RiuHouseBookingTranslations } from "../../../i18n/riu-house/booking/types";
 import type { OutsideVisitors, TripReason } from "../../../i18n/riu-house/booking/types";
 import { formatDisplayDate } from "../../../lib/booking/costa-rica-dates";
-import { isStayRangeValid } from "../../../lib/booking/availability";
+import {
+  isStayRangeValidWithCalendarDays,
+} from "../../../lib/booking/availability";
+import { calculateQuoteFromCalendarDays } from "../../../lib/booking/client-pricing";
 import { useAvailabilityBlocks } from "../../../lib/booking/use-availability-blocks";
 import {
   isValidEmail,
@@ -13,6 +16,7 @@ import {
   validateGuestCounts,
 } from "../../../lib/booking/validation";
 import AvailabilityCalendar from "./AvailabilityCalendar";
+import PriceSummary from "./PriceSummary";
 
 const inputClassName =
   "mt-2 w-full min-h-[44px] rounded-xl border border-[#111111]/10 bg-white px-4 py-3 text-sm text-[#111111] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C69C6D]";
@@ -128,10 +132,47 @@ export default function BookingRequestWizard({
 
   const {
     blocks: blockedRanges,
+    days: calendarDays,
+    pricingConfigured,
+    cleaningFeeCents,
+    currency,
+    includedGuestCount,
+    extraGuestFeeCents,
+    maximumGuestCount,
     loading: availabilityLoading,
     error: availabilityLoadError,
     reload: reloadAvailability,
   } = useAvailabilityBlocks();
+
+  const priceQuote = useMemo(() => {
+    if (!pricingConfigured || !checkIn || !checkOut || adults < 1) return null;
+    const totalChargeableGuests = adults + children;
+    return calculateQuoteFromCalendarDays(
+      checkIn,
+      checkOut,
+      calendarDays,
+      cleaningFeeCents,
+      currency,
+      {
+        includedGuestCount,
+        extraGuestFeeCents,
+        maximumGuestCount,
+      },
+      totalChargeableGuests,
+    );
+  }, [
+    adults,
+    calendarDays,
+    checkIn,
+    checkOut,
+    children,
+    cleaningFeeCents,
+    currency,
+    extraGuestFeeCents,
+    includedGuestCount,
+    maximumGuestCount,
+    pricingConfigured,
+  ]);
 
   const stepLabel = useMemo(
     () => bt.stepIndicator.replace("{current}", String(step)).replace("{total}", "2"),
@@ -177,8 +218,15 @@ export default function BookingRequestWizard({
     if (checkIn && checkOut && checkOut <= checkIn) {
       next.checkOut = bt.errors.checkOutAfterCheckIn;
     }
-    if (checkIn && checkOut && !isStayRangeValid(checkIn, checkOut, blockedRanges)) {
-      next.checkOut = bt.errors.invalidStayRange;
+    if (
+      checkIn &&
+      checkOut &&
+      !isStayRangeValidWithCalendarDays(checkIn, checkOut, blockedRanges, calendarDays)
+    ) {
+      const minimumNights =
+        calendarDays.find((day) => day.date === checkIn)?.minimumNightsOnCheckIn ?? 1;
+      next.checkOut =
+        minimumNights > 1 ? bt.errors.minimumStayNotMet : bt.errors.invalidStayRange;
     }
 
     if (adults === 0) next.adults = bt.errors.noAdults;
@@ -305,7 +353,7 @@ export default function BookingRequestWizard({
         }
         setErrors(nextErrors);
         if (payload.fields.some((field) =>
-          ["checkInRequired", "checkOutRequired", "checkOutAfterCheckIn", "invalidStayRange", "noAdults", "tooManyGuests", "childAgesRequired", "childAgesCountMismatch", "childAgesEmptyValue", "childAgesNonNumeric", "childAgesDecimal", "childAgesOutOfRange", "childAgesMustBeAdult"].includes(field),
+          ["checkInRequired", "checkOutRequired", "checkOutAfterCheckIn", "invalidStayRange", "minimumStayNotMet", "noAdults", "tooManyGuests", "childAgesRequired", "childAgesCountMismatch", "childAgesEmptyValue", "childAgesNonNumeric", "childAgesDecimal", "childAgesOutOfRange", "childAgesMustBeAdult"].includes(field),
         )) {
           setStep(1);
         }
@@ -388,6 +436,7 @@ export default function BookingRequestWizard({
             checkIn={checkIn}
             checkOut={checkOut}
             blockedRanges={blockedRanges}
+            calendarDays={calendarDays}
             loading={availabilityLoading}
             loadError={availabilityLoadError}
             onRetry={() => void reloadAvailability()}
@@ -409,10 +458,10 @@ export default function BookingRequestWizard({
                 return next;
               });
             }}
-            onRangeError={() =>
+            onRangeError={(message) =>
               setErrors((prev) => ({
                 ...prev,
-                checkOut: bt.errors.invalidStayRange,
+                checkOut: message ?? bt.errors.invalidStayRange,
               }))
             }
           />
@@ -426,6 +475,10 @@ export default function BookingRequestWizard({
               {errors.checkOut}
             </p>
           )}
+
+          {priceQuote ? (
+            <PriceSummary quote={priceQuote} locale={locale} labels={bt.priceSummary} />
+          ) : null}
 
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
             <div>

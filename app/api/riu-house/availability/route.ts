@@ -6,6 +6,9 @@ import {
   RIU_HOUSE_PROPERTY_SLUG,
   sanitizeBlockedRanges,
 } from "../../../lib/booking/blocked-ranges";
+import { buildCalendarDayPricing } from "../../../lib/pricing/calendar-days";
+import { loadPricingConfig } from "../../../lib/pricing/pricing-service";
+import { isPricingActiveAndConsistent } from "../../../lib/pricing/settings-validation";
 import { getSupabaseAdmin } from "../../../lib/supabase/server";
 
 export const dynamic = "force-dynamic";
@@ -47,20 +50,44 @@ export async function GET() {
     }
 
     const nowIso = new Date().toISOString();
-    const blocks = sanitizeBlockedRanges(
+    const blockedRanges = sanitizeBlockedRanges(
       (data ?? [])
         .filter((row) => !row.block_expires_at || row.block_expires_at > nowIso)
         .map((row) => ({
           start: row.start_date,
           end: row.end_date,
         })),
-    ).map((range) => ({
+    );
+
+    const blocks = blockedRanges.map((range) => ({
       startDate: range.start,
       endDate: range.end,
     }));
 
+    const pricingConfig = await loadPricingConfig();
+    const days = buildCalendarDayPricing(pricingConfig, blockedRanges, horizonStart).map(
+      (day) => ({
+        date: day.date,
+        availability: day.availability,
+        nightlyRateCents: day.nightlyRateCents,
+        currency: day.currency,
+        minimumNightsOnCheckIn: day.minimumNightsOnCheckIn,
+        pricingSource: day.pricingSource,
+        holidayName: day.holidayName,
+      }),
+    );
+
     return NextResponse.json(
-      { blocks },
+      {
+        blocks,
+        days,
+        pricingConfigured: isPricingActiveAndConsistent(pricingConfig.settings),
+        cleaningFeeCents: pricingConfig.settings.cleaningFeeCents,
+        currency: pricingConfig.settings.currency,
+        includedGuestCount: pricingConfig.settings.includedGuestCount,
+        extraGuestFeeCents: pricingConfig.settings.extraGuestFeeCents,
+        maximumGuestCount: pricingConfig.settings.maximumGuestCount,
+      },
       {
         headers: {
           "Cache-Control": "private, max-age=60",

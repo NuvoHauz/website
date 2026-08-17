@@ -45,6 +45,26 @@ const de: RiuHouseBookingTranslations = {
   calendarNextMonth: "Nächster Monat",
   calendarSelectCheckIn: "Wählen Sie Ihr Anreisedatum",
   calendarSelectCheckOut: "Wählen Sie Ihr Abreisedatum",
+  calendarLegendHoliday: "Feiertagspreis",
+  minimumStayThursday: "Mindestaufenthalt von zwei Nächten bei Anreise am Donnerstag.",
+  minimumStayFriday: "Mindestaufenthalt von zwei Nächten bei Anreise am Freitag.",
+  minimumStaySaturday: "Mindestaufenthalt von zwei Nächten bei Anreise am Samstag.",
+  minimumStayGeneric: "Mindestaufenthalt von {nights} Nächten für dieses Anreisedatum.",
+  priceSummary: {
+    title: "Geschätzte Gesamtsumme",
+    nightlyLine: "Nachtpreis",
+    nightsCount: "{count} Nächte",
+    nightlySubtotal: "Zwischensumme Nächte",
+    additionalGuests:
+      "Zusätzliche Gäste ({count} × {rate}/Nacht × {nights} Nächte)",
+    cleaningFee: "Reinigungsgebühr",
+    estimatedTotal: "Geschätzte Gesamtsumme",
+    checkoutNotCharged: "Ihr Abreisedatum wird nicht als belegte Nacht berechnet.",
+    includedGuestsNote:
+      "Der Basis-Nachtpreis gilt für bis zu {count} Gäste.",
+    extraGuestsApprovalNote:
+      "Gäste 7 und 8 erfordern vorherige Genehmigung und bedürfen der Bestätigung durch den Gastgeber.",
+  },
   calendarWeekdays: ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"],
   tripReasons: {
     vacation: "Urlaub",
@@ -91,6 +111,8 @@ const de: RiuHouseBookingTranslations = {
       "Ihre Anfrage konnte gerade nicht gesendet werden. Bitte versuchen Sie es in Kürze erneut.",
     availabilityConflict:
       "Diese Daten sind nicht mehr verfügbar. Bitte wählen Sie andere Daten und versuchen Sie es erneut.",
+    minimumStayNotMet:
+      "Ihr Aufenthalt erfüllt nicht die Mindestnachtanzahl für das gewählte Anreisedatum.",
   },
   confirmation: {
     heading: "Ihre Anfrage wurde empfangen.",
