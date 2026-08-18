@@ -10,12 +10,14 @@ import { buildCalendarDayPricing } from "../../../lib/pricing/calendar-days";
 import { loadPricingConfig } from "../../../lib/pricing/pricing-service";
 import { isPricingActiveAndConsistent } from "../../../lib/pricing/settings-validation";
 import { getSupabaseAdmin } from "../../../lib/supabase/server";
+import { processExpiredOwnerHolds } from "../../../lib/admin/expire-owner-holds";
 
 export const dynamic = "force-dynamic";
 
 export async function GET() {
   try {
     const supabase = getSupabaseAdmin();
+    await processExpiredOwnerHolds(supabase);
     const horizonStart = getTodayInCostaRica();
     const horizonEnd = getAvailabilityHorizonEnd();
 

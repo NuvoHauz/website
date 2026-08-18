@@ -22,6 +22,12 @@ import { getSupabaseAdmin } from "../../../lib/supabase/server";
 import { getTodayInCostaRica } from "../../../lib/booking/costa-rica-dates";
 import { getAvailabilityHorizonEnd } from "../../../lib/booking/server-validation";
 import { maybeSendBookingNotification } from "../../../lib/notifications/booking-notification-service";
+import {
+  buildGuestStatusLinkForBooking,
+  maybeSendGuestNotification,
+} from "../../../lib/notifications/guest/guest-notification-service";
+import type { GuestNotificationPublicStatus } from "../../../lib/notifications/guest/types";
+import { processExpiredOwnerHolds } from "../../../lib/admin/expire-owner-holds";
 import type { SupabaseClient } from "@supabase/supabase-js";
 
 export const dynamic = "force-dynamic";
@@ -34,11 +40,60 @@ function isValidUuid(value: string): boolean {
   return UUID_PATTERN.test(value);
 }
 
-function successResponse(requestReference: string) {
+function successResponse(
+  requestReference: string,
+  statusUrl: string | null = null,
+  guestNotificationStatus: GuestNotificationPublicStatus = "unavailable",
+) {
   return NextResponse.json({
     success: true,
     requestReference,
+    statusUrl,
+    guestNotificationStatus,
   });
+}
+
+async function notifyBookingSaved(
+  supabase: SupabaseClient,
+  idempotencyKey: string,
+): Promise<{
+  statusUrl: string | null;
+  guestNotificationStatus: GuestNotificationPublicStatus;
+}> {
+  const { data: row } = await supabase
+    .from("booking_requests")
+    .select("id, check_out")
+    .eq("idempotency_key", idempotencyKey)
+    .maybeSingle();
+
+  const bookingId = row?.id;
+  const checkOut = row?.check_out;
+  const statusUrl =
+    bookingId && checkOut
+      ? buildGuestStatusLinkForBooking(bookingId, checkOut)
+      : null;
+
+  try {
+    await maybeSendBookingNotification(supabase, idempotencyKey);
+  } catch {
+    console.error("booking notification operation failed", idempotencyKey);
+  }
+
+  let guestNotificationStatus: GuestNotificationPublicStatus = "unavailable";
+  if (bookingId) {
+    try {
+      guestNotificationStatus = await maybeSendGuestNotification(
+        supabase,
+        bookingId,
+        "request_received",
+      );
+    } catch {
+      console.error("guest notification operation failed", bookingId);
+      guestNotificationStatus = "failed";
+    }
+  }
+
+  return { statusUrl, guestNotificationStatus };
 }
 
 async function respondWithSavedReference(
@@ -46,13 +101,11 @@ async function respondWithSavedReference(
   idempotencyKey: string,
   requestReference: string,
 ) {
-  try {
-    await maybeSendBookingNotification(supabase, idempotencyKey);
-  } catch {
-    console.error("booking notification operation failed", requestReference);
-  }
-
-  return successResponse(requestReference);
+  const { statusUrl, guestNotificationStatus } = await notifyBookingSaved(
+    supabase,
+    idempotencyKey,
+  );
+  return successResponse(requestReference, statusUrl, guestNotificationStatus);
 }
 
 function isAllowedOrigin(request: NextRequest): boolean {
@@ -70,6 +123,7 @@ function isAllowedOrigin(request: NextRequest): boolean {
 
 async function loadBlockedRanges() {
   const supabase = getSupabaseAdmin();
+  await processExpiredOwnerHolds(supabase);
   const horizonStart = getTodayInCostaRica();
   const horizonEnd = getAvailabilityHorizonEnd();
 
@@ -112,6 +166,7 @@ export async function POST(request: NextRequest) {
 
   try {
     const supabase = getSupabaseAdmin();
+    await processExpiredOwnerHolds(supabase);
 
     const { data: existing, error: existingError } = await supabase
       .from("booking_requests")
@@ -222,6 +277,7 @@ export async function POST(request: NextRequest) {
       guest_message: data.message,
       agreed_to_rules: data.agreedHouseRules,
       acknowledged_request_only: data.agreedRequest,
+      guest_locale: data.guestLocale,
       ...(pricingResolution.snapshot ?? {}),
     };
 

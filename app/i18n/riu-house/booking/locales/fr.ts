@@ -118,6 +118,18 @@ const fr: RiuHouseBookingTranslations = {
   confirmation: {
     heading: "Votre demande a bien été reçue.",
     referenceLabel: "Référence",
+    pendingBadge: "En attente d'examen",
+    emailSentSuccess:
+      "Votre e-mail de confirmation a été accepté pour envoi. Resend assurera la livraison finale dans votre boîte de réception.",
+    emailFailed:
+      "Votre demande a été enregistrée, mais l'e-mail de confirmation n'a pas pu être livré pour le moment.",
+    emailFailedHint:
+      "Veuillez enregistrer le lien de statut sécurisé ci-dessous pour consulter votre demande à tout moment.",
+    emailUnavailable:
+      "Votre demande a été enregistrée. L'envoi par e-mail est temporairement indisponible, mais vous pouvez utiliser le lien de statut sécurisé ci-dessous.",
+    spamNote:
+      "Si vous ne voyez pas l'e-mail dans quelques minutes, vérifiez votre dossier spam ou promotions.",
+    viewStatusButton: "Voir le statut de la demande",
     body1:
       "Votre séjour n'est pas encore confirmé. Sandy ou l'équipe NuvoHauz examinera votre demande.",
     body2:

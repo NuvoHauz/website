@@ -10,6 +10,7 @@ import type {
   BookingRequestRowWithMeta,
   BookingRequestStatus,
 } from "./reservation-types";
+import type { BookingNotificationDeliveryRow } from "../supabase/database.types";
 
 const PENDING_STATUSES = new Set<BookingRequestStatus>([
   "submitted",
@@ -60,8 +61,15 @@ export function getBlockLabel(blockType: string): string {
   }
 }
 
-export function mapBookingRequest(row: BookingRequestRowWithMeta): AdminBookingRequest {
+export function mapBookingRequest(
+  row: BookingRequestRowWithMeta,
+  guestDeliveries: BookingNotificationDeliveryRow[] = [],
+): AdminBookingRequest {
   const nights = getStayNights(row.check_in, row.check_out).length;
+  const latestDelivery = [...guestDeliveries].sort((a, b) =>
+    b.updated_at.localeCompare(a.updated_at),
+  )[0];
+
   return {
     id: row.id,
     requestReference: row.request_reference,
@@ -84,6 +92,10 @@ export function mapBookingRequest(row: BookingRequestRowWithMeta): AdminBookingR
     holdExpiresAt: row.hold_expires_at ?? null,
     reviewedAt: row.reviewed_at ?? null,
     reviewedBy: row.reviewed_by ?? null,
+    guestEmailStatus: latestDelivery?.status ?? null,
+    guestEmailLastEvent: latestDelivery?.event_type ?? null,
+    guestEmailLastError: latestDelivery?.last_error_code ?? null,
+    guestEmailSentAt: latestDelivery?.sent_at ?? null,
   };
 }
 

@@ -1,3 +1,4 @@
+import type { Locale } from "../../i18n/types";
 import type { OutsideVisitors, TripReason } from "../../i18n/riu-house/booking/types";
 import {
   addDaysToIsoDate,
@@ -34,6 +35,7 @@ export interface BookingRequestPayload {
   agreedHouseRules: boolean;
   agreedRequest: boolean;
   honeypot?: string;
+  guestLocale?: Locale;
 }
 
 export type BookingValidationErrorCode =
@@ -79,6 +81,16 @@ export interface ValidatedBookingRequest {
   message: string | null;
   agreedHouseRules: boolean;
   agreedRequest: boolean;
+  guestLocale: Locale;
+}
+
+const supportedGuestLocales = new Set<Locale>(["en", "es", "fr", "de"]);
+
+function normalizeGuestLocale(value: Locale | undefined): Locale {
+  if (value && supportedGuestLocales.has(value)) {
+    return value;
+  }
+  return "en";
 }
 
 const tripReasons = new Set<TripReason>([
@@ -240,6 +252,7 @@ export function validateBookingRequestPayload(
       message: payload.message?.trim() ? payload.message.trim() : null,
       agreedHouseRules: payload.agreedHouseRules,
       agreedRequest: payload.agreedRequest,
+      guestLocale: normalizeGuestLocale(payload.guestLocale),
     },
   };
 }

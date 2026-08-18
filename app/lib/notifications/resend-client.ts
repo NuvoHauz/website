@@ -1,6 +1,17 @@
 import "server-only";
 
 import { Resend } from "resend";
+import {
+  getBookingNotificationMailConfig,
+  type BookingNotificationMailConfig,
+  buildResendIdempotencyKey,
+} from "./mail-config";
+
+export {
+  getBookingNotificationMailConfig,
+  type BookingNotificationMailConfig,
+  buildResendIdempotencyKey,
+};
 
 let resendClient: Resend | null = null;
 
@@ -15,23 +26,4 @@ export function getResendClient(): Resend | null {
   }
 
   return resendClient;
-}
-
-export type BookingNotificationMailConfig = {
-  from: string;
-  to: string;
-};
-
-export function getBookingNotificationMailConfig(): BookingNotificationMailConfig | null {
-  const from = process.env.BOOKING_EMAIL_FROM;
-  const to = process.env.BOOKING_NOTIFICATION_TO;
-  if (!from || !to) {
-    return null;
-  }
-
-  return { from, to };
-}
-
-export function buildResendIdempotencyKey(bookingIdempotencyKey: string): string {
-  return `riu-house-inquiry/${bookingIdempotencyKey}`;
 }

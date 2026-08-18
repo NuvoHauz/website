@@ -117,6 +117,18 @@ const es: RiuHouseBookingTranslations = {
   confirmation: {
     heading: "Su solicitud ha sido recibida.",
     referenceLabel: "Referencia",
+    pendingBadge: "Pendiente de revisión",
+    emailSentSuccess:
+      "Su correo de confirmación fue aceptado para envío. Resend completará la entrega en su bandeja de entrada.",
+    emailFailed:
+      "Guardamos su solicitud, pero no pudimos entregar el correo de confirmación en este momento.",
+    emailFailedHint:
+      "Guarde el enlace seguro de estado a continuación para consultar su solicitud en cualquier momento.",
+    emailUnavailable:
+      "Su solicitud fue guardada. La entrega por correo no está disponible temporalmente, pero puede usar el enlace seguro de estado a continuación.",
+    spamNote:
+      "Si no ve el correo en unos minutos, revise su carpeta de spam o promociones.",
+    viewStatusButton: "Ver estado de la solicitud",
     body1:
       "Su estancia aún no está confirmada. Sandy o el equipo de NuvoHauz revisará su solicitud.",
     body2:

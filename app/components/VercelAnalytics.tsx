@@ -2,6 +2,15 @@
 
 import { Analytics, type BeforeSendEvent } from "@vercel/analytics/next";
 
+function isPrivateGuestRoute(url: string): boolean {
+  try {
+    const pathname = new URL(url).pathname;
+    return pathname === "/reservation/status" || pathname.startsWith("/reservation/status/");
+  } catch {
+    return false;
+  }
+}
+
 function isAdminRoute(url: string): boolean {
   try {
     const pathname = new URL(url).pathname;
@@ -24,7 +33,7 @@ function sanitizePageViewEvent(event: BeforeSendEvent): BeforeSendEvent {
 }
 
 function analyticsBeforeSend(event: BeforeSendEvent): BeforeSendEvent | null {
-  if (isAdminRoute(event.url)) {
+  if (isAdminRoute(event.url) || isPrivateGuestRoute(event.url)) {
     return null;
   }
 

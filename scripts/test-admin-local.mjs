@@ -5,6 +5,7 @@
 
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
+import { randomUUID } from "node:crypto";
 
 const baseUrl = process.argv[2] ?? "http://localhost:3000";
 
@@ -68,6 +69,61 @@ function assert(condition, message) {
   if (!condition) {
     throw new Error(message);
   }
+}
+
+function addDaysToIsoDate(isoDate, days) {
+  const date = new Date(`${isoDate}T12:00:00.000Z`);
+  date.setUTCDate(date.getUTCDate() + days);
+  return date.toISOString().slice(0, 10);
+}
+
+/**
+ * Unique far-future range so reruns never collide with prior smoke-test blocks.
+ */
+function generateSmokeTestRange() {
+  const runId = `${Date.now()}-${randomUUID().slice(0, 8)}`;
+  const dayOffset = (Date.now() % 300) + 1;
+  const startDate = addDaysToIsoDate("2099-01-01", dayOffset);
+  const endDate = addDaysToIsoDate(startDate, 5);
+  const smokeNote = `admin-smoke-test:${runId}`;
+
+  return { runId, smokeNote, startDate, endDate };
+}
+
+async function findSmokeTestBlock(cookie, { smokeNote, startDate, endDate }) {
+  const dashboard = await request("/api/admin/reservations", {}, cookie);
+  if (dashboard.response.status !== 200) {
+    return null;
+  }
+
+  const blocks = dashboard.body.availabilityBlocks ?? [];
+  return (
+    blocks.find(
+      (block) =>
+        block.internalNote === smokeNote &&
+        block.startDate === startDate &&
+        block.endDate === endDate,
+    ) ?? null
+  );
+}
+
+async function deactivateSmokeTestBlock(cookie, blockId) {
+  if (!blockId) {
+    return;
+  }
+
+  await request(
+    "/api/admin/reservations",
+    {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Origin: new URL(baseUrl).origin,
+      },
+      body: JSON.stringify({ blockId }),
+    },
+    cookie,
+  );
 }
 
 async function run() {
@@ -195,34 +251,11 @@ async function run() {
     );
     results.push("Overlapping-date rejection test passed (preview mode)");
   } else {
-    const startDate = "2099-06-10";
-    const endDate = "2099-06-15";
-    const firstBlock = await request(
-      "/api/admin/reservations",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Origin: new URL(baseUrl).origin,
-        },
-        body: JSON.stringify({
-          startDate,
-          endDate,
-          reason: "maintenance",
-          note: "Overlap test block A",
-        }),
-      },
-      cookie,
-    );
+    const smokeTest = generateSmokeTestRange();
+    let createdBlockId = null;
 
-    if (firstBlock.response.status === 503) {
-      results.push(
-        "Overlapping-date rejection test skipped: Supabase RPC unavailable (apply local migration first)",
-      );
-    } else {
-      assert(firstBlock.response.status === 200, "First manual block should succeed");
-
-      const overlappingBlock = await request(
+    try {
+      const firstBlock = await request(
         "/api/admin/reservations",
         {
           method: "POST",
@@ -231,19 +264,57 @@ async function run() {
             Origin: new URL(baseUrl).origin,
           },
           body: JSON.stringify({
-            startDate: "2099-06-12",
-            endDate: "2099-06-18",
-            reason: "other",
-            note: "Overlap test block B",
+            startDate: smokeTest.startDate,
+            endDate: smokeTest.endDate,
+            reason: "maintenance",
+            note: smokeTest.smokeNote,
           }),
         },
         cookie,
       );
-      assert(
-        overlappingBlock.response.status === 409,
-        "Overlapping manual block should return 409",
-      );
-      results.push("Overlapping-date rejection test passed");
+
+      if (firstBlock.response.status === 503) {
+        results.push(
+          "Overlapping-date rejection test skipped: Supabase RPC unavailable (apply local migration first)",
+        );
+      } else {
+        assert(firstBlock.response.status === 200, "First manual block should succeed");
+
+        const createdBlock = await findSmokeTestBlock(cookie, smokeTest);
+        assert(createdBlock?.id, "Smoke-test block should appear on the dashboard");
+        createdBlockId = createdBlock.id;
+
+        const overlapStartDate = addDaysToIsoDate(smokeTest.startDate, 2);
+        const overlapEndDate = addDaysToIsoDate(smokeTest.endDate, 3);
+
+        const overlappingBlock = await request(
+          "/api/admin/reservations",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Origin: new URL(baseUrl).origin,
+            },
+            body: JSON.stringify({
+              startDate: overlapStartDate,
+              endDate: overlapEndDate,
+              reason: "other",
+              note: `${smokeTest.smokeNote}:overlap-attempt`,
+            }),
+          },
+          cookie,
+        );
+        assert(
+          overlappingBlock.response.status === 409,
+          "Overlapping manual block should return 409",
+        );
+        results.push("Overlapping-date rejection test passed");
+      }
+    } finally {
+      if (createdBlockId) {
+        await deactivateSmokeTestBlock(cookie, createdBlockId);
+        results.push("Smoke-test block cleanup completed");
+      }
     }
   }
 

@@ -51,7 +51,7 @@ export function getPreviewReservations(owner: OwnerName): AdminReservationsRespo
       outside_visitors: "not_sure",
       guest_message: null,
       created_at: new Date(Date.now() - 86400000).toISOString(),
-      hold_expires_at: new Date(Date.now() + 36 * 3600000).toISOString(),
+      hold_expires_at: new Date(Date.now() + 60 * 60 * 1000).toISOString(),
       reviewed_at: new Date(Date.now() - 3600000).toISOString(),
       reviewed_by: "Sandy",
     },
@@ -144,6 +144,7 @@ export function getPreviewReservations(owner: OwnerName): AdminReservationsRespo
       pricing_extra_guest_total_cents: null,
       pricing_maximum_guest_count: null,
       pricing_total_chargeable_guests: null,
+      guest_locale: null,
     }),
   );
 

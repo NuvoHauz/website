@@ -50,6 +50,7 @@ export interface BookingRequestInsert {
   pricing_extra_guest_total_cents?: number | null;
   pricing_maximum_guest_count?: number | null;
   pricing_total_chargeable_guests?: number | null;
+  guest_locale?: "en" | "es" | "fr" | "de" | null;
 }
 
 export interface PropertyPricingSettingsRow {
@@ -144,6 +145,39 @@ export interface BookingRequestRow extends BookingRequestInsert {
   pricing_extra_guest_total_cents: number | null;
   pricing_maximum_guest_count: number | null;
   pricing_total_chargeable_guests: number | null;
+  guest_locale: "en" | "es" | "fr" | "de" | null;
+}
+
+export type GuestNotificationEventType =
+  | "request_received"
+  | "approved"
+  | "confirmed"
+  | "declined"
+  | "expired"
+  | "cancelled";
+
+export type GuestNotificationDeliveryStatus =
+  | "pending"
+  | "sending"
+  | "sent"
+  | "failed"
+  | "delivered";
+
+export interface BookingNotificationDeliveryRow {
+  id: string;
+  booking_request_id: string;
+  event_type: GuestNotificationEventType;
+  recipient_type: "guest" | "owner";
+  recipient_masked: string;
+  status: GuestNotificationDeliveryStatus;
+  attempt_count: number;
+  resend_email_id: string | null;
+  sent_at: string | null;
+  delivered_at: string | null;
+  last_error_code: string | null;
+  claimed_at: string | null;
+  created_at: string;
+  updated_at: string;
 }
 
 export type BookingTripReason =

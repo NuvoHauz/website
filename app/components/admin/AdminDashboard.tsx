@@ -145,6 +145,28 @@ export default function AdminDashboard({
     return null;
   }
 
+  async function handleRetryGuestEmail(
+    bookingRequestId: string,
+    eventType: string,
+  ): Promise<string | null> {
+    const response = await fetch("/api/admin/guest-notifications/retry", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ bookingRequestId, eventType }),
+    });
+
+    if (response.status === 409) {
+      return "This guest email is not eligible for retry.";
+    }
+
+    if (!response.ok) {
+      return "Unable to retry this guest email.";
+    }
+
+    await loadData();
+    return null;
+  }
+
   const owner = data.owner ?? initialOwner;
 
   return (
@@ -208,6 +230,7 @@ export default function AdminDashboard({
           <AdminPendingRequests
             requests={data.bookingRequests}
             onAction={handleReservationAction}
+            onRetryGuestEmail={handleRetryGuestEmail}
           />
           <AdminManualBlockForm
             blocks={data.availabilityBlocks}

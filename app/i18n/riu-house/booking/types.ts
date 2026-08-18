@@ -106,6 +106,13 @@ export interface RiuHouseBookingTranslations {
   confirmation: {
     heading: string;
     referenceLabel: string;
+    pendingBadge: string;
+    emailSentSuccess: string;
+    emailFailed: string;
+    emailFailedHint: string;
+    emailUnavailable: string;
+    spamNote: string;
+    viewStatusButton: string;
     body1: string;
     body2: string;
     body3: string;

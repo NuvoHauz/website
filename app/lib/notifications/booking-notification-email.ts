@@ -2,6 +2,7 @@ import "server-only";
 
 import type { BookingRequestRow } from "../supabase/database.types";
 import { parseIsoDate } from "../booking/costa-rica-dates";
+import { escapeHtml } from "./email-text";
 import {
   formatOutsideVisitorsLabel,
   formatTripReasonLabel,
@@ -13,6 +14,8 @@ import {
   getResendClient,
 } from "./resend-client";
 
+export { escapeHtml } from "./email-text";
+
 export type BookingNotificationErrorCode =
   | "mail_not_configured"
   | "resend_client_unavailable"
@@ -22,15 +25,6 @@ export type BookingNotificationErrorCode =
 export type BookingNotificationSendResult =
   | { ok: true; providerId: string }
   | { ok: false; errorCode: BookingNotificationErrorCode; httpStatus?: number };
-
-export function escapeHtml(value: string): string {
-  return value
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#39;");
-}
 
 function formatShortDisplayDate(iso: string): string {
   const { y, m, d } = parseIsoDate(iso);

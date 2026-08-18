@@ -1,8 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import { guestEmailPreviewForAction } from "../../lib/notifications/guest/status-events";
 import { isPendingStatus } from "../../lib/admin/reservation-labels";
 import type { AdminBookingRequest, ReservationAction } from "../../lib/admin/reservation-types";
+import type { GuestNotificationEvent } from "../../lib/notifications/guest/types";
 
 type AdminPendingRequestsProps = {
   requests: AdminBookingRequest[];
@@ -10,7 +12,28 @@ type AdminPendingRequestsProps = {
     bookingRequestId: string,
     action: ReservationAction,
   ) => Promise<string | null>;
+  onRetryGuestEmail: (
+    bookingRequestId: string,
+    eventType: GuestNotificationEvent,
+  ) => Promise<string | null>;
 };
+
+function formatGuestEmailStatus(status: string | null): string {
+  if (!status) return "Not sent yet";
+  switch (status) {
+    case "sent":
+    case "delivered":
+      return "Accepted for delivery";
+    case "failed":
+      return "Failed";
+    case "sending":
+      return "Sending";
+    case "pending":
+      return "Pending";
+    default:
+      return status;
+  }
+}
 
 function formatDateTime(value: string | null): string {
   if (!value) return "—";
@@ -23,9 +46,11 @@ function formatDateTime(value: string | null): string {
 export default function AdminPendingRequests({
   requests,
   onAction,
+  onRetryGuestEmail,
 }: AdminPendingRequestsProps) {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [busyAction, setBusyAction] = useState<ReservationAction | null>(null);
+  const [retryBusy, setRetryBusy] = useState(false);
   const [feedback, setFeedback] = useState<{
     text: string;
     kind: "success" | "error";
@@ -46,16 +71,18 @@ export default function AdminPendingRequests({
 
     const destructive = action === "decline" || action === "cancel";
     const labels: Record<ReservationAction, string> = {
-      approve_hold: "approve this request with a 48-hour hold",
+      approve_hold: "approve this request with a 1-hour hold",
       confirm: "confirm this reservation",
       decline: "decline this request",
       cancel: "cancel this reservation",
     };
 
-    if (
-      destructive &&
-      !window.confirm(`Are you sure you want to ${labels[action]}?`)
-    ) {
+    const preview = guestEmailPreviewForAction(action);
+    const confirmMessage = destructive
+      ? `Are you sure you want to ${labels[action]}?\n\n${preview}`
+      : `${preview}\n\nContinue with ${labels[action]}?`;
+
+    if (!window.confirm(confirmMessage)) {
       return;
     }
 
@@ -71,6 +98,22 @@ export default function AdminPendingRequests({
 
     setFeedback({ text: "Reservation updated.", kind: "success" });
     setSelectedId(null);
+  }
+
+  async function runRetry() {
+    if (!selected?.guestEmailLastEvent) return;
+    setRetryBusy(true);
+    setFeedback(null);
+    const error = await onRetryGuestEmail(
+      selected.id,
+      selected.guestEmailLastEvent as GuestNotificationEvent,
+    );
+    setRetryBusy(false);
+    if (error) {
+      setFeedback({ text: error, kind: "error" });
+      return;
+    }
+    setFeedback({ text: "Guest email retry queued.", kind: "success" });
   }
 
   return (
@@ -146,6 +189,24 @@ export default function AdminPendingRequests({
             <Detail label="Reviewed by" value={selected.reviewedBy ?? "—"} />
             <Detail label="Reviewed at" value={formatDateTime(selected.reviewedAt)} />
             <Detail label="Hold expires" value={formatDateTime(selected.holdExpiresAt)} />
+            <Detail
+              label="Guest email status"
+              value={formatGuestEmailStatus(selected.guestEmailStatus)}
+            />
+            <Detail
+              label="Last guest email"
+              value={selected.guestEmailLastEvent ?? "—"}
+            />
+            <Detail
+              label="Guest email sent"
+              value={formatDateTime(selected.guestEmailSentAt)}
+            />
+            {selected.guestEmailLastError ? (
+              <Detail
+                label="Guest email error"
+                value={selected.guestEmailLastError}
+              />
+            ) : null}
           </div>
           {selected.guestMessage ? (
             <div className="mt-4">
@@ -158,10 +219,23 @@ export default function AdminPendingRequests({
             </div>
           ) : null}
 
+          {selected.guestEmailStatus === "failed" && selected.guestEmailLastEvent ? (
+            <div className="mt-4">
+              <button
+                type="button"
+                disabled={retryBusy}
+                onClick={runRetry}
+                className="inline-flex min-h-[44px] items-center rounded-full border border-[#C69C6D] px-4 py-2 text-sm text-[#8B6A3E] hover:bg-[#FFF9F2] disabled:opacity-60"
+              >
+                {retryBusy ? "Retrying..." : "Retry failed guest email"}
+              </button>
+            </div>
+          ) : null}
+
           <div className="mt-5 flex flex-wrap gap-2">
             {selected.status !== "approved_hold" && selected.status !== "confirmed" ? (
               <ActionButton
-                label="Approve with 48-hour hold"
+                label="Approve with 1-hour hold"
                 busy={busyAction === "approve_hold"}
                 onClick={() => runAction("approve_hold")}
               />

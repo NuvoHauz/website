@@ -47,6 +47,10 @@ export default function BookingRequestWizard({
   const [step, setStep] = useState<1 | 2>(1);
   const [submitted, setSubmitted] = useState(false);
   const [reference, setReference] = useState("");
+  const [statusUrl, setStatusUrl] = useState<string | null>(null);
+  const [guestNotificationStatus, setGuestNotificationStatus] = useState<
+    "sent" | "failed" | "unavailable" | null
+  >(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState<FormErrors>({});
 
@@ -183,6 +187,8 @@ export default function BookingRequestWizard({
     setStep(1);
     setSubmitted(false);
     setReference("");
+    setStatusUrl(null);
+    setGuestNotificationStatus(null);
     setIsSubmitting(false);
     setErrors({});
     setCheckIn("");
@@ -326,12 +332,15 @@ export default function BookingRequestWizard({
           agreedHouseRules,
           agreedRequest,
           honeypot,
+          guestLocale: locale,
         }),
       });
 
       const payload = (await response.json()) as {
         success?: boolean;
         requestReference?: string;
+        statusUrl?: string | null;
+        guestNotificationStatus?: "sent" | "failed" | "unavailable";
         error?: string;
         fields?: string[];
       };
@@ -366,6 +375,8 @@ export default function BookingRequestWizard({
       }
 
       setReference(payload.requestReference);
+      setStatusUrl(payload.statusUrl ?? null);
+      setGuestNotificationStatus(payload.guestNotificationStatus ?? "unavailable");
       setSubmitted(true);
     } catch {
       setSubmitError(bt.errors.submitFailed);
@@ -391,17 +402,41 @@ export default function BookingRequestWizard({
           {bt.confirmation.referenceLabel}:{" "}
           <span className="font-medium text-[#111111]">{reference}</span>
         </p>
+        <span className="mt-4 inline-flex rounded-full bg-[#C69C6D]/15 px-3 py-1 text-xs font-medium uppercase tracking-[0.12em] text-[#8B6A3E]">
+          {bt.confirmation.pendingBadge}
+        </span>
         {checkIn && checkOut && (
           <p className="mt-2 text-sm text-[#111111]/70">
             {formatDisplayDate(checkIn, locale)} → {formatDisplayDate(checkOut, locale)}
           </p>
         )}
         <div className="mt-6 space-y-3 text-sm leading-relaxed text-[#111111]/70">
+          {guestNotificationStatus === "sent" ? (
+            <>
+              <p>{bt.confirmation.emailSentSuccess}</p>
+              <p>{bt.confirmation.spamNote}</p>
+            </>
+          ) : guestNotificationStatus === "failed" ? (
+            <>
+              <p>{bt.confirmation.emailFailed}</p>
+              <p>{bt.confirmation.emailFailedHint}</p>
+            </>
+          ) : (
+            <p>{bt.confirmation.emailUnavailable}</p>
+          )}
           <p>{bt.confirmation.body1}</p>
           <p>{bt.confirmation.body2}</p>
           <p>{bt.confirmation.body3}</p>
         </div>
         <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+          {statusUrl ? (
+            <a
+              href={statusUrl}
+              className="inline-flex min-h-[44px] items-center justify-center rounded-full bg-[#C69C6D] px-8 py-3.5 text-sm font-medium tracking-wide text-white transition-all duration-300 hover:bg-[#b58a5c] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C69C6D]"
+            >
+              {bt.confirmation.viewStatusButton}
+            </a>
+          ) : null}
           <button
             type="button"
             onClick={resetForm}

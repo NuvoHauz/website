@@ -64,6 +64,10 @@ export interface AdminBookingRequest {
   holdExpiresAt: string | null;
   reviewedAt: string | null;
   reviewedBy: string | null;
+  guestEmailStatus: string | null;
+  guestEmailLastEvent: string | null;
+  guestEmailLastError: string | null;
+  guestEmailSentAt: string | null;
 }
 
 export interface AdminAvailabilityBlock {

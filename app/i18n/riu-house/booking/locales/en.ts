@@ -117,6 +117,18 @@ const en: RiuHouseBookingTranslations = {
   confirmation: {
     heading: "Your request has been received.",
     referenceLabel: "Reference",
+    pendingBadge: "Pending review",
+    emailSentSuccess:
+      "Your confirmation email was accepted for delivery. Resend will handle final delivery to your inbox.",
+    emailFailed:
+      "We saved your request, but the confirmation email could not be delivered right now.",
+    emailFailedHint:
+      "Please save the secure status link below so you can check your request at any time.",
+    emailUnavailable:
+      "Your request was saved. Email delivery is temporarily unavailable, but you can use the secure status link below.",
+    spamNote:
+      "If you do not see the email within a few minutes, please check your spam or promotions folder.",
+    viewStatusButton: "View request status",
     body1:
       "Your stay is not yet confirmed. Sandy or the NuvoHauz team will review your request.",
     body2:
