@@ -1,0 +1,524 @@
+"use client";
+
+import { useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
+import { CATEGORY_LABELS } from "../../../lib/bookkeeping/default-rules";
+import type {
+  BookkeeperRunResult,
+  BookkeepingCategoryId,
+  CategoryAnswer,
+  LearnedPattern,
+} from "../../../lib/bookkeeping/types";
+
+type ImportDraft = {
+  id: string;
+  accountId: string;
+  accountName: string;
+  entity: string;
+  fileName: string;
+  csvText: string;
+};
+
+function money(cents: number): string {
+  const sign = cents < 0 ? "-" : "";
+  return `${sign}$${(Math.abs(cents) / 100).toFixed(2)}`;
+}
+
+function downloadText(filename: string, contents: string, mime: string) {
+  const blob = new Blob([contents], { type: mime });
+  const url = URL.createObjectURL(blob);
+  const anchor = document.createElement("a");
+  anchor.href = url;
+  anchor.download = filename;
+  anchor.click();
+  URL.revokeObjectURL(url);
+}
+
+function defaultPeriod(): { start: string; end: string } {
+  const now = new Date();
+  const start = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1));
+  const end = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() + 1, 0));
+  return {
+    start: start.toISOString().slice(0, 10),
+    end: end.toISOString().slice(0, 10),
+  };
+}
+
+function readLearnedPatterns(): LearnedPattern[] {
+  try {
+    const raw = window.localStorage.getItem("nuvohauz.bookkeeping.learnedPatterns");
+    if (!raw) return [];
+    return JSON.parse(raw) as LearnedPattern[];
+  } catch {
+    return [];
+  }
+}
+
+function writeLearnedPatterns(patterns: LearnedPattern[]) {
+  window.localStorage.setItem(
+    "nuvohauz.bookkeeping.learnedPatterns",
+    JSON.stringify(patterns),
+  );
+}
+
+export default function BookkeepingWorkspace() {
+  const router = useRouter();
+  const initialPeriod = useMemo(() => defaultPeriod(), []);
+  const [periodStart, setPeriodStart] = useState(initialPeriod.start);
+  const [periodEnd, setPeriodEnd] = useState(initialPeriod.end);
+  const [imports, setImports] = useState<ImportDraft[]>([
+    {
+      id: "import_1",
+      accountId: "checking",
+      accountName: "Operating Checking",
+      entity: "Riu House",
+      fileName: "",
+      csvText: "",
+    },
+  ]);
+  const [result, setResult] = useState<BookkeeperRunResult | null>(null);
+  const [answers, setAnswers] = useState<Record<string, BookkeepingCategoryId>>({});
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  async function onPickFile(importId: string, file: File | null) {
+    if (!file) return;
+    const csvText = await file.text();
+    setImports((current) =>
+      current.map((entry) =>
+        entry.id === importId
+          ? { ...entry, fileName: file.name, csvText }
+          : entry,
+      ),
+    );
+  }
+
+  function addAccount() {
+    setImports((current) => [
+      ...current,
+      {
+        id: `import_${current.length + 1}_${Date.now()}`,
+        accountId: `account_${current.length + 1}`,
+        accountName: `Account ${current.length + 1}`,
+        entity: "Riu House",
+        fileName: "",
+        csvText: "",
+      },
+    ]);
+  }
+
+  async function processImports() {
+    setBusy(true);
+    setError(null);
+
+    try {
+      const response = await fetch("/api/admin/bookkeeping/process", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          action: "process",
+          period: { start: periodStart, end: periodEnd },
+          learnedPatterns: readLearnedPatterns(),
+          imports: imports.map((entry) => ({
+            accountId: entry.accountId,
+            accountName: entry.accountName,
+            entity: entry.entity,
+            csvText: entry.csvText,
+          })),
+        }),
+      });
+
+      if (response.status === 401) {
+        router.push("/admin/login");
+        return;
+      }
+
+      const payload = (await response.json()) as BookkeeperRunResult & {
+        error?: string;
+        message?: string;
+      };
+
+      if (!response.ok) {
+        setError(payload.message ?? payload.error ?? "Unable to process imports.");
+        return;
+      }
+
+      setResult(payload);
+      setAnswers({});
+      writeLearnedPatterns(payload.learnedPatterns);
+    } catch {
+      setError("Unable to process imports.");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function submitAnswers() {
+    if (!result) return;
+    setBusy(true);
+    setError(null);
+
+    try {
+      const answerList: CategoryAnswer[] = result.questions
+        .filter((question) => answers[question.transactionId])
+        .map((question) => ({
+          questionId: question.id,
+          transactionId: question.transactionId,
+          categoryId: answers[question.transactionId],
+          learnPattern: true,
+        }));
+
+      if (answerList.length === 0) {
+        setError("Select a category for at least one open question.");
+        setBusy(false);
+        return;
+      }
+
+      const response = await fetch("/api/admin/bookkeeping/process", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          action: "answer",
+          period: { start: periodStart, end: periodEnd },
+          categorized: result.categorized,
+          questions: result.questions,
+          answers: answerList,
+          learnedPatterns: result.learnedPatterns,
+        }),
+      });
+
+      if (response.status === 401) {
+        router.push("/admin/login");
+        return;
+      }
+
+      const payload = (await response.json()) as BookkeeperRunResult & {
+        error?: string;
+        message?: string;
+      };
+
+      if (!response.ok) {
+        setError(payload.message ?? payload.error ?? "Unable to apply answers.");
+        return;
+      }
+
+      setResult(payload);
+      setAnswers({});
+      writeLearnedPatterns(payload.learnedPatterns);
+    } catch {
+      setError("Unable to apply answers.");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  return (
+    <div className="space-y-8">
+      <section className="rounded-2xl border border-[#111111]/10 bg-white p-5 sm:p-6">
+        <h2 className="font-serif text-2xl font-light text-[#111111]">
+          Import QuickBooks exports
+        </h2>
+        <p className="mt-2 max-w-3xl text-sm leading-relaxed text-[#111111]/70">
+          Upload transaction CSVs from each account (checking, credit cards, etc.).
+          The bookkeeper agent categorizes by pattern, asks clarifying questions,
+          then builds a consolidated log and CPA-ready package for the month.
+        </p>
+
+        <div className="mt-5 grid gap-4 sm:grid-cols-2">
+          <label className="block text-sm">
+            <span className="text-[#111111]/60">Period start</span>
+            <input
+              type="date"
+              value={periodStart}
+              onChange={(event) => setPeriodStart(event.target.value)}
+              className="mt-1 w-full rounded-xl border border-[#111111]/15 bg-[#F8F6F2] px-3 py-2.5"
+            />
+          </label>
+          <label className="block text-sm">
+            <span className="text-[#111111]/60">Period end</span>
+            <input
+              type="date"
+              value={periodEnd}
+              onChange={(event) => setPeriodEnd(event.target.value)}
+              className="mt-1 w-full rounded-xl border border-[#111111]/15 bg-[#F8F6F2] px-3 py-2.5"
+            />
+          </label>
+        </div>
+
+        <div className="mt-6 space-y-4">
+          {imports.map((entry) => (
+            <div
+              key={entry.id}
+              className="grid gap-3 rounded-xl border border-[#111111]/08 bg-[#F8F6F2]/70 p-4 sm:grid-cols-2 lg:grid-cols-4"
+            >
+              <label className="block text-sm">
+                <span className="text-[#111111]/60">Account id</span>
+                <input
+                  value={entry.accountId}
+                  onChange={(event) =>
+                    setImports((current) =>
+                      current.map((row) =>
+                        row.id === entry.id
+                          ? { ...row, accountId: event.target.value }
+                          : row,
+                      ),
+                    )
+                  }
+                  className="mt-1 w-full rounded-xl border border-[#111111]/15 bg-white px-3 py-2.5"
+                />
+              </label>
+              <label className="block text-sm">
+                <span className="text-[#111111]/60">Account name</span>
+                <input
+                  value={entry.accountName}
+                  onChange={(event) =>
+                    setImports((current) =>
+                      current.map((row) =>
+                        row.id === entry.id
+                          ? { ...row, accountName: event.target.value }
+                          : row,
+                      ),
+                    )
+                  }
+                  className="mt-1 w-full rounded-xl border border-[#111111]/15 bg-white px-3 py-2.5"
+                />
+              </label>
+              <label className="block text-sm">
+                <span className="text-[#111111]/60">Entity / property</span>
+                <input
+                  value={entry.entity}
+                  onChange={(event) =>
+                    setImports((current) =>
+                      current.map((row) =>
+                        row.id === entry.id
+                          ? { ...row, entity: event.target.value }
+                          : row,
+                      ),
+                    )
+                  }
+                  className="mt-1 w-full rounded-xl border border-[#111111]/15 bg-white px-3 py-2.5"
+                />
+              </label>
+              <label className="block text-sm">
+                <span className="text-[#111111]/60">QuickBooks CSV</span>
+                <input
+                  type="file"
+                  accept=".csv,text/csv"
+                  onChange={(event) =>
+                    void onPickFile(entry.id, event.target.files?.[0] ?? null)
+                  }
+                  className="mt-1 w-full text-sm"
+                />
+                {entry.fileName ? (
+                  <p className="mt-1 text-xs text-[#1B3D32]">{entry.fileName}</p>
+                ) : null}
+              </label>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-5 flex flex-wrap gap-3">
+          <button
+            type="button"
+            onClick={addAccount}
+            className="inline-flex min-h-[44px] items-center rounded-full border border-[#111111]/20 px-5 py-2.5 text-sm"
+          >
+            Add another account
+          </button>
+          <button
+            type="button"
+            disabled={busy}
+            onClick={() => void processImports()}
+            className="inline-flex min-h-[44px] items-center rounded-full bg-[#1B3D32] px-5 py-2.5 text-sm text-white disabled:opacity-60"
+          >
+            {busy ? "Working…" : "Run bookkeeper"}
+          </button>
+        </div>
+      </section>
+
+      {error ? (
+        <p className="rounded-xl bg-red-50 px-4 py-3 text-sm text-red-700">{error}</p>
+      ) : null}
+
+      {result ? (
+        <>
+          <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+            {[
+              ["Transactions", String(result.log.transactions.length)],
+              ["Open questions", String(result.questions.length)],
+              ["Income", money(result.profitAndLoss.incomeCents)],
+              ["Net operating", money(result.profitAndLoss.netCents)],
+            ].map(([label, value]) => (
+              <div
+                key={label}
+                className="rounded-2xl border border-[#111111]/10 bg-white p-5"
+              >
+                <p className="text-xs uppercase tracking-[0.22em] text-[#111111]/45">
+                  {label}
+                </p>
+                <p className="mt-3 font-serif text-3xl font-light text-[#111111]">
+                  {value}
+                </p>
+              </div>
+            ))}
+          </section>
+
+          {result.questions.length > 0 ? (
+            <section className="rounded-2xl border border-[#111111]/10 bg-white p-5 sm:p-6">
+              <h2 className="font-serif text-2xl font-light">Categorization questions</h2>
+              <p className="mt-2 text-sm text-[#111111]/70">
+                Answer these so the agent can learn patterns and finish the month cleanly.
+              </p>
+              <div className="mt-5 space-y-4">
+                {result.questions.map((question) => (
+                  <div
+                    key={question.id}
+                    className="rounded-xl border border-[#111111]/08 bg-[#F8F6F2]/70 p-4"
+                  >
+                    <p className="text-sm text-[#111111]">{question.prompt}</p>
+                    {question.evidence.length > 0 ? (
+                      <p className="mt-1 text-xs text-[#111111]/50">
+                        {question.evidence.join(" · ")}
+                      </p>
+                    ) : null}
+                    <select
+                      className="mt-3 w-full rounded-xl border border-[#111111]/15 bg-white px-3 py-2.5 text-sm"
+                      value={answers[question.transactionId] ?? ""}
+                      onChange={(event) =>
+                        setAnswers((current) => ({
+                          ...current,
+                          [question.transactionId]: event.target
+                            .value as BookkeepingCategoryId,
+                        }))
+                      }
+                    >
+                      <option value="">Select category…</option>
+                      {question.options.map((option) => (
+                        <option key={option.value} value={option.value}>
+                          {option.label}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                ))}
+              </div>
+              <button
+                type="button"
+                disabled={busy}
+                onClick={() => void submitAnswers()}
+                className="mt-5 inline-flex min-h-[44px] items-center rounded-full bg-[#C69C6D] px-5 py-2.5 text-sm text-[#111111] disabled:opacity-60"
+              >
+                Apply answers & learn patterns
+              </button>
+            </section>
+          ) : null}
+
+          <section className="rounded-2xl border border-[#111111]/10 bg-white p-5 sm:p-6">
+            <div className="flex flex-wrap items-end justify-between gap-3">
+              <div>
+                <h2 className="font-serif text-2xl font-light">Consolidated transaction log</h2>
+                <p className="mt-2 text-sm text-[#111111]/70">
+                  Ready for monthly recon and CPA review.
+                </p>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                <button
+                  type="button"
+                  onClick={() =>
+                    downloadText(
+                      `consolidated-${periodStart}-${periodEnd}.csv`,
+                      result.cpaPack.consolidatedCsv,
+                      "text/csv",
+                    )
+                  }
+                  className="rounded-full border border-[#111111]/20 px-4 py-2 text-sm"
+                >
+                  Download CSV
+                </button>
+                <button
+                  type="button"
+                  onClick={() =>
+                    downloadText(
+                      `pnl-${periodStart}-${periodEnd}.csv`,
+                      result.cpaPack.profitAndLossCsv,
+                      "text/csv",
+                    )
+                  }
+                  className="rounded-full border border-[#111111]/20 px-4 py-2 text-sm"
+                >
+                  Download P&L
+                </button>
+                <button
+                  type="button"
+                  onClick={() =>
+                    downloadText(
+                      `cpa-summary-${periodStart}-${periodEnd}.md`,
+                      `${result.cpaPack.summaryMarkdown}\n${result.cpaPack.openItemsMarkdown}`,
+                      "text/markdown",
+                    )
+                  }
+                  className="rounded-full bg-[#1B3D32] px-4 py-2 text-sm text-white"
+                >
+                  Download CPA pack
+                </button>
+              </div>
+            </div>
+
+            <div className="mt-5 overflow-x-auto">
+              <table className="min-w-full text-left text-sm">
+                <thead className="border-b border-[#111111]/10 text-xs uppercase tracking-[0.16em] text-[#111111]/45">
+                  <tr>
+                    <th className="px-2 py-3 font-medium">Date</th>
+                    <th className="px-2 py-3 font-medium">Account</th>
+                    <th className="px-2 py-3 font-medium">Description</th>
+                    <th className="px-2 py-3 font-medium">Category</th>
+                    <th className="px-2 py-3 font-medium">Amount</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {result.log.transactions.map((txn) => (
+                    <tr key={txn.id} className="border-b border-[#111111]/05">
+                      <td className="px-2 py-3 whitespace-nowrap">{txn.date}</td>
+                      <td className="px-2 py-3">{txn.source.accountName}</td>
+                      <td className="px-2 py-3">{txn.description}</td>
+                      <td className="px-2 py-3">
+                        {CATEGORY_LABELS[txn.categoryId]}
+                        <span className="ml-2 text-xs text-[#111111]/40">
+                          {txn.confidence}
+                        </span>
+                      </td>
+                      <td className="px-2 py-3 whitespace-nowrap">
+                        {money(txn.amountCents)}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section className="rounded-2xl border border-[#111111]/10 bg-white p-5 sm:p-6">
+            <h2 className="font-serif text-2xl font-light">Specialist agent handoffs</h2>
+            <p className="mt-2 text-sm text-[#111111]/70">
+              The bookkeeper emits structured packages other agents can consume
+              (P&amp;L, reconciliation, tax prep).
+            </p>
+            <ul className="mt-4 space-y-2 text-sm">
+              {result.handoffs.map((handoff) => (
+                <li
+                  key={`${handoff.from}-${handoff.to}-${handoff.purpose}`}
+                  className="rounded-xl bg-[#F8F6F2] px-4 py-3"
+                >
+                  <span className="font-medium text-[#1B3D32]">
+                    {handoff.from} → {handoff.to}
+                  </span>
+                  <span className="text-[#111111]/70"> — {handoff.purpose}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        </>
+      ) : null}
+    </div>
+  );
+}
