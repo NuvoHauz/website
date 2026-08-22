@@ -33,4 +33,9 @@ export {
   handoffToTaxPrep,
   handoffToReconciliation,
 } from "./agent-protocol";
+export {
+  buildQboBankRuleSuggestions,
+  qboBankRulesToCsv,
+  qboBankRulesSetupMarkdown,
+} from "./qbo-bank-rules";
 export { runBookkeeper, continueBookkeeperWithAnswers } from "./run-bookkeeper";

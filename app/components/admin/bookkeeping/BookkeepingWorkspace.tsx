@@ -226,13 +226,14 @@ export default function BookkeepingWorkspace() {
     <div className="space-y-8">
       <section className="rounded-2xl border border-[#111111]/10 bg-white p-5 sm:p-6">
         <h2 className="font-serif text-2xl font-light text-[#111111]">
-          QuickBooks Online — batch Chart of Accounts
+          Automate QBO pending classification
         </h2>
         <p className="mt-2 max-w-3xl text-sm leading-relaxed text-[#111111]/70">
-          Instead of categorizing one transaction at a time in every bank register
-          inside the {companyName} QBO file, upload exports from each account.
-          The bookkeeper maps them to your Chart of Accounts, asks only the unclear
-          ones, then gives you COA batches to apply in QBO.
+          Those pending counts on Forum, Amex, and other linked accounts are already
+          in QuickBooks. Intuit does not let apps categorize For review via API.
+          This tool learns merchants and builds <strong>Bank Rules</strong> you
+          install once in QBO — then QuickBooks classifies matching pending and
+          future transactions for you.
         </p>
 
         <div className="mt-5 grid gap-4 sm:grid-cols-3">
@@ -367,7 +368,7 @@ export default function BookkeepingWorkspace() {
             onClick={() => void processImports()}
             className="inline-flex min-h-[44px] items-center rounded-full bg-[#1B3D32] px-5 py-2.5 text-sm text-white disabled:opacity-60"
           >
-            {busy ? "Working…" : "Categorize for Chart of Accounts"}
+            {busy ? "Working…" : "Build automation rules"}
           </button>
         </div>
       </section>
@@ -380,9 +381,9 @@ export default function BookkeepingWorkspace() {
         <>
           <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
             {[
-              ["Transactions", String(result.log.transactions.length)],
-              ["COA batches", String(result.log.qboBatches.length)],
-              ["Open questions", String(result.questions.length)],
+              ["Transactions scanned", String(result.log.transactions.length)],
+              ["Bank rules ready", String(result.bankRules.length)],
+              ["Edge-case questions", String(result.questions.length)],
               ["Net operating", money(result.profitAndLoss.netCents)],
             ].map(([label, value]) => (
               <div
@@ -403,11 +404,77 @@ export default function BookkeepingWorkspace() {
             <div className="flex flex-wrap items-end justify-between gap-3">
               <div>
                 <h2 className="font-serif text-2xl font-light">
+                  QBO Bank Rules (this is the automation)
+                </h2>
+                <p className="mt-2 max-w-3xl text-sm text-[#111111]/70">
+                  Install these in QuickBooks → Bookkeeping → Rules. Enable{" "}
+                  <strong>Also apply to transactions waiting for review</strong> so
+                  current pending on Forum / Amex / etc. get classified by QBO.
+                </p>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                <button
+                  type="button"
+                  onClick={() =>
+                    downloadText(
+                      `qbo-bank-rules-${companyId}-${periodStart}-${periodEnd}.csv`,
+                      result.cpaPack.qboBankRulesCsv,
+                      "text/csv",
+                    )
+                  }
+                  className="rounded-full border border-[#111111]/20 px-4 py-2 text-sm"
+                >
+                  Download rules CSV
+                </button>
+                <button
+                  type="button"
+                  onClick={() =>
+                    downloadText(
+                      `qbo-bank-rules-setup-${companyId}-${periodStart}-${periodEnd}.md`,
+                      result.cpaPack.qboBankRulesMarkdown,
+                      "text/markdown",
+                    )
+                  }
+                  className="rounded-full bg-[#1B3D32] px-4 py-2 text-sm text-white"
+                >
+                  Download setup guide
+                </button>
+              </div>
+            </div>
+
+            <div className="mt-5 overflow-x-auto">
+              <table className="min-w-full text-left text-sm">
+                <thead className="border-b border-[#111111]/10 text-xs uppercase tracking-[0.16em] text-[#111111]/45">
+                  <tr>
+                    <th className="px-2 py-3 font-medium">When bank text contains</th>
+                    <th className="px-2 py-3 font-medium">Assign QBO account</th>
+                    <th className="px-2 py-3 font-medium">Money</th>
+                    <th className="px-2 py-3 font-medium">Support</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {result.bankRules.slice(0, 40).map((rule) => (
+                    <tr key={rule.id} className="border-b border-[#111111]/05">
+                      <td className="px-2 py-3 font-mono text-xs">{rule.contains}</td>
+                      <td className="px-2 py-3">{rule.qboAccountName}</td>
+                      <td className="px-2 py-3">{rule.moneyMovement.replace("_", " ")}</td>
+                      <td className="px-2 py-3">{rule.supportCount}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section className="rounded-2xl border border-[#111111]/10 bg-white p-5 sm:p-6">
+            <div className="flex flex-wrap items-end justify-between gap-3">
+              <div>
+                <h2 className="font-serif text-2xl font-light">
                   Apply by Chart of Accounts (not one-by-one)
                 </h2>
                 <p className="mt-2 text-sm text-[#111111]/70">
-                  Each bucket is a QBO category. Finish one account across all bank
-                  registers, then move to the next.
+                  Optional fallback while rules are being installed. Prefer Bank Rules
+                  above so QBO does the work.
                 </p>
               </div>
               <div className="flex flex-wrap gap-2">
@@ -568,7 +635,7 @@ export default function BookkeepingWorkspace() {
                   onClick={() =>
                     downloadText(
                       `cpa-pack-${companyId}-${periodStart}-${periodEnd}.md`,
-                      `${result.cpaPack.summaryMarkdown}\n${result.cpaPack.qboCoaApplyMarkdown}\n${result.cpaPack.openItemsMarkdown}`,
+                      `${result.cpaPack.summaryMarkdown}\n${result.cpaPack.qboBankRulesMarkdown}\n${result.cpaPack.openItemsMarkdown}`,
                       "text/markdown",
                     )
                   }

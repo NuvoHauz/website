@@ -1,39 +1,35 @@
-# Bookkeeper agent — Alfa Renovations (QuickBooks Online)
+# Bookkeeper agent — automate Alfa Renovations classification in QBO
 
-Use this when the owner needs to categorize bank/credit transactions into the **Alfa Renovations** QBO Chart of Accounts without doing it one-by-one in every register.
+## What you actually want
 
-## Pain this solves
+Those blue **pending** counts (Forum, Amex, Rental House, Banco Nacional) are bank-feed rows already in QuickBooks. You want **QuickBooks to classify them**, not a spreadsheet telling you what to click.
 
-In QuickBooks Online they normally open each bank/credit account and assign a Chart of Accounts category per transaction. This agent:
+## Hard Intuit limit
 
-1. Ingests CSV exports from **all** accounts for the month
-2. Maps rows to the Alfa Renovations COA (Job Materials, Subcontractors, Job Income, etc.)
-3. Asks only unclear questions and learns merchant → COA patterns
-4. Emits **COA batches** so they apply one QBO account at a time across registers
-5. Hands off P&L / recon / CPA packs to specialist agents
+QuickBooks Online’s public API **cannot** read or categorize Banking → For review / pending. Apps cannot push categories onto those 493 rows via API.
 
-## Company file
+## Supported automation path
 
-Default profile: `alfa-renovations` in `default-rules.ts`  
-QBO account names live on `chartOfAccounts` (adjust names there to match the live QBO file exactly).
+**QBO Bank Rules** — created once inside QuickBooks. Matching pending + future bank-feed transactions are categorized by QBO itself (optionally Auto-add).
+
+This agent’s job:
+1. Learn merchant → Chart of Accounts patterns from your exports / answers
+2. Emit **Bank Rule suggestions** (`qboBankRulesCsv` / setup markdown)
+3. You install rules in QBO once with **Also apply to transactions waiting for review**
+4. Pending clears for matches; new feeds auto-classify
 
 ## Workflow
 
-1. Period + company file (`alfa-renovations`) + one CSV per bank/card account
-2. `runBookkeeper({ companyId: "alfa-renovations", ... })` or `POST /api/admin/bookkeeping/process`
-3. Answer open COA questions → patterns persist (localStorage per company in the UI)
-4. Deliver:
-   - `qboCoaApplyCsv` / `qboCoaApplyMarkdown` — batch apply by Chart of Accounts
-   - Consolidated CSV with `QBO Chart of Accounts` column
-   - P&L + CPA summary
+1. Export CSVs from each linked account (optional after rules exist — useful to discover new merchants)
+2. `/admin/bookkeeping` → run bookkeeper → **Download Bank Rules**
+3. QBO (web) → Bookkeeping → **Rules** → create rules → apply to waiting review
+4. Re-run monthly only to catch new merchants → add a few new rules
+
+## Separate entities
+
+- Alfa Renovations (Forum) + Amex → contractor rules  
+- Alfa Rental House Checking → different COA / separate rule set (don’t mix)
 
 ## UI
 
 `/admin/bookkeeping`
-
-## Rules of thumb
-
-- Prefer contractor COA: Job Income, Job Materials, Subcontractors, Equipment Rental, Automobile, Tools
-- Transfers / owner draw / personal are not operating expenses
-- If a live QBO account name differs, update `ALFA_RENOVATIONS_COA` so exports match the file exactly
-- Never invent receipts; leave uncertain rows as questions

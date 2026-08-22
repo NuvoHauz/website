@@ -80,6 +80,9 @@ describe("runBookkeeper Alfa Renovations COA", () => {
     assert.ok(result.log.transactions.length > 10);
     assert.equal(result.log.accounts.length, 2);
     assert.ok(result.log.qboBatches.length >= 3);
+    assert.ok(result.bankRules.length > 0);
+    assert.ok(result.cpaPack.qboBankRulesCsv.includes("Assign QBO account"));
+    assert.ok(result.cpaPack.qboBankRulesMarkdown.includes("Bank Rules"));
     assert.ok(
       result.log.qboBatches.some((batch) => batch.qboAccountName === "Job Materials"),
     );

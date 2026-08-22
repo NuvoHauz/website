@@ -9,6 +9,7 @@ import {
 import { getCompanyProfile } from "./default-rules";
 import { parseQuickBooksCsv } from "./parse-quickbooks-csv";
 import { buildProfitAndLoss } from "./profit-and-loss";
+import { buildQboBankRuleSuggestions } from "./qbo-bank-rules";
 import type {
   BookkeeperRunInput,
   BookkeeperRunResult,
@@ -89,7 +90,17 @@ function finalizeRun(
     profile.id,
   );
   const profitAndLoss = buildProfitAndLoss(log);
-  const cpaPack = buildCpaDocumentationPack(log, profitAndLoss, questions);
+  const bankRules = buildQboBankRuleSuggestions({
+    companyId: profile.id,
+    categorized,
+    learnedPatterns,
+    defaultRules: profile.rules,
+  });
+  const cpaPack = buildCpaDocumentationPack(log, profitAndLoss, questions, {
+    categorized,
+    learnedPatterns,
+    bankRules,
+  });
 
   return {
     log,
@@ -97,6 +108,7 @@ function finalizeRun(
     questions,
     profitAndLoss,
     cpaPack,
+    bankRules,
     learnedPatterns,
     companyId: profile.id,
     companyName: profile.name,

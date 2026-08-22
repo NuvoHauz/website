@@ -161,6 +161,21 @@ export interface QboCoaBatch {
   transactions: CategorizedTransaction[];
 }
 
+export type QboBankRuleConditionField = "Description" | "Bank text";
+
+/** Suggested QuickBooks Online Bank Rule so QBO auto-classifies pending/future feeds. */
+export interface QboBankRuleSuggestion {
+  id: string;
+  contains: string;
+  conditionField: QboBankRuleConditionField;
+  qboAccountName: string;
+  categoryId: BookkeepingCategoryId;
+  moneyMovement: "money_out" | "money_in" | "either";
+  supportCount: number;
+  source: "learned_pattern" | "high_confidence" | "default_rule";
+  ruleName: string;
+}
+
 export interface ConsolidatedTransactionLog {
   period: { start: string; end: string };
   generatedAt: string;
@@ -215,6 +230,9 @@ export interface CpaDocumentationPack {
   /** Grouped by Chart of Account for applying categories in QBO in batches. */
   qboCoaApplyCsv: string;
   qboCoaApplyMarkdown: string;
+  /** Bank Rules to install in QBO so pending/future feeds auto-classify. */
+  qboBankRulesCsv: string;
+  qboBankRulesMarkdown: string;
   profitAndLossCsv: string;
   openItemsMarkdown: string;
   categoryTotals: Record<BookkeepingCategoryId, MoneyCents>;
@@ -238,6 +256,8 @@ export interface BookkeeperRunResult {
   questions: CategorizationQuestion[];
   profitAndLoss: ProfitAndLossReport;
   cpaPack: CpaDocumentationPack;
+  /** Install these in QBO → Rules so pending bank feed auto-classifies. */
+  bankRules: QboBankRuleSuggestion[];
   handoffs: Array<AgentHandoffEnvelope<unknown>>;
   learnedPatterns: LearnedPattern[];
   companyId: string;
