@@ -29,12 +29,12 @@ describe("parseQuickBooksCsv", () => {
       "batch_1",
     );
     assert.ok(parsed.transactions.length >= 10);
-    const airbnb = parsed.transactions.find((txn) =>
-      txn.description.toLowerCase().includes("airbnb payments"),
+    const income = parsed.transactions.find((txn) =>
+      txn.description.toLowerCase().includes("customer payment"),
     );
-    assert.ok(airbnb);
-    assert.equal(airbnb?.amountCents, 245000);
-    assert.equal(airbnb?.direction, "inflow");
+    assert.ok(income);
+    assert.equal(income?.amountCents, 480000);
+    assert.equal(income?.direction, "inflow");
   });
 
   it("parses debit/credit column exports", () => {
@@ -44,23 +44,24 @@ describe("parseQuickBooksCsv", () => {
       "batch_2",
     );
     assert.ok(parsed.transactions.length >= 5);
-    const plumber = parsed.transactions.find((txn) =>
-      txn.description.toLowerCase().includes("plumber"),
+    const harbor = parsed.transactions.find((txn) =>
+      txn.description.toLowerCase().includes("harbor freight"),
     );
-    assert.equal(plumber?.amountCents, -21000);
+    assert.equal(harbor?.amountCents, -8950);
   });
 });
 
-describe("runBookkeeper", () => {
-  it("consolidates multi-account imports and builds CPA + P&L handoffs", () => {
+describe("runBookkeeper Alfa Renovations COA", () => {
+  it("maps multi-account imports into QBO Chart of Accounts batches", () => {
     const result = runBookkeeper({
+      companyId: "alfa-renovations",
       period: { start: "2026-08-01", end: "2026-08-31" },
       imports: [
         {
           source: {
             accountId: "checking",
             accountName: "Operating Checking",
-            entity: "Riu House",
+            entity: "Alfa Renovations",
           },
           csvText: checkingCsv,
         },
@@ -68,30 +69,37 @@ describe("runBookkeeper", () => {
           source: {
             accountId: "visa",
             accountName: "Business Visa",
-            entity: "Riu House",
+            entity: "Alfa Renovations",
           },
           csvText: creditCsv,
         },
       ],
     });
 
+    assert.equal(result.companyName, "Alfa Renovations");
     assert.ok(result.log.transactions.length > 10);
     assert.equal(result.log.accounts.length, 2);
+    assert.ok(result.log.qboBatches.length >= 3);
+    assert.ok(
+      result.log.qboBatches.some((batch) => batch.qboAccountName === "Job Materials"),
+    );
+    assert.ok(
+      result.log.transactions.some((txn) => txn.qboAccountName === "Job Income"),
+    );
     assert.ok(result.profitAndLoss.incomeCents > 0);
-    assert.ok(result.profitAndLoss.expenseCents > 0);
-    assert.ok(result.cpaPack.consolidatedCsv.includes("Operating Checking"));
-    assert.ok(result.cpaPack.summaryMarkdown.includes("CPA monthly package"));
+    assert.ok(result.cpaPack.qboCoaApplyCsv.includes("QBO Chart of Accounts"));
+    assert.ok(result.cpaPack.qboCoaApplyMarkdown.includes("batch apply"));
     assert.ok(
       result.handoffs.some(
         (handoff) =>
           handoff.from === "bookkeeper" && handoff.to === "profit_and_loss",
       ),
     );
-    assert.ok(result.questions.length > 0);
   });
 
-  it("learns patterns from answers and clears questions", () => {
+  it("learns merchant → COA patterns from answers", () => {
     const first = runBookkeeper({
+      companyId: "alfa-renovations",
       period: { start: "2026-08-01", end: "2026-08-31" },
       imports: [
         {
@@ -102,11 +110,12 @@ describe("runBookkeeper", () => {
     });
 
     const amazonQuestion = first.questions.find((question) =>
-      question.prompt.toLowerCase().includes("retail"),
+      question.prompt.toLowerCase().includes("amazon"),
     );
     assert.ok(amazonQuestion);
 
     const continued = continueBookkeeperWithAnswers({
+      companyId: "alfa-renovations",
       categorized: first.categorized,
       questions: first.questions,
       period: { start: "2026-08-01", end: "2026-08-31" },
@@ -115,20 +124,25 @@ describe("runBookkeeper", () => {
         {
           questionId: amazonQuestion!.id,
           transactionId: amazonQuestion!.transactionId,
-          categoryId: "supplies",
+          categoryId: "materials",
           learnPattern: true,
         },
       ],
     });
 
     assert.ok(
-      continued.learnedPatterns.some((pattern) =>
-        pattern.normalizedMerchant.includes("amzn"),
+      continued.learnedPatterns.some(
+        (pattern) =>
+          pattern.normalizedMerchant.includes("amzn") &&
+          pattern.categoryId === "materials" &&
+          pattern.companyId === "alfa-renovations",
       ),
     );
     assert.ok(
-      !continued.questions.some(
-        (question) => question.transactionId === amazonQuestion!.transactionId,
+      continued.categorized.some(
+        (txn) =>
+          txn.id === amazonQuestion!.transactionId &&
+          txn.qboAccountName === "Job Materials",
       ),
     );
 

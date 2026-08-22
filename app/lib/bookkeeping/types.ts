@@ -4,8 +4,14 @@ export type MoneyCents = number;
 
 export type TransactionDirection = "inflow" | "outflow" | "transfer";
 
+/** Internal category ids mapped to each company file's Chart of Accounts. */
 export type BookkeepingCategoryId =
+  | "job_income"
   | "rental_income"
+  | "materials"
+  | "subcontractors"
+  | "equipment_rental"
+  | "tools"
   | "platform_fees"
   | "cleaning"
   | "supplies"
@@ -17,22 +23,62 @@ export type BookkeepingCategoryId =
   | "hoa_fees"
   | "professional_fees"
   | "advertising"
+  | "vehicle"
+  | "office_expenses"
+  | "meals"
   | "owner_travel"
   | "taxes_licenses"
   | "bank_fees"
   | "transfer"
   | "owner_draw"
+  | "owner_investment"
   | "personal"
   | "uncategorized";
 
 export type CategoryConfidence = "high" | "medium" | "low" | "needs_input";
 
-export type SpecialistAgentKind = "bookkeeper" | "profit_and_loss" | "tax_prep" | "reconciliation";
+export type SpecialistAgentKind =
+  | "bookkeeper"
+  | "profit_and_loss"
+  | "tax_prep"
+  | "reconciliation";
+
+export type AccountingSystemId = "quickbooks_online" | "generic";
+
+export type CoaAccountType =
+  | "Income"
+  | "Cost of Goods Sold"
+  | "Expense"
+  | "Other Expense"
+  | "Other Income"
+  | "Bank"
+  | "Credit Card"
+  | "Other Current Liability"
+  | "Equity"
+  | "Other";
+
+export interface ChartOfAccountEntry {
+  categoryId: BookkeepingCategoryId;
+  /** Exact (or preferred) name as it appears in the QBO Chart of Accounts. */
+  qboAccountName: string;
+  accountType: CoaAccountType;
+  accountNumber?: string;
+  plSection: "income" | "cogs" | "expense" | "other";
+}
+
+export interface CompanyProfile {
+  id: string;
+  name: string;
+  accountingSystem: AccountingSystemId;
+  chartOfAccounts: ChartOfAccountEntry[];
+  /** Extra / overriding merchant rules for this company file. */
+  rules?: CategoryRule[];
+}
 
 export interface AccountSource {
   /** Stable id for the bank/credit/cash account in QuickBooks. */
   accountId: string;
-  /** Human label, e.g. "Operating Checking — BAC". */
+  /** Human label, e.g. "Operating Checking — Chase". */
   accountName: string;
   /** Optional entity / property this account belongs to. */
   entity?: string;
@@ -71,6 +117,7 @@ export interface LearnedPattern {
   categoryId: BookkeepingCategoryId;
   createdFromTransactionId: string;
   answeredAt: string;
+  companyId?: string;
 }
 
 export interface CategorizationQuestion {
@@ -87,6 +134,8 @@ export interface CategorizationQuestion {
 
 export interface CategorizedTransaction extends ImportedTransaction {
   categoryId: BookkeepingCategoryId;
+  /** Resolved QBO Chart of Accounts name for the active company file. */
+  qboAccountName: string;
   confidence: CategoryConfidence;
   matchedRuleId?: string;
   matchedPattern?: string;
@@ -103,12 +152,25 @@ export interface CategoryAnswer {
   note?: string;
 }
 
+export interface QboCoaBatch {
+  qboAccountName: string;
+  categoryId: BookkeepingCategoryId;
+  accountType: CoaAccountType;
+  transactionCount: number;
+  totalCents: MoneyCents;
+  transactions: CategorizedTransaction[];
+}
+
 export interface ConsolidatedTransactionLog {
   period: { start: string; end: string };
   generatedAt: string;
+  companyId: string;
+  companyName: string;
   accounts: AccountSource[];
   transactions: CategorizedTransaction[];
   totalsByCategory: Record<BookkeepingCategoryId, MoneyCents>;
+  /** Transactions grouped by QBO COA for batch apply (instead of one-by-one). */
+  qboBatches: QboCoaBatch[];
   unmatchedCount: number;
   openQuestionCount: number;
 }
@@ -116,14 +178,18 @@ export interface ConsolidatedTransactionLog {
 export interface ProfitAndLossLine {
   categoryId: BookkeepingCategoryId;
   label: string;
+  qboAccountName?: string;
   amountCents: MoneyCents;
-  kind: "income" | "expense" | "other";
+  kind: "income" | "cogs" | "expense" | "other";
 }
 
 export interface ProfitAndLossReport {
   period: { start: string; end: string };
   currency: string;
+  companyId?: string;
+  companyName?: string;
   incomeCents: MoneyCents;
+  cogsCents: MoneyCents;
   expenseCents: MoneyCents;
   netCents: MoneyCents;
   lines: ProfitAndLossLine[];
@@ -142,8 +208,13 @@ export interface AgentHandoffEnvelope<TPayload> {
 export interface CpaDocumentationPack {
   period: { start: string; end: string };
   generatedAt: string;
+  companyId: string;
+  companyName: string;
   summaryMarkdown: string;
   consolidatedCsv: string;
+  /** Grouped by Chart of Account for applying categories in QBO in batches. */
+  qboCoaApplyCsv: string;
+  qboCoaApplyMarkdown: string;
   profitAndLossCsv: string;
   openItemsMarkdown: string;
   categoryTotals: Record<BookkeepingCategoryId, MoneyCents>;
@@ -151,6 +222,7 @@ export interface CpaDocumentationPack {
 
 export interface BookkeeperRunInput {
   period: { start: string; end: string };
+  companyId?: string;
   imports: Array<{
     source: AccountSource;
     csvText: string;
@@ -168,4 +240,6 @@ export interface BookkeeperRunResult {
   cpaPack: CpaDocumentationPack;
   handoffs: Array<AgentHandoffEnvelope<unknown>>;
   learnedPatterns: LearnedPattern[];
+  companyId: string;
+  companyName: string;
 }

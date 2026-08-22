@@ -6,6 +6,7 @@ import {
   handoffToReconciliation,
   handoffToTaxPrep,
 } from "./agent-protocol";
+import { getCompanyProfile } from "./default-rules";
 import { parseQuickBooksCsv } from "./parse-quickbooks-csv";
 import { buildProfitAndLoss } from "./profit-and-loss";
 import type {
@@ -22,13 +23,19 @@ function newBatchId(): string {
 }
 
 export function runBookkeeper(input: BookkeeperRunInput): BookkeeperRunResult {
+  const profile = getCompanyProfile(input.companyId);
   const imported = input.imports.flatMap((entry) => {
     const batchId = entry.importBatchId ?? newBatchId();
-    const parsed = parseQuickBooksCsv(entry.csvText, entry.source, batchId);
+    const source = {
+      ...entry.source,
+      entity: entry.source.entity ?? profile.name,
+    };
+    const parsed = parseQuickBooksCsv(entry.csvText, source, batchId);
     return parsed.transactions;
   });
 
   const { categorized, questions } = categorizeTransactions(imported, {
+    companyId: profile.id,
     learnedPatterns: input.learnedPatterns,
     rules: input.extraRules,
   });
@@ -38,6 +45,7 @@ export function runBookkeeper(input: BookkeeperRunInput): BookkeeperRunResult {
     questions,
     input.period,
     input.learnedPatterns ?? [],
+    profile.id,
   );
 }
 
@@ -47,12 +55,14 @@ export function continueBookkeeperWithAnswers(params: {
   answers: CategoryAnswer[];
   period: { start: string; end: string };
   learnedPatterns?: LearnedPattern[];
+  companyId?: string;
 }): BookkeeperRunResult {
   const applied = applyCategoryAnswers(
     params.categorized,
     params.questions,
     params.answers,
     params.learnedPatterns ?? [],
+    params.companyId,
   );
 
   return finalizeRun(
@@ -60,6 +70,7 @@ export function continueBookkeeperWithAnswers(params: {
     applied.questions,
     params.period,
     applied.learnedPatterns,
+    applied.profile.id,
   );
 }
 
@@ -68,8 +79,15 @@ function finalizeRun(
   questions: CategorizationQuestion[],
   period: { start: string; end: string },
   learnedPatterns: LearnedPattern[],
+  companyId: string,
 ): BookkeeperRunResult {
-  const log = buildConsolidatedLog(categorized, period, questions.length);
+  const profile = getCompanyProfile(companyId);
+  const log = buildConsolidatedLog(
+    categorized,
+    period,
+    questions.length,
+    profile.id,
+  );
   const profitAndLoss = buildProfitAndLoss(log);
   const cpaPack = buildCpaDocumentationPack(log, profitAndLoss, questions);
 
@@ -80,6 +98,8 @@ function finalizeRun(
     profitAndLoss,
     cpaPack,
     learnedPatterns,
+    companyId: profile.id,
+    companyName: profile.name,
     handoffs: [
       handoffToProfitAndLoss(log),
       handoffToReconciliation(log),

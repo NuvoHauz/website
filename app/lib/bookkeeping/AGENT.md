@@ -1,32 +1,39 @@
-# Bookkeeper agent (NuvoHauz)
+# Bookkeeper agent — Alfa Renovations (QuickBooks Online)
 
-Use this when the owner asks to import QuickBooks transactions, categorize spend, reconcile a month, or prepare CPA documentation.
+Use this when the owner needs to categorize bank/credit transactions into the **Alfa Renovations** QBO Chart of Accounts without doing it one-by-one in every register.
 
-## Mission
+## Pain this solves
 
-Act as the lead bookkeeper agent. Ingest QuickBooks CSV exports from multiple accounts, categorize by patterns and clarifying questions, emit a consolidated transaction log, and hand off structured packages to specialist agents (P&L, reconciliation, tax prep).
+In QuickBooks Online they normally open each bank/credit account and assign a Chart of Accounts category per transaction. This agent:
+
+1. Ingests CSV exports from **all** accounts for the month
+2. Maps rows to the Alfa Renovations COA (Job Materials, Subcontractors, Job Income, etc.)
+3. Asks only unclear questions and learns merchant → COA patterns
+4. Emits **COA batches** so they apply one QBO account at a time across registers
+5. Hands off P&L / recon / CPA packs to specialist agents
+
+## Company file
+
+Default profile: `alfa-renovations` in `default-rules.ts`  
+QBO account names live on `chartOfAccounts` (adjust names there to match the live QBO file exactly).
 
 ## Workflow
 
-1. Collect period (`YYYY-MM-DD` start/end) and one CSV per account (checking, credit, etc.).
-2. Call `runBookkeeper` from `app/lib/bookkeeping` (or `POST /api/admin/bookkeeping/process` with owner session).
-3. Present open categorization questions; apply answers via `continueBookkeeperWithAnswers` so merchant patterns are learned.
+1. Period + company file (`alfa-renovations`) + one CSV per bank/card account
+2. `runBookkeeper({ companyId: "alfa-renovations", ... })` or `POST /api/admin/bookkeeping/process`
+3. Answer open COA questions → patterns persist (localStorage per company in the UI)
 4. Deliver:
-   - Consolidated transaction CSV
-   - P&L CSV
-   - CPA markdown pack (summary + open items)
-5. Hand off envelopes already included in the result:
-   - `bookkeeper → profit_and_loss`
-   - `bookkeeper → reconciliation`
-   - `bookkeeper → tax_prep`
+   - `qboCoaApplyCsv` / `qboCoaApplyMarkdown` — batch apply by Chart of Accounts
+   - Consolidated CSV with `QBO Chart of Accounts` column
+   - P&L + CPA summary
 
 ## UI
 
-Owner portal: `/admin/bookkeeping`
+`/admin/bookkeeping`
 
 ## Rules of thumb
 
-- Prefer business categories for short-term rental operations (cleaning, utilities, platform fees, repairs).
-- Treat transfers, owner draws, personal charges, and mortgage principal as non-operating unless confirmed.
-- Never invent receipts; mark uncertain rows as questions.
-- Keep outputs CPA-ready: dated period, account list, category totals, open items.
+- Prefer contractor COA: Job Income, Job Materials, Subcontractors, Equipment Rental, Automobile, Tools
+- Transfers / owner draw / personal are not operating expenses
+- If a live QBO account name differs, update `ALFA_RENOVATIONS_COA` so exports match the file exactly
+- Never invent receipts; leave uncertain rows as questions

@@ -1,4 +1,10 @@
-import { CATEGORY_LABELS, CATEGORY_OPTIONS, DEFAULT_CATEGORY_RULES } from "./default-rules";
+import {
+  CATEGORY_LABELS,
+  CATEGORY_OPTIONS,
+  getCompanyProfile,
+  resolveQboAccountName,
+  SHARED_CATEGORY_RULES,
+} from "./default-rules";
 import type {
   BookkeepingCategoryId,
   CategorizationQuestion,
@@ -6,6 +12,7 @@ import type {
   CategoryAnswer,
   CategoryConfidence,
   CategoryRule,
+  CompanyProfile,
   ImportedTransaction,
   LearnedPattern,
 } from "./types";
@@ -46,11 +53,13 @@ function confidenceForRule(rule: CategoryRule): CategoryConfidence {
 function findLearnedMatch(
   txn: ImportedTransaction,
   learned: LearnedPattern[],
+  companyId: string,
 ): LearnedPattern | null {
   const merchant = normalizeMerchant(txn.description);
   if (!merchant) return null;
   return (
     learned.find((pattern) => {
+      if (pattern.companyId && pattern.companyId !== companyId) return false;
       return (
         merchant.includes(pattern.normalizedMerchant) ||
         pattern.normalizedMerchant.includes(merchant)
@@ -77,69 +86,100 @@ function findRuleMatch(
   return null;
 }
 
-function buildQuestion(
-  txn: ImportedTransaction,
-  suggested?: BookkeepingCategoryId,
-  evidence: string[] = [],
-  customPrompt?: string,
-): CategorizationQuestion {
-  const prompt =
-    customPrompt ??
-    `How should we categorize “${txn.description}” (${formatMoney(txn.amountCents)}) on ${txn.date}?`;
-
-  return {
-    id: `q_${txn.id}`,
-    transactionId: txn.id,
-    prompt,
-    options: CATEGORY_OPTIONS.filter((option) => option.value !== "uncategorized"),
-    suggestedCategoryId: suggested,
-    evidence,
-  };
-}
-
 function formatMoney(cents: number): string {
   const sign = cents < 0 ? "-" : "";
   return `${sign}$${(Math.abs(cents) / 100).toFixed(2)}`;
 }
 
+function buildQuestion(
+  txn: ImportedTransaction,
+  profile: CompanyProfile,
+  suggested?: BookkeepingCategoryId,
+  evidence: string[] = [],
+  customPrompt?: string,
+): CategorizationQuestion {
+  const suggestedCoa = suggested
+    ? resolveQboAccountName(profile, suggested)
+    : undefined;
+  const prompt =
+    customPrompt ??
+    `Which ${profile.name} Chart of Accounts category should “${txn.description}” (${formatMoney(txn.amountCents)}) on ${txn.date} use?`;
+
+  return {
+    id: `q_${txn.id}`,
+    transactionId: txn.id,
+    prompt: suggestedCoa
+      ? `${prompt} Suggested QBO account: ${suggestedCoa}.`
+      : prompt,
+    options: CATEGORY_OPTIONS.filter((option) => option.value !== "uncategorized").map(
+      (option) => ({
+        value: option.value,
+        label: `${resolveQboAccountName(profile, option.value)} (${CATEGORY_LABELS[option.value]})`,
+      }),
+    ),
+    suggestedCategoryId: suggested,
+    evidence,
+  };
+}
+
+function withCoa(
+  txn: ImportedTransaction,
+  profile: CompanyProfile,
+  categoryId: BookkeepingCategoryId,
+  rest: Omit<CategorizedTransaction, keyof ImportedTransaction | "categoryId" | "qboAccountName">,
+): CategorizedTransaction {
+  return {
+    ...txn,
+    categoryId,
+    qboAccountName: resolveQboAccountName(profile, categoryId),
+    ...rest,
+  };
+}
+
 export function categorizeTransactions(
   transactions: ImportedTransaction[],
   options?: {
+    companyId?: string;
     rules?: CategoryRule[];
     learnedPatterns?: LearnedPattern[];
   },
 ): {
   categorized: CategorizedTransaction[];
   questions: CategorizationQuestion[];
+  profile: CompanyProfile;
 } {
-  const rules = [...DEFAULT_CATEGORY_RULES, ...(options?.rules ?? [])];
+  const profile = getCompanyProfile(options?.companyId);
+  const rules = [
+    ...(profile.rules ?? SHARED_CATEGORY_RULES),
+    ...(options?.rules ?? []),
+  ];
   const learned = options?.learnedPatterns ?? [];
   const categorized: CategorizedTransaction[] = [];
   const questions: CategorizationQuestion[] = [];
 
   for (const txn of transactions) {
-    const learnedMatch = findLearnedMatch(txn, learned);
+    const learnedMatch = findLearnedMatch(txn, learned, profile.id);
     if (learnedMatch) {
-      categorized.push({
-        ...txn,
-        categoryId: learnedMatch.categoryId,
-        confidence: "high",
-        matchedPattern: learnedMatch.normalizedMerchant,
-        notes: "Matched learned merchant pattern",
-      });
+      categorized.push(
+        withCoa(txn, profile, learnedMatch.categoryId, {
+          confidence: "high",
+          matchedPattern: learnedMatch.normalizedMerchant,
+          notes: `Matched learned merchant pattern → ${resolveQboAccountName(profile, learnedMatch.categoryId)}`,
+        }),
+      );
       continue;
     }
 
     const ruleMatch = findRuleMatch(txn, rules);
     if (!ruleMatch) {
-      const question = buildQuestion(txn, undefined, ["No pattern matched"]);
+      const question = buildQuestion(txn, profile, undefined, ["No pattern matched"]);
       questions.push(question);
-      categorized.push({
-        ...txn,
-        categoryId: "uncategorized",
-        confidence: "needs_input",
-        questionId: question.id,
-      });
+      categorized.push(
+        withCoa(txn, profile, "uncategorized", {
+          confidence: "needs_input",
+          questionId: question.id,
+        }),
+      );
       continue;
     }
 
@@ -149,32 +189,35 @@ export function categorizeTransactions(
     if (confidence === "needs_input" || confidence === "low") {
       const question = buildQuestion(
         txn,
+        profile,
         rule.categoryId,
-        [`Matched pattern “${pattern}” via rule ${rule.id}`],
+        [
+          `Matched “${pattern}” → suggested QBO account ${resolveQboAccountName(profile, rule.categoryId)}`,
+        ],
         rule.questionPrompt,
       );
       questions.push(question);
-      categorized.push({
-        ...txn,
-        categoryId: rule.categoryId,
-        confidence,
-        matchedRuleId: rule.id,
-        matchedPattern: pattern,
-        questionId: question.id,
-      });
+      categorized.push(
+        withCoa(txn, profile, rule.categoryId, {
+          confidence,
+          matchedRuleId: rule.id,
+          matchedPattern: pattern,
+          questionId: question.id,
+        }),
+      );
       continue;
     }
 
-    categorized.push({
-      ...txn,
-      categoryId: rule.categoryId,
-      confidence,
-      matchedRuleId: rule.id,
-      matchedPattern: pattern,
-    });
+    categorized.push(
+      withCoa(txn, profile, rule.categoryId, {
+        confidence,
+        matchedRuleId: rule.id,
+        matchedPattern: pattern,
+      }),
+    );
   }
 
-  return { categorized, questions };
+  return { categorized, questions, profile };
 }
 
 export function applyCategoryAnswers(
@@ -182,11 +225,14 @@ export function applyCategoryAnswers(
   questions: CategorizationQuestion[],
   answers: CategoryAnswer[],
   learnedPatterns: LearnedPattern[] = [],
+  companyId?: string,
 ): {
   categorized: CategorizedTransaction[];
   questions: CategorizationQuestion[];
   learnedPatterns: LearnedPattern[];
+  profile: CompanyProfile;
 } {
+  const profile = getCompanyProfile(companyId);
   const answerByTxn = new Map(answers.map((answer) => [answer.transactionId, answer]));
   const nextLearned = [...learnedPatterns];
   const remainingQuestions: CategorizationQuestion[] = [];
@@ -207,7 +253,8 @@ export function applyCategoryAnswers(
         const exists = nextLearned.some(
           (pattern) =>
             pattern.normalizedMerchant === merchant &&
-            pattern.categoryId === answer.categoryId,
+            pattern.categoryId === answer.categoryId &&
+            (pattern.companyId ?? profile.id) === profile.id,
         );
         if (!exists) {
           nextLearned.push({
@@ -216,17 +263,20 @@ export function applyCategoryAnswers(
             categoryId: answer.categoryId,
             createdFromTransactionId: txn.id,
             answeredAt: new Date().toISOString(),
+            companyId: profile.id,
           });
         }
       }
     }
 
+    const qboAccountName = resolveQboAccountName(profile, answer.categoryId);
     return {
       ...txn,
       categoryId: answer.categoryId,
+      qboAccountName,
       confidence: "high" as const,
       questionId: undefined,
-      notes: answer.note ?? `Confirmed as ${CATEGORY_LABELS[answer.categoryId]}`,
+      notes: answer.note ?? `Confirmed QBO account: ${qboAccountName}`,
     };
   });
 
@@ -234,15 +284,21 @@ export function applyCategoryAnswers(
     categorized: nextCategorized,
     questions: remainingQuestions,
     learnedPatterns: nextLearned,
+    profile,
   };
 }
 
 export function identifyRecurringPatterns(
   transactions: CategorizedTransaction[],
-): Array<{ merchant: string; count: number; categoryId: BookkeepingCategoryId }> {
+): Array<{ merchant: string; count: number; categoryId: BookkeepingCategoryId; qboAccountName: string }> {
   const counts = new Map<
     string,
-    { merchant: string; count: number; categoryId: BookkeepingCategoryId }
+    {
+      merchant: string;
+      count: number;
+      categoryId: BookkeepingCategoryId;
+      qboAccountName: string;
+    }
   >();
 
   for (const txn of transactions) {
@@ -257,6 +313,7 @@ export function identifyRecurringPatterns(
         merchant,
         count: 1,
         categoryId: txn.categoryId,
+        qboAccountName: txn.qboAccountName,
       });
     }
   }

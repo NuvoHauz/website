@@ -1,5 +1,16 @@
 export type * from "./types";
-export { DEFAULT_CATEGORY_RULES, CATEGORY_LABELS, CATEGORY_OPTIONS } from "./default-rules";
+export {
+  CATEGORY_LABELS,
+  CATEGORY_OPTIONS,
+  SHARED_CATEGORY_RULES,
+  DEFAULT_CATEGORY_RULES,
+  ALFA_RENOVATIONS_PROFILE,
+  COMPANY_PROFILES,
+  DEFAULT_COMPANY_ID,
+  getCompanyProfile,
+  resolveQboAccountName,
+  emptyCategoryTotals,
+} from "./default-rules";
 export { parseQuickBooksCsv } from "./parse-quickbooks-csv";
 export {
   categorizeTransactions,
@@ -7,7 +18,13 @@ export {
   identifyRecurringPatterns,
   normalizeMerchant,
 } from "./categorize";
-export { buildConsolidatedLog, consolidatedLogToCsv } from "./consolidate";
+export {
+  buildConsolidatedLog,
+  buildQboCoaBatches,
+  consolidatedLogToCsv,
+  qboCoaApplyCsv,
+  qboCoaApplyMarkdown,
+} from "./consolidate";
 export { buildProfitAndLoss, profitAndLossToCsv } from "./profit-and-loss";
 export { buildCpaDocumentationPack } from "./cpa-pack";
 export {

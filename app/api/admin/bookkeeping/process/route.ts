@@ -35,6 +35,7 @@ function configError(error: AdminAuthConfigError) {
 
 type ProcessBody = {
   action?: "process" | "answer";
+  companyId?: string;
   period?: { start?: string; end?: string };
   imports?: Array<{
     accountId?: string;
@@ -103,6 +104,7 @@ export async function POST(request: NextRequest) {
         answers: body.answers,
         period: { start: periodStart, end: periodEnd },
         learnedPatterns: body.learnedPatterns ?? [],
+        companyId: body.companyId,
       });
 
       return NextResponse.json(result, { headers: ADMIN_NO_STORE_HEADERS });
@@ -135,6 +137,7 @@ export async function POST(request: NextRequest) {
 
     const result = runBookkeeper({
       period: { start: periodStart, end: periodEnd },
+      companyId: body.companyId,
       imports,
       learnedPatterns: body.learnedPatterns ?? [],
     });

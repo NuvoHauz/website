@@ -1,4 +1,4 @@
-import { CATEGORY_LABELS } from "./default-rules";
+import { CATEGORY_LABELS, getCompanyProfile, getCoaEntry } from "./default-rules";
 import type {
   BookkeepingCategoryId,
   ConsolidatedTransactionLog,
@@ -6,84 +6,78 @@ import type {
   ProfitAndLossReport,
 } from "./types";
 
-const INCOME_CATEGORIES: BookkeepingCategoryId[] = ["rental_income"];
-
-const EXPENSE_CATEGORIES: BookkeepingCategoryId[] = [
-  "platform_fees",
-  "cleaning",
-  "supplies",
-  "repairs_maintenance",
-  "utilities",
-  "insurance",
-  "property_management",
-  "hoa_fees",
-  "professional_fees",
-  "advertising",
-  "owner_travel",
-  "taxes_licenses",
-  "bank_fees",
-];
-
-const OTHER_CATEGORIES: BookkeepingCategoryId[] = [
-  "mortgage_loan",
-  "transfer",
-  "owner_draw",
-  "personal",
-  "uncategorized",
-];
-
 /**
- * P&L specialist: builds a statement from the consolidated bookkeeper log.
- * Designed so another agent (or accounting system adapter) can consume the same shape.
+ * P&L specialist: builds a statement from the consolidated bookkeeper log
+ * using the company file's Chart of Accounts sections (income / COGS / expense).
  */
 export function buildProfitAndLoss(
   log: ConsolidatedTransactionLog,
   currency = "USD",
 ): ProfitAndLossReport {
+  const profile = getCompanyProfile(log.companyId);
   const lines: ProfitAndLossLine[] = [];
 
   let incomeCents = 0;
-  for (const categoryId of INCOME_CATEGORIES) {
-    const amountCents = sumAbsoluteIncome(log, categoryId);
-    incomeCents += amountCents;
-    lines.push({
-      categoryId,
-      label: CATEGORY_LABELS[categoryId],
-      amountCents,
-      kind: "income",
-    });
-  }
-
+  let cogsCents = 0;
   let expenseCents = 0;
-  for (const categoryId of EXPENSE_CATEGORIES) {
-    const amountCents = sumAbsoluteExpense(log, categoryId);
-    if (amountCents === 0) continue;
-    expenseCents += amountCents;
-    lines.push({
-      categoryId,
-      label: CATEGORY_LABELS[categoryId],
-      amountCents,
-      kind: "expense",
-    });
-  }
 
-  for (const categoryId of OTHER_CATEGORIES) {
+  const categoryIds = Object.keys(log.totalsByCategory) as BookkeepingCategoryId[];
+
+  for (const categoryId of categoryIds) {
+    const coa = getCoaEntry(profile, categoryId);
+    const section = coa?.plSection ?? "other";
+
+    if (section === "income") {
+      const amountCents = sumAbsoluteIncome(log, categoryId);
+      if (amountCents === 0) continue;
+      incomeCents += amountCents;
+      lines.push({
+        categoryId,
+        label: CATEGORY_LABELS[categoryId],
+        qboAccountName: coa?.qboAccountName,
+        amountCents,
+        kind: "income",
+      });
+      continue;
+    }
+
+    if (section === "cogs" || section === "expense") {
+      const amountCents = sumAbsoluteExpense(log, categoryId);
+      if (amountCents === 0) continue;
+      if (section === "cogs") cogsCents += amountCents;
+      else expenseCents += amountCents;
+      lines.push({
+        categoryId,
+        label: CATEGORY_LABELS[categoryId],
+        qboAccountName: coa?.qboAccountName,
+        amountCents,
+        kind: section,
+      });
+      continue;
+    }
+
     const amountCents = log.totalsByCategory[categoryId] ?? 0;
     if (amountCents === 0) continue;
     lines.push({
       categoryId,
       label: CATEGORY_LABELS[categoryId],
+      qboAccountName: coa?.qboAccountName,
       amountCents,
       kind: "other",
     });
   }
 
+  const operatingExpenseCents = cogsCents + expenseCents;
+
   return {
     period: log.period,
     currency,
+    companyId: log.companyId,
+    companyName: log.companyName,
     incomeCents,
+    cogsCents,
     expenseCents,
-    netCents: incomeCents - expenseCents,
+    netCents: incomeCents - operatingExpenseCents,
     lines,
     producedBy: "profit_and_loss",
   };
@@ -109,13 +103,19 @@ function sumAbsoluteExpense(
 
 export function profitAndLossToCsv(report: ProfitAndLossReport): string {
   const rows = [
-    ["Section", "Category", "Amount"].join(","),
+    ["Section", "QBO Account", "Category", "Amount"].join(","),
     ...report.lines.map((line) =>
-      [line.kind, line.label, (line.amountCents / 100).toFixed(2)].join(","),
+      [
+        line.kind,
+        line.qboAccountName ?? "",
+        line.label,
+        (line.amountCents / 100).toFixed(2),
+      ].join(","),
     ),
-    ["totals", "Income", (report.incomeCents / 100).toFixed(2)].join(","),
-    ["totals", "Expenses", (report.expenseCents / 100).toFixed(2)].join(","),
-    ["totals", "Net operating", (report.netCents / 100).toFixed(2)].join(","),
+    ["totals", "", "Income", (report.incomeCents / 100).toFixed(2)].join(","),
+    ["totals", "", "COGS", (report.cogsCents / 100).toFixed(2)].join(","),
+    ["totals", "", "Expenses", (report.expenseCents / 100).toFixed(2)].join(","),
+    ["totals", "", "Net operating", (report.netCents / 100).toFixed(2)].join(","),
   ];
   return rows.join("\n");
 }

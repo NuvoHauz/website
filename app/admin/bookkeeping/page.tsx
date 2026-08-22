@@ -31,10 +31,10 @@ export default async function AdminBookkeepingPage() {
               NuvoHauz
             </p>
             <h1 className="mt-1 font-serif text-2xl font-light sm:text-3xl">
-              Bookkeeper agent
+              Bookkeeper · Alfa Renovations
             </h1>
             <p className="mt-2 text-sm text-white/75">
-              Signed in as {session.owner} · monthly recon &amp; CPA docs
+              Signed in as {session.owner} · QBO Chart of Accounts batches &amp; CPA docs
             </p>
           </div>
           <Link
