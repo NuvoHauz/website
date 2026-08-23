@@ -1,27 +1,26 @@
 # Reels — To Record
 
-Scripts ready to film. When filmed → move file to `../Recorded/` and note filename.
+## Primary file ⭐
 
-**Priority:** `Three-Mistakes-Series.md` → **M2 Indy investors** (extends your best-performing format)
+**`Spoken-Reels-Indy.md`** — 20 conversational scripts · Hook → Value → CTA · EN + ES · Indy-focused
 
-## Files in this folder
+Film in order: R05 → R01 → R02 → R07 → R06
 
-| File | Contents |
+## Rules
+
+- 20–45 seconds
+- Spoken language, not formal writing
+- Check `../Posted/Posted-Topics.md` — **do not repeat posted topics**
+- Posted: ~~3 mistakes first-time buyers~~
+
+## Legacy (reference only)
+
+| File | Note |
 |---|---|
-| `Core-Scripts.md` | B1–B5, S1–S4, I1–I5, Y1–Y3 |
-| `Three-Mistakes-Series.md` | M1–M7 (proven format) |
-| `Batch-2-Scripts.md` | B6–B8, S5–S7, I6–I8, Y4–Y6 |
+| `Core-Scripts.md` | Pre-refresh scripts |
+| `Batch-2-Scripts.md` | Pre-refresh scripts |
+| `Three-Mistakes-Series.md` | M7 first-time buyers = skip (posted) |
 
-## Filming rules
+## After filming
 
-- 20–35 sec (3 Mistakes: 25–40 sec)
-- Hook in first 1–2 seconds
-- One CTA per Reel
-- Vertical 9:16 · natural light
-- Rewrite any line that doesn’t sound like your mouth
-
-## Shoot-day batch (2 hours)
-
-1. M2 + Y1 + B1 + S1 + I1 (talking head)
-2. 15 B-roll clips — see `05 PROPERTY VIDEOS/B-Roll-Shot-Lists.md`
-3. Post M2 same day
+Move script section to `../Recorded/` tracker → post → log topic in `../Posted/Posted-Topics.md`

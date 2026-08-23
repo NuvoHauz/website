@@ -1,6 +1,14 @@
-# “3 Mistakes” Series — To Record
+# “3 Mistakes” Series — LEGACY
 
-Sandy’s proven format. **Film M2 first.**
+⚠️ **Use `Spoken-Reels-Indy.md` instead** — updated voice, Hook→Value→CTA, Indy focus.
+
+**Do not film M7 or first-time buyer angles** — `3 mistakes first-time buyers` is **posted**.
+
+---
+
+# “3 Mistakes” Series — To Record (legacy)
+
+Sandy’s proven format. **Film M2 first** — or use **R05** in Spoken-Reels-Indy (preferred).
 
 **Structure:** Hook → Mistake 1 → 2 → 3 → CTA · 25–40 sec
 

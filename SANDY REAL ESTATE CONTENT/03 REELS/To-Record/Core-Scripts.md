@@ -1,3 +1,9 @@
+# Core Reel Scripts — LEGACY
+
+⚠️ **Use `Spoken-Reels-Indy.md` instead** — conversational spoken scripts, Indy-focused, EN+ES, Hook→Value→CTA.
+
+---
+
 # Core Reel Scripts
 
 **Format:** Hook → Body → CTA · 20–35 seconds

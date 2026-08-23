@@ -1,90 +1,65 @@
-# 7-Day Plan — Sandy Alfaro
+# 7-Day Plan — Indy spoken Reels
 
-Built for your account (6.6K views/30 days · “3 Mistakes” format working).
+Scripts: `03 REELS/To-Record/Spoken-Reels-Indy.md`  
+Skip posted topics: `03 REELS/Posted/Posted-Topics.md`
 
-| Day | Format | Content | Audience |
+| Day | Reel | Audience | Bilingual |
 |---|---|---|---|
-| Mon | Reel | **M2** — 3 mistakes Indy investors | Investors |
-| Tue | Stories | Poll: Buy / Sell / Invest | All |
-| Wed | Reel | Property tour — “Would I own this?” | Investors |
-| Thu | Carousel | C5 — Who I help | All |
-| Fri | Reel | I3 — Kill TikTok math | Investors |
-| Sat | Stories | Bella + “back to showings Monday” | Personal |
-| Sun | Reel | Y1 — Who I work with | All |
-
-Scripts: `03 REELS/To-Record/` · Captions: `06 CAPTIONS/`
+| Mon | R05 — 3 mistakes Indy investors | Investors | EN + ES |
+| Tue | R01 — Fountain Square at 9pm | Buyers | EN + ES |
+| Wed | R02 — Would I Airbnb this? | Investors | EN + ES |
+| Thu | R06 — Turnover day | Investors/Airbnb | EN |
+| Fri | R07 — Neighbor's price | Sellers | EN + ES |
+| Sat | Stories — poll MASS vs FOUNTAIN | All | — |
+| Sun | R17 — Why I pick up towels | Trust/All | EN |
 
 ---
 
 # 30-Day Calendar
 
-**5–6 posts/week** · rotate audiences · never 3 investor posts in a row
+Rotate **buy · sell · invest**. Never 3 investor posts back-to-back.  
+All from `Spoken-Reels-Indy.md` unless noted.
 
-## Week 1 — Position
+## Week 1
+| Mon | R05 Indy investor mistakes |
+| Tue | R14 Who Fountain Square is for |
+| Wed | R02 Would I Airbnb this |
+| Thu | R16 Staging isn't decorating |
+| Fri | R19 Comment INVEST |
+| Sat | R01 Fountain Square 9pm |
+| Sun | Stories Q&A |
 
-| Day | Format | Piece | Audience |
-|---|---|---|---|
-| Mon | Reel | Y1 Who I work with | All |
-| Tue | Carousel | C5 Who I help | All |
-| Wed | Reel | B1 Shop with investor eyes | Buyers |
-| Thu | Reel | I1 I have properties | Investors |
-| Fri | 15s hook | Paint is cheap | Buyers |
-| Sat | Carousel | C8 How to DM me | All |
-| Sun | Stories | Poll Buy/Sell/Invest | All |
+## Week 2
+| Mon | R10 Fountain Square showing checklist |
+| Tue | R08 Wide-angle lied |
+| Wed | R09 STR vs LTR |
+| Thu | R04 FS vs downtown tower |
+| Fri | R13 Price to move |
+| Sat | R03 Reno didn't pay back |
+| Sun | Stories — send 5 photos |
 
-## Week 2 — Indianapolis
+## Week 3
+| Mon | R11 Mass vs Fountain |
+| Tue | R18 Deferred maintenance |
+| Wed | R15 TikTok math |
+| Thu | R12 HVAC weekend |
+| Fri | R07 Neighbor's price (remake new b-roll OK if not duplicate post) |
+| Sat | R17 Pick up towels |
+| Sun | Stories poll |
 
-| Day | Format | Piece | Audience |
-|---|---|---|---|
-| Mon | Reel | B2 Night walk rule | Buyers |
-| Tue | Reel | S1 Prep that helps | Sellers |
-| Wed | Carousel | C7 Indy buyer fit | Buyers |
-| Thu | Reel | I3 Kill TikTok math | Investors |
-| Fri | Reel | S2 Pricing honesty | Sellers |
-| Sat | Carousel | C2 Seller prep | Sellers |
-| Sun | Stories | Send 5 listing photos | Sellers |
+## Week 4
+| Mon | R02 remake new property |
+| Tue | R05 remake new b-roll |
+| Wed | Carousel C5 Who I help |
+| Thu | R20 Costa Rica brief (optional) |
+| Fri | Best performer remake |
+| Sat | R01 remake dusk b-roll |
+| Sun | DM buy/sell/invest story |
 
-## Week 3 — Costa Rica
-
-| Day | Format | Piece | Audience |
-|---|---|---|---|
-| Mon | Reel | B3 Pretty vs ownable | Buyers |
-| Tue | Carousel | C6 CR myths | Buyers/Investors |
-| Wed | Reel | I2 Indy vs CR | Investors |
-| Thu | Reel | Y2 Two-country brain | All |
-| Fri | 15s hook | Beach = minutes not vibes | Buyers |
-| Sat | Carousel | C3 Indy vs CR | Investors |
-| Sun | Stories | AMA Costa Rica buying | All |
-
-## Week 4 — Convert
-
-| Day | Format | Piece | Audience |
-|---|---|---|---|
-| Mon | Reel | I5 What I won't chase | Investors |
-| Tue | Carousel | C4 4-number filter | Investors |
-| Wed | Reel | S3 What kills showings | Sellers |
-| Thu | Reel | B4 First-time buyer | Buyers |
-| Fri | Reel | Y3 I don't need every client | All |
-| Sat | Carousel | C1 Buyer checklist | Buyers |
-| Sun | Stories | DM buy/sell/invest | All |
+**Note:** Week 4 remakes = new footage, same lesson. Log in Posted-Topics if same core topic reposted.
 
 ---
 
-# Daily Stories (5 min)
+# Daily Stories
 
-| Day | Story |
-|---|---|
-| Mon | “This week: helping [buyers/sellers/investors] in [Indy/CR]” + poll |
-| Tue | One quick tip from Hook-Bank |
-| Wed | Q&A box — answer 2–3 on video |
-| Thu | B-roll + text hook |
-| Fri | “This week I said no to…” trust post |
-| Weekend | Personal + soft CTA |
-
-Full rotation: `07 CONTENT CALENDAR/Stories-Weekly.md`
-
----
-
-## After 30 days
-
-Top 3 posts by DMs + saves → remake with new B-roll. Drop agent-peer vanity likes.
+See `Stories-Weekly.md`

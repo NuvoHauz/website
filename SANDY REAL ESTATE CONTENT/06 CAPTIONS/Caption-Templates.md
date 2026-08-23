@@ -1,94 +1,85 @@
-# Caption Templates
+# Caption Templates — conversational
 
-Customize with one real detail before posting. Run anti-AI check in brand guide.
+Write like Sandy texts a client. Short lines. No brochure voice.
 
 ---
 
-## Buyer
+## Spoken Reel caption (English)
 
 ```
-Most people fall in love with paint.
+[Hook as first line — same words you said on camera]
 
-I care about layout, condition, and whether this still works if life changes.
+[1–2 lines of value — one Indy detail: Fountain Square, turnover, reno, etc.]
 
-Buying in Indianapolis or looking at Costa Rica?
-DM me — tell me what you're trying to solve.
+[One CTA]
+
+Sandy Alfaro · Keller Williams · Indianapolis
+```
+
+**Example (R05):**
+```
+Three mistakes I see Indy investors make on their first rental—and I almost made number two.
+
+Cheapest house on the block. Best-month Airbnb math. No turnover plan. I've hosted here. The spreadsheet isn't the whole story.
+
+First investment in Indy? DM me the address.
 
 Sandy Alfaro · Keller Williams
 ```
 
 ---
 
-## Seller
+## Reel caption (Español)
 
 ```
-I prep homes to remove friction — not to decorate for fun.
+[Hook en español]
 
-Calm first photo. Clear surfaces. Honest price.
+[1–2 líneas — detalle de Indy]
 
-Selling soon? Send 5 photos and I'll tell you what's helping vs hurting.
+[CTA]
+
+Sandy Alfaro · Keller Williams · Indianapolis
+```
+
+---
+
+## Seller / listing photos offer
+
+```
+Your photos are doing more work than your description.
+
+Send me 5 phone photos — I'll tell you what's helping and what's hurting. No pitch, just eyes.
+
+DM me 📍 Indianapolis
+```
+
+---
+
+## Investor / address offer
+
+```
+If the deal only works on your best month, it's not a deal.
+
+Send me an address you're looking at in Indy. I'll tell you if I'd keep going or walk.
 
 Sandy Alfaro · Keller Williams
 ```
 
 ---
 
-## Investor
+## Hashtags (3–5 max)
 
-```
-I don't sell fantasy returns.
+`#IndianapolisRealEstate` `#IndyRealEstate` `#FountainSquare` `#RealEstateInvesting` `#AirbnbHost`
 
-I ask: slow-month occupancy, real expenses, who operates it, and what's the exit.
-
-Indy or Costa Rica — DM me which market and what you're building.
-
-Sandy Alfaro · Keller Williams
-```
+Skip 30-tag walls.
 
 ---
 
-## 3 Mistakes format
-
-```
-3 mistakes I see [audience] make in [Indy / Costa Rica] 👇
-
-[One line mistake #1]
-[One line mistake #2]
-[One line mistake #3]
-
-Which one hit home? Comment the number or DM me.
-
-Sandy Alfaro · Keller Williams
-Indianapolis + Costa Rica
-```
-
----
-
-## Trust / intro
-
-```
-I work with buyers who want clarity, sellers who want honesty, and investors who want numbers that survive reality.
-
-Indy + Costa Rica. Agent and investor.
-
-DM me: buy · sell · invest
-
-Sandy Alfaro · Keller Williams
-```
-
----
-
-## Hashtags (3–6 max)
-
-`#IndianapolisRealEstate` `#IndyRealEstate` `#FountainSquare` `#CostaRicaRealEstate` `#RealEstateInvesting` `#HomeSelling`
-
----
-
-## CTA menu (one per post)
+## CTA menu
 
 | Audience | CTA |
 |---|---|
-| Buyers | DM me your must-haves + Indy or CR |
-| Sellers | Send 5 photos — I'll reply with notes |
-| Investors | Comment INDY or CR |
-| All | DM me: buy / sell / invest |
+| Buyers | DM me the streets you're looking at |
+| Sellers | Send 5 listing photos |
+| Investors | DM me the address / Comment INVEST |
+| All | Buy, sell, or invest—tell me which |

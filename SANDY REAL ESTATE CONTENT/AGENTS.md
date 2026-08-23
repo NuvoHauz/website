@@ -1,47 +1,40 @@
-# Sandy Real Estate Content — workspace guide
+# Sandy Real Estate Content — guide
 
-Personal IG / YouTube content for **Sandy Alfaro** — buyers, sellers, investors in **Indianapolis** and **Costa Rica**.
+**Sandy Alfaro** — Indianapolis broker, investor, Airbnb host.  
+**Audience:** buyers · sellers · investors  
+**Account:** @sandiagent007 · sandyalfaro.kw.com
 
-**Account:** Sandy Alfaro | Real Estate · @sandiagent007 · sandyalfaro.kw.com
+## Voice (non-negotiable)
 
-## Folder map
+- Conversational, confident, easy to understand
+- **Not** generic Realtor speak
+- Heavy focus: **Indianapolis, Fountain Square, downtown, investing, renovations, Airbnb, real investor life**
+- Every Reel: **Hook → Value → CTA** · **20–45 seconds**
+- Natural **spoken** scripts — read aloud before filming
+- **English + Español** when topic fits bilingual Indy audience
+- **Do not repeat** topics in `03 REELS/Posted/Posted-Topics.md`
+
+## Primary scripts
+
+👉 **`03 REELS/To-Record/Spoken-Reels-Indy.md`** — 20 fresh Reels, EN + ES where noted
+
+Legacy scripts (`Core-Scripts.md`, `Batch-2-Scripts.md`, `Three-Mistakes-Series.md`) — reference only; prefer Spoken-Reels-Indy.
+
+## Pipeline
 
 ```
-SANDY REAL ESTATE CONTENT/
-├── 01 BRAND & VOICE/     → How Sandy sounds; profile; anti-AI rules
-├── 02 CONTENT IDEAS/     → Hooks and topic banks by audience/market
-├── 03 REELS/             → Production pipeline: To-Record → Recorded → Posted
-├── 04 YOUTUBE/           → Shorts + long-form repurposing
-├── 05 PROPERTY VIDEOS/   → Tours, B-roll, shoot-day checklists
-├── 06 CAPTIONS/          → Caption templates, CTAs, DM replies
-└── 07 CONTENT CALENDAR/  → 7-day, 30-day, Stories schedule
+02 CONTENT IDEAS → 03 REELS/To-Record → Recorded → Posted + Posted-Topics.md
 ```
 
-## Workflow
+## Film first
 
-1. **Ideate** — pick a hook from `02 CONTENT IDEAS/`
-2. **Script** — grab full script from `03 REELS/To-Record/`
-3. **Film** — use `05 PROPERTY VIDEOS/` for B-roll + tour shots
-4. **Move file** — To-Record → Recorded when filmed
-5. **Caption** — copy from `06 CAPTIONS/`, customize one real detail
-6. **Post** — move to Posted, log date + link in that folder’s tracker
-7. **Calendar** — follow `07 CONTENT CALENDAR/`
+**R05** — 3 mistakes Indy investors make *(not first-time buyers — that's posted)*  
+**R01** — Fountain Square at 9pm  
+**R02** — Would I Airbnb this?
 
-## Reels pipeline
+## Before every post
 
-| Stage | Folder | Action |
-|---|---|---|
-| Ready to film | `03 REELS/To-Record/` | Scripts waiting |
-| Filmed, not live | `03 REELS/Recorded/` | Move file + note filename |
-| Live on IG | `03 REELS/Posted/` | Move file + add post URL |
-
-## Content rules
-
-- Lead gen only: **buy · sell · invest** — not vacation booking
-- Operator experience (rentals, renovations) = investor credibility
-- If a line works for any realtor in any city, add Indy or Costa Rica specificity
-- Run the anti-AI checklist in `01 BRAND & VOICE/Sandy-Brand-Guide.md` before posting
-
-## Priority this week
-
-Film **M2 — 3 mistakes Indy investors make** (`03 REELS/To-Record/Three-Mistakes-Series.md`) — extends Sandy’s proven “3 Mistakes” format.
+1. Check `Posted-Topics.md` — new angle?  
+2. Read script out loud — sounds like Sandy in a car?  
+3. Brand guide anti-generic checklist  
+4. Log topic when live

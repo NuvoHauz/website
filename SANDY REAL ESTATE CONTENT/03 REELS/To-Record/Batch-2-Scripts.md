@@ -1,3 +1,9 @@
+# Batch 2 Scripts — LEGACY
+
+⚠️ **Use `Spoken-Reels-Indy.md` instead.**
+
+---
+
 # Batch 2 Scripts — To Record
 
 ---
