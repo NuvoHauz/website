@@ -1,84 +1,79 @@
-# Profile setup (personal IG)
+# Profile setup — Sandy Alfaro
 
-This account sells **you as an agent/investor**, not a vacation brand.
+Your account is already set up well. This file is **tune-ups**, not a from-scratch bio.
+
+**Current profile (Aug 2026):** Sandy Alfaro | Real Estate · verified · sandyalfaro.kw.com · 6.6K views/30 days.
 
 ---
 
-## Bio options (pick one, edit names)
+## Your bio today (keep — optional one-line add)
 
-**Option A — direct**
 ```
-Sandy · Real Estate Agent & Investor
-Indianapolis + Costa Rica
-Buyers · Sellers · Investors
-↓ DM me: buy / sell / invest
-```
-
-**Option B — credibility**
-```
-Agent + investor · Indy & Costa Rica
-I own here. I advise here.
-Straight answers > hype
-DM to start
+🏡 Real Estate Agent & Investor
+📍 Indianapolis 🇺🇸 + Costa Rica 🇨🇷
+💰 Rentals • Airbnb • Renovations
+🎥 Property Tours & Deal Analysis
 ```
 
-**Option C — bilingual hint**
+**Optional add for more DMs:**
 ```
-Real estate · Indy & Costa Rica
-Compro · Vendo · Invierto
-English & Español — DM me
+👇 DM: buy · sell · invest
 ```
 
 ---
 
 ## Link in bio
 
-Use ONE primary action:
+**Primary:** sandyalfaro.kw.com (Keller Williams — keep this)
 
-- Calendly / calendar link (“15-min intro call”)  
-- WhatsApp link with prefill: `Hi Sandy — I'm interested in [buy/sell/invest] in [Indy/Costa Rica]`  
-- Simple Linktree with: Contact · Buyer guide · Seller guide · Investor questions  
+**Your “2 more” links — prioritize:**
+1. WhatsApp or calendar for consults  
+2. Simple page: Buy · Sell · Invest (even a Linktree with 3 buttons)
 
-Do **not** lead with vacation booking as the main button.
+Prefill example: `Hi Sandy — I'm interested in [buy/sell/invest] in [Indy/Costa Rica]`
 
 ---
 
-## Pinned posts (3)
+## Pinned posts (for @sandiagent007)
 
 **Pin 1 — Who you help**  
 Reel Y1 or carousel C5. CTA: buy / sell / invest.
 
-**Pin 2 — Your best education piece**  
-Pick I2 (Indy vs CR) or B3 (CR diligence) after you film it — whichever gets saves.
+**Pin 2 — Your best format**  
+Your “3 Mistakes first-time…” style — then add **3 mistakes Indy investors make** as pin #2 when filmed.
 
-**Pin 3 — How to work with you**  
-Carousel C8 (How to DM me) or a 20s Reel: “Send me: buy/sell/invest, Indy or CR, timeline.”
-
----
-
-## Grid aesthetic (simple)
-
-- Mix: your face + property/neighborhood B-roll  
-- Avoid: stock luxury mansions, purple gradient quote cards, “DM READY” bait graphics  
-- Captions: short, specific, one CTA  
-- Cover frames: clean text on your own photo — “Indy buyers,” “CR investors,” etc.
+**Pin 3 — How to reach you**  
+20s Reel: “DM me: buy/sell/invest + Indy or Costa Rica + timeline.”
 
 ---
 
-## Name field (search)
+## Highlights (add client buckets)
 
-Include searchable terms people use:
+Keep **About Me** and **Bella** — they’re human and on-brand.
 
-`Sandy [Last Name] | Indianapolis & Costa Rica Real Estate`
+Add:
+- **Buy** — first-time tips, tours, checklists  
+- **Sell** — prep, pricing, before/after  
+- **Invest** — deal analysis, rentals, reno reality  
 
 ---
 
-## DM auto-response (optional, keep human)
+## Name field (search) — you already have this right
 
-If IG allows quick replies:
+`Sandy Alfaro | Real Estate` — consider subtitle in bio for search: Indianapolis · Costa Rica
 
-> Hey — thanks for reaching out. To point you in the right direction, send me:  
-> 1) buy, sell, or invest  
-> 2) Indianapolis or Costa Rica  
-> 3) your timeline  
-> I’ll reply personally.
+---
+
+## DM quick reply
+
+> Hey — thanks for reaching out!  
+> 1) buy, sell, or invest?  
+> 2) Indianapolis or Costa Rica?  
+> 3) timeline?  
+> I'll reply personally. — Sandy
+
+---
+
+## Full audit + 7-day plan
+
+See **`12-sandy-alfaro-account.md`**

@@ -1,46 +1,47 @@
-# Make it more you (fill this in)
+# Sandy Alfaro — account profile (filled in)
 
-This kit is a starting voice. Your real phrases make it yours.
+## Your account
 
-## Basics
+- **Name:** Sandy Alfaro | Real Estate ✓  
+- **Threads:** @sandiagent007  
+- **Brokerage:** Keller Williams — sandyalfaro.kw.com  
+- **Markets:** Indianapolis 🇺🇸 + Costa Rica 🇨🇷  
+- **Languages:** English + Español (use on CR / bilingual posts when natural)  
+- **Lead channel:** IG DM → sandyalfaro.kw.com / WhatsApp (in bio links)  
+- **Content pillars (from your bio):** Property Tours · Deal Analysis · Rentals · Renovations  
 
-- [ ] IG handle for this account: @___  
-- [ ] Name on account: ___  
-- [ ] Markets you want in bio: Indianapolis / Costa Rica / both  
-- [ ] Preferred lead channel: IG DM / WhatsApp / calendar link  
-- [ ] Languages: English / Spanish / both  
-- [ ] Years as agent: ___  
-- [ ] Years investing / first investment year: ___  
+## Your voice on IG (from what you already post)
 
-## Sayings you already use with clients
+- Education-first (“3 mistakes…”) — not hype  
+- Operator credibility — you own rentals and do renovations  
+- Two-market agent — Indy + Costa Rica is the hook  
+- Personal touches (About Me, Bella) — stay human  
 
-1. ___  
-2. ___  
-3. ___  
+## Sayings to weave in (edit if wrong — make them yours)
 
-Paste these into hooks in `02-reels-and-shorts.md`.
+1. “I don’t tour houses like a normal buyer — I’m thinking three years from now.”  
+2. “If the deal only works on best-case rent, it doesn’t work.”  
+3. “Pretty photos don’t pay for repairs.”  
 
-## Stories you’re okay sharing publicly
+## Stories you can tell publicly
 
-(No private client data. General lessons only.)
+- **Indy lesson:** Neighborhoods feel different at night — walk before you offer.  
+- **Costa Rica lesson:** Verify internet and access at the exact pin, not the listing description.  
+- **Investor mistake you see:** Copy-pasting a neighbor’s sale price or ADR without running slow-month math.  
 
-- Indy lesson: ___  
-- Costa Rica lesson: ___  
-- Investor mistake you see too often: ___  
+## Highlights to build
 
-## Off-limits on this IG
+Buy · Sell · Invest · About Me · Bella  
 
-- ___  
-- ___  
+## First filming batch (match your existing Reels style)
 
-## First filming batch (2 hours)
+1. **3 mistakes Indy investors make** (extends your first-time buyer format)  
+2. Property tour: “Would I own this?”  
+3. Talking-head: Y1 from `02-reels-and-shorts.md`  
+4. 15 B-roll clips from your next showing  
 
-1. Talking-head: Y1, B1, S1, I1, I2  
-2. 15 B-roll clips from one Indy showing day  
-3. Post Y1 same day with CTA: buy / sell / invest  
-4. Save the rest into the 30-day plan
+Post the **3 mistakes investors** Reel first — same format as what’s already working on your grid.
 
-## Reminder
+## Full account playbook
 
-This project ≠ your Airbnb brand.  
-Same person, different job on camera: **clients**, not guests.
+See **`12-sandy-alfaro-account.md`** for audit, 7-day plan, and “3 Mistakes” series.

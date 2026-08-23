@@ -1,11 +1,14 @@
-# Sandy — Instagram lead-gen kit (personal brand)
+# Sandy Alfaro — Instagram lead-gen kit
 
-**This is not your Airbnb / NuvoHauz stays account.**  
-This is your **personal IG** to attract **buyers, sellers, and investors**.
+**Account:** Sandy Alfaro | Real Estate · @sandiagent007 (Threads) · sandyalfaro.kw.com
 
-You are: real estate agent · investor · someone who owns investment property in **Indianapolis** and **Costa Rica**.
+**This is your personal IG** — buyers, sellers, investors in Indianapolis and Costa Rica. Not a vacation booking account.
 
-Hosting experience is proof you understand deals from the operator side — not a CTA to book a stay.
+Your bio already says it well: Agent & Investor · Property Tours & Deal Analysis · Rentals · Renovations.
+
+## Start here for *your* account
+
+👉 **`12-sandy-alfaro-account.md`** — audit of what you have + 7-day plan + “3 Mistakes” series built on your existing Reels.
 
 ## What’s in here
 
@@ -22,6 +25,8 @@ Hosting experience is proof you understand deals from the operator side — not 
 | `09-profile-setup.md` | Bio, pins, link in bio |
 | `10-shoot-day-checklist.md` | Batch one month in one shoot day |
 | `11-more-scripts-batch-2.md` | 15+ extra scripts + Spanish hooks |
+| `12-sandy-alfaro-account.md` | **Your account audit + 7-day plan** |
+| `13-three-mistakes-series.md` | **7 scripts in your proven Reel format** |
 
 ## Quick start (today)
 
