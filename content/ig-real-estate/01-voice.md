@@ -40,3 +40,12 @@ Skip: vacation vibes as the main message, guest-facing tours, “escape to parad
 - One audience per CTA (buyer **or** seller **or** investor)  
 - Vertical, natural light, talking to one smart person — not a crowd  
 - If a line could be any agent in any city, delete it and add Indy or Costa Rica specificity
+
+## Anti-AI checklist (run before every post)
+
+- [ ] Did I use a **specific place** (Fountain Square, Paquera, Nicoya — not “Costa Rica paradise”)?  
+- [ ] Did I admit a **tradeoff** (not everything is amazing)?  
+- [ ] Is there **one opinion** someone might disagree with?  
+- [ ] Did I cut words like: unlock, game-changer, journey, elevate, curated lifestyle?  
+- [ ] Would I say this on a showing or investor call without cringing?  
+- [ ] Is the CTA **one clear action** — not “follow for more tips!!!”?
