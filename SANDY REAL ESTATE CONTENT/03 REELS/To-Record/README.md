@@ -15,11 +15,13 @@ Film in order: R05 → R01 → R02 → R07 → R06
 
 ## Legacy (reference only)
 
-| File | Note |
+| File | Contents |
 |---|---|
-| `Core-Scripts.md` | Pre-refresh scripts |
-| `Batch-2-Scripts.md` | Pre-refresh scripts |
-| `Three-Mistakes-Series.md` | M7 first-time buyers = skip (posted) |
+| `Spoken-Reels-Indy.md` | 20 template scripts (no footage yet) |
+| `From-Your-Footage.md` | Scripts built from **your** uploads in `08 RAW FOOTAGE/` |
+| `Core-Scripts.md` | Legacy |
+| `Batch-2-Scripts.md` | Legacy |
+| `Three-Mistakes-Series.md` | Legacy — skip first-time buyer (posted) |
 
 ## After filming
 

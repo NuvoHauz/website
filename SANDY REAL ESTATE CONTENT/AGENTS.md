@@ -16,15 +16,25 @@
 
 ## Primary scripts
 
-👉 **`03 REELS/To-Record/Spoken-Reels-Indy.md`** — 20 fresh Reels, EN + ES where noted
+👉 **`03 REELS/To-Record/Spoken-Reels-Indy.md`** — 20 template scripts · EN + ES  
+👉 **`03 REELS/To-Record/From-Your-Footage.md`** — scripts matched to **your uploaded clips**
 
 Legacy scripts (`Core-Scripts.md`, `Batch-2-Scripts.md`, `Three-Mistakes-Series.md`) — reference only; prefer Spoken-Reels-Indy.
 
 ## Pipeline
 
 ```
+08 RAW FOOTAGE (upload clips) → Footage-Review → From-Your-Footage.md
 02 CONTENT IDEAS → 03 REELS/To-Record → Recorded → Posted + Posted-Topics.md
 ```
+
+## Upload your videos
+
+1. Drop files in [`08 RAW FOOTAGE/`](08 RAW FOOTAGE/README.md) (`.mp4` / `.mov`)
+2. Fill in [`CLIP-INVENTORY.md`](08 RAW FOOTAGE/CLIP-INVENTORY.md) — one line per clip
+3. Message: **"Videos uploaded — see CLIP-INVENTORY."**
+
+Agent output: [`From-Your-Footage.md`](03 REELS/To-Record/From-Your-Footage.md) with edit plans + scripts for your exact clips.
 
 ## Film first
 
