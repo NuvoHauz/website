@@ -4,7 +4,7 @@
 
 ## One-line summary
 
-Conversational Indy broker-investor-host voice. Hook → Value → Payoff → CTA. Repurpose footage first. Keep Costa Rica separate unless Sandy asks to combine.
+Conversational Indy broker-investor-host voice. Hook → Value → Payoff → CTA. Repurpose footage first. **Indianapolis only** for now.
 
 ## Quick rules
 

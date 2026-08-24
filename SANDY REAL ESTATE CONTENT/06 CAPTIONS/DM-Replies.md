@@ -1,18 +1,16 @@
-# DM Reply Snippets
-
-Paste and personalize. Always ask: buy/sell/invest · Indy/CR · timeline.
+# DM Reply Snippets — Indianapolis only
 
 ---
 
-## First reply (any lead)
+## First reply
 
 ```
 Hey! Thanks for reaching out 🙌
 
 Quick so I can help:
 1) buying, selling, or investing?
-2) Indianapolis or Costa Rica?
-3) timeline — now, 3 months, or exploring?
+2) which part of Indianapolis? (or relocating here?)
+3) timeline — now, 3 months, or just exploring?
 
 — Sandy
 ```
@@ -22,7 +20,7 @@ Quick so I can help:
 ## Buyer
 
 ```
-Got it — tell me your top 3 must-haves and budget range if you're comfortable. I'll tell you if I'm the right person to help and what to look at first.
+Got it — tell me your top 3 must-haves and which neighborhoods you're looking at. I'll tell you what to check first.
 ```
 
 ---
@@ -43,29 +41,13 @@ Want to jump on a quick call about pricing and timing?
 ## Investor
 
 ```
-Indy or CR — and are you planning to self-manage or hire it out? That changes everything I'd ask about the deal.
+Got it — are you planning to self-manage or hire it out? And which neighborhood — Fountain Square, downtown, somewhere else? That changes what I'd ask about the deal.
 ```
 
 ---
 
-## After comment "INDY" or "CR"
+## Relocation
 
 ```
-Here are 5 questions I'd ask first in [market]:
-
-1) [question]
-2) [question]
-3) [question]
-4) [question]
-5) [question]
-
-DM me if you want to go deeper on a specific address.
-```
-
----
-
-## Not a fit / redirect
-
-```
-Appreciate you reaching out — this might be outside what I do best. [Honest reason.] Happy to point you toward [referral/alternative] if helpful.
+Where are you moving from? Tell me your lifestyle must-haves and I'll tell you which Indy areas I'd compare first.
 ```

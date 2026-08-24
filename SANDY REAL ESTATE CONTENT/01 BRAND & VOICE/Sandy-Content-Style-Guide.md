@@ -20,7 +20,7 @@ Her main real estate market is **Indianapolis**, with a strong focus on:
 - Rental properties
 - Airbnb and short-term rentals
 
-She also owns property in **Costa Rica**, but Indianapolis and Costa Rica content should normally be **kept separate** unless Sandy specifically asks to combine them.
+She also owns property elsewhere, but **current content focus is Indianapolis only.** Do not include Costa Rica unless Sandy explicitly requests it later.
 
 ---
 
@@ -255,7 +255,6 @@ When she says things such as:
 - "I like this hook better."
 - "This sounds like AI."
 - "Make this more conversational."
-- "Keep Costa Rica separate."
 - "This one sounds like me."
 
 Use that feedback for future content.

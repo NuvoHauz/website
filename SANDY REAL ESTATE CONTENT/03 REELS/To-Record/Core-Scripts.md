@@ -1,6 +1,6 @@
 # Core Reel Scripts — LEGACY
 
-⚠️ **Use `Spoken-Reels-Indy.md` instead** — conversational spoken scripts, Indy-focused, EN+ES, Hook→Value→CTA.
+⚠️ **LEGACY — Indianapolis only.** Use [`Spoken-Reels-Indy.md`](Spoken-Reels-Indy.md). **Do not film B3, I2, Y2 (Costa Rica) below.**
 
 ---
 
@@ -16,17 +16,14 @@
 **Hook:** “I don’t tour houses like a normal buyer.”  
 **Body:** “I’m looking at layout, maintenance, and whether this still works if life changes in three years — keep it, rent it, or sell it.”  
 **Visual:** Listing walk-through. Face to camera at end.  
-**CTA:** “Buyers in Indy or Costa Rica — DM me what you’re trying to solve.”
+**CTA:** “Buyers in Indianapolis — DM me what you’re trying to solve.”
 
 ### B2 — Indy neighborhood honesty
 **Hook:** “Don’t buy a neighborhood from daytime photos.”  
 **Body:** “Walk it at night. Sit in traffic at the hour you’d actually commute. Listen for noise.”  
 **CTA:** “Tell me your non‑negotiables. I’ll tell you which Indy areas fit.”
 
-### B3 — Costa Rica: pretty vs ownable
-**Hook:** “Buying in Costa Rica isn’t the hard part. Owning well is.”  
-**Body:** “Verify water, internet at the exact pin, road access in rainy season, and who handles the property when you’re not in the country.”  
-**CTA:** “Serious about Costa Rica? Message me before you move money.”
+### ~~B3 — Costa Rica~~ OUT OF SCOPE
 
 ### B4 — First-time buyer
 **Hook:** “First home? Ignore the paint.”  
@@ -68,13 +65,10 @@
 
 ### I1 — Your wedge
 **Hook:** “I’m not a guru. I have properties.”  
-**Body:** “Indianapolis and Costa Rica. Agent work and ownership. I care about the deal after closing.”  
-**CTA:** “Investors — DM me Indy or Costa Rica.”
+**Body:** “Indianapolis. Agent work and ownership. I care about the deal after closing.”  
+**CTA:** “Investors in Indy — DM me what you’re trying to build.”
 
-### I2 — Indy vs Costa Rica
-**Hook:** “These are not the same investment.”  
-**Body:** “Indy: closer ops, clearer comps. Costa Rica: more logistics, need local partnership. Choose the problem you want.”  
-**CTA:** “Comment INDY or CR.”
+### ~~I2 — Indy vs Costa Rica~~ OUT OF SCOPE
 
 ### I3 — Kill TikTok math
 **Hook:** “If the deal only works on best-case rent, it doesn’t work.”  
@@ -100,10 +94,7 @@
 **Body:** “Buyers who want clarity. Sellers who want honesty. Investors who want real numbers.”  
 **CTA:** “Reply buy, sell, or invest.”
 
-### Y2 — Two-country brain
-**Hook:** “People ask how I work Indy and Costa Rica.”  
-**Body:** “Same standard: verify, don’t romanticize. Different checklist. No copy-paste across borders.”  
-**CTA:** “Tell me your situation.”
+### ~~Y2 — Two-country brain~~ OUT OF SCOPE
 
 ### Y3 — Soft authority
 **Hook:** “I don’t need every client.”  

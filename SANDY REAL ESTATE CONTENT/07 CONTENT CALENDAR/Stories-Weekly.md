@@ -1,43 +1,34 @@
-# Stories — Weekly Rotation
-
-5 minutes/day · client-facing · not vacation promos
+# Stories — Weekly Rotation (Indianapolis only)
 
 ---
 
-## Monday — What I'm working on
-Selfie or car clip.  
-**Text:** “This week I'm helping [buyers/sellers/investors] in [Indy/CR]. Reply if that's you.”  
+## Monday
+**Text:** "This week I'm helping [buyers/sellers/investors] in Indianapolis. Reply if that's you."  
 **Poll:** Buy / Sell / Invest
 
-## Tuesday — Quick tip
-One slide from `02 CONTENT IDEAS/Hook-Bank.md`  
-**Sticker:** Questions? DM me.
+## Tuesday
+One quick tip from [`Hook-Bank.md`](../02%20CONTENT%20IDEAS/Hook-Bank.md)
 
-## Wednesday — Q&A
-**Box:** “Ask me anything about buying, selling, or investing in Indy or Costa Rica.”  
-Answer 2–3 on video. Can't answer without consult? “DM me the address/timeline.”
+## Wednesday
+**Q&A box:** "Ask me anything about buying, selling, or investing in Indianapolis."
 
-## Thursday — B-roll + text
-Silent listing/neighborhood clip + one hook line.
+## Thursday
+Silent Indy b-roll + one hook line
 
-## Friday — “This week I said no to…”
-- Deal that only worked on fantasy occupancy  
-- List price the market wouldn't pay  
-- CR property with no management plan  
-**CTA:** “Want straight talk? DM me.”
+## Friday
+"This week I said no to…" (bad deal math, wrong list price, forced STR on wrong street)
 
-## Weekend — Personal
-Coffee, Bella, travel between markets.  
-**Line:** “Two markets, one standard — straight answers.”
+## Weekend
+Personal + soft CTA: "Follow for Indianapolis real estate tips that don't sound like a billboard."
 
 ---
 
-## Highlight buckets
+## Highlights
 
 | Highlight | Save these |
 |---|---|
-| Buy 🏠 | Tips, tours, 3 Mistakes buyer |
-| Sell 📋 | Prep, pricing, before/after |
-| Invest 📊 | Deal analysis, Indy vs CR |
-| About Me 🙋‍♀️ | Intro, who you help |
-| Bella 🐾 | Personal trust |
+| Buy | Tips, Fountain Square, relocation |
+| Sell | Prep, pricing, before/after |
+| Invest | Deal analysis, STR reality, reno |
+| About Me | Intro, who you help |
+| Bella | Personal trust |

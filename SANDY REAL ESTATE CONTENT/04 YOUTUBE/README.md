@@ -1,54 +1,42 @@
-# YouTube — Shorts & long-form
+# YouTube Shorts — Indianapolis only
 
-Repurpose IG Reels to YouTube Shorts (same vertical file). Long-form = expanded versions of best performers.
+Repurpose IG Reels to YouTube Shorts (same vertical file).
 
 ---
 
 ## Shorts strategy
 
-- Upload same Reel file within 24–48 hours of IG post
-- Title = hook (searchable): `3 Mistakes Indy Investors Make on Their First Rental`
-- Description: 2 lines + sandyalfaro.kw.com + “DM on IG @sandiagent007”
-- Pin comment: “Buying, selling, or investing in Indy or Costa Rica? Comment below.”
+- Upload same Reel within 24–48 hours of IG post
+- Title = hook: `3 Mistakes Indy Investors Make on Their First Rental`
+- Description: 2 lines + sandyalfaro.kw.com + DM on IG @sandiagent007
+- Pin comment: "Buying, selling, or investing in Indianapolis? Comment below."
 
 ---
 
-## Shorts queue (from Reels pipeline)
+## Shorts queue
 
-| Reel script | YT Short title | Status |
+| Reel | YT Short title | Status |
 |---|---|---|
-| M2 Indy investors | 3 Mistakes Indy Investors Make | To film |
-| B2 Night walk | Don't Buy a Neighborhood From Daytime Photos | To film |
-| I2 Indy vs CR | Indianapolis vs Costa Rica Real Estate Investing | To film |
-| B3 CR ownable | Buying Costa Rica Property — What to Verify First | To film |
+| R05 | 3 Mistakes Indy Investors Make | To film |
+| R01 | Walk Fountain Square at 9pm Before You Buy | To film |
+| R02 | Would I Airbnb This Indianapolis House? | To film |
+| R20 | Moving to Indianapolis? Start Here | To film |
 
 ---
 
 ## Long-form ideas (8–15 min)
 
-| Topic | Source Reels | Outline |
-|---|---|---|
-| Indy vs Costa Rica for investors | I2, I7, C3 | Compare ops, diligence, partnership |
-| First rental in Indianapolis | M2, I8, I3 | Mistakes + underwriting walkthrough |
-| Buying Costa Rica from the US | M3, B3, B7 | Due diligence checklist |
-| How I tour a property | M4, B1 | Buyer + investor lens |
+| Topic | Source Reels |
+|---|---|
+| First rental in Indianapolis | R05, R09, R15 |
+| Fountain Square buyer guide | R01, R10, R14 |
+| STR vs long-term in Indy | R09, R06 |
+| Relocating to Indianapolis | R20, C8 |
 
 ---
 
-## Thumbnails (when long-form)
+## Thumbnails
 
 - Sandy face + bold text (3 words max)
+- Indy neighborhood visual in frame
 - No stock mansion photos
-- Indy or CR visual cue in frame
-
----
-
-## Folder workflow
-
-1. Reel posts on IG → log in `03 REELS/Posted/`
-2. Export/upload to YouTube Shorts same week
-3. Track Shorts performance here:
-
-| Date | Title | Views | Subs gained |
-|---|---|---|---|
-| | | | |

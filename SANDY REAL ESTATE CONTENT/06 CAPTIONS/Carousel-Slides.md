@@ -4,7 +4,7 @@
 
 **Style guide:** [`Sandy-Content-Style-Guide.md`](../01%20BRAND%20&%20VOICE/Sandy-Content-Style-Guide.md)
 
-**Indianapolis-focused.** Costa Rica carousels only when Sandy asks for them separately.
+**Indianapolis only.**
 
 ---
 

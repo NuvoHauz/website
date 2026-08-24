@@ -51,7 +51,7 @@ All from `Spoken-Reels-Indy.md` unless noted.
 | Mon | R02 remake new property |
 | Tue | R05 remake new b-roll |
 | Wed | Carousel C5 Who I help |
-| Thu | R20 Costa Rica brief (optional) |
+| Thu | R20 Relocating to Indianapolis | All |
 | Fri | Best performer remake |
 | Sat | R01 remake dusk b-roll |
 | Sun | DM buy/sell/invest story |

@@ -1,11 +1,13 @@
-# Spoken Reels — Indianapolis (English + Español)
+# Spoken Reels — Indianapolis
 
 **Style guide:** [`Sandy-Content-Style-Guide.md`](../../01 BRAND & VOICE/Sandy-Content-Style-Guide.md)
 
 **Structure:** HOOK → VALUE → PAYOFF → CTA · **20–45 sec**  
+**Market:** Indianapolis only (downtown, Fountain Square, urban neighborhoods)  
 **Voice:** conversational — read out loud. If it sounds like a brochure, rewrite.  
-**Markets:** Indianapolis first. Costa Rica only when Sandy asks to combine.  
 **Skip posted topics:** first-time buyer mistakes *(on grid)*
+
+English + Español included where useful for Indy buyers/investors.
 
 Film in order of ⭐ priority.
 
@@ -307,16 +309,23 @@ Film in order of ⭐ priority.
 
 ---
 
-## R20 — Costa Rica is my second market (brief) BUYERS / INVESTORS
+## R20 — Relocating to Indianapolis BUYERS / RELOCATION
 
-**~30 sec · Only when bridging CR audience—not main feed filler**
+**~35 sec · Talking head or Indy b-roll**
 
 ### English
-**Hook:** "Yes I work Costa Rica too—but Indy is where I host, renovate, and pick up towels."
+**Hook:** "Moving to Indianapolis? Most people start with Zillow. I'd start here."
 
-**Value:** "Different market, different checklist. If you're local to Indianapolis and looking abroad, we talk logistics. If you're buying here, we talk parking at nine pm and HVAC on a Saturday."
+**Value:** "Pick your lifestyle first — downtown, Fountain Square, urban neighborhood, or suburbs. Then visit the street at night. Then commute at the hour you'd actually drive. The house is the easy part. The block is the decision."
 
-**CTA:** "Indy or abroad—DM me which one you're solving for."
+**CTA:** "Relocating to Indy? DM me where you're coming from and I'll tell you what I'd compare."
+
+### Español
+**Hook:** "¿Te mudas a Indianapolis? La mayoría empieza en Zillow. Yo empezaría aquí."
+
+**Value:** "Primero el estilo de vida — downtown, Fountain Square, barrio urbano, o suburbios. Luego visita la calle de noche. Luego maneja a la hora real. La casa es lo fácil. El barrio es la decisión."
+
+**CTA:** "¿Te mudas a Indy? Escríbeme de dónde vienes y te digo qué comparar."
 
 ---
 

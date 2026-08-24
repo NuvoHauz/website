@@ -1,69 +1,83 @@
-# Carousel Captions
-
-One caption per carousel. Slides are in each title below.
+# Carousel Captions — Indianapolis only
 
 ---
 
-## C1 — What I check that most buyers skip
-```
-What I check that most buyers skip 👇
+## C1 — Before you fall in love with a house
 
-Swipe for the list — especially #4 if you're buying in Indy or Costa Rica.
+```
+6 things I check BEFORE my buyers fall in love with a house 👇
 
-Buying soon? DM me your must-haves.
+Especially #3 if you're buying in Indianapolis.
+
+Save this before your next showing. DM me "BUYER."
 ```
 
-## C2 — Seller prep
+---
+
+## C2 — Before you list
+
 ```
-Prep that actually helps you sell — not just "make it pretty."
+What I'd fix before your first showing — not the fancy stuff.
 
 Send me 5 phone photos if you want eyes on yours before MLS.
 ```
 
-## C3 — Indy vs Costa Rica investors
+---
+
+## C3 — Would this make a good rental?
+
 ```
-Indy and Costa Rica are not the same investment.
+5 things I check before I buy a rental in Indianapolis.
 
-Comment INDY or CR and I'll share my first 5 diligence questions.
-```
-
-## C4 — 4-number filter
-```
-My filter before I touch a deal:
-
-Slow-month occupancy. All-in expenses. CapEx. Exit.
-
-Send an address — I'll tell you what I'd pressure-test.
+Got an address? DM me — I'll tell you what I'd pressure-test.
 ```
 
-## C5 — Who I help
+---
+
+## C4 — Fountain Square fit
+
 ```
-Who I actually work with:
+Is Fountain Square actually for you? Honest answer inside 👇
 
-Buyers who want clarity.
-Sellers who want honesty.
-Investors who want downside protection.
-
-Reply buy · sell · invest
-```
-
-## C6 — Costa Rica myths
-```
-5 Costa Rica myths I hear every week.
-
-Serious about CR? DM me what you'd verify first.
+Relocating to Indy? Tell me your non-negotiables.
 ```
 
-## C7 — Indy neighborhood fit
-```
-Before you pick an Indy neighborhood — swipe.
+---
 
-Send your must-haves. I'll tell you what fits.
+## C5 — Pretty vs good renovation
+
+```
+A pretty renovation doesn't always mean a good renovation.
+
+Would you have thought to check this? Save this post.
 ```
 
-## C8 — How to DM me
+---
+
+## C6 — Airbnb reality in Indy
+
+```
+What nobody shows you about owning an Airbnb in Indianapolis.
+
+Thinking STR? Comment STR — I'll tell you what I ask first.
+```
+
+---
+
+## C7 — How to reach me
+
 ```
 Not sure how to reach out? Swipe — it's easy.
 
-That's all I need to point you in the right direction.
+DM me and I'll take it from there.
+```
+
+---
+
+## C8 — Relocating to Indianapolis
+
+```
+Moving to Indianapolis? Start here 👇
+
+Tell me where you're moving from. I'll tell you what I'd compare.
 ```

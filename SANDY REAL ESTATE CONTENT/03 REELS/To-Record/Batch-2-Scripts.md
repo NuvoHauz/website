@@ -1,10 +1,8 @@
-# Batch 2 Scripts — LEGACY
-
-⚠️ **Use `Spoken-Reels-Indy.md` instead.**
+⚠️ **LEGACY — Indianapolis only now.** Use [`Spoken-Reels-Indy.md`](Spoken-Reels-Indy.md). **Do not film CR / Costa Rica scripts below.**
 
 ---
 
-# Batch 2 Scripts — To Record
+# Batch 2 Scripts — To Record (legacy)
 
 ---
 
@@ -15,10 +13,7 @@
 **Body:** “Learn the neighborhood. Don’t fall in love with staging and skip inspection, street, commute.”  
 **CTA:** “DM me the areas you’re circling.”
 
-### B7 — Costa Rica from Indy
-**Hook:** “Buying Costa Rica from Indianapolis? Same mistake every time.”  
-**Body:** “People buy the vacation version. Buy the Tuesday version — rain, internet, access, AC.”  
-**CTA:** “CR buyers — message me before earnest money.”
+### ~~B7 — Costa Rica from Indy~~ OUT OF SCOPE — use R20 Relocating to Indianapolis in Spoken-Reels-Indy.md
 
 ### B8 — Walk away
 **Hook:** “I’ll tell you to walk away.”  
@@ -48,11 +43,9 @@
 
 ### I6 — First rental ≠ portfolio
 **Hook:** “Your first rental isn’t a portfolio.”  
-**CTA:** “First investment? DM me Indy or CR.”
+**CTA:** “First investment? DM me — Indianapolis neighborhood and address if you have one.”
 
-### I7 — CR partnership
-**Hook:** “I don’t buy Costa Rica alone.”  
-**CTA:** “CR investors — DM me your plan.”
+### ~~I7 — CR partnership~~ OUT OF SCOPE — was here, removed
 
 ### I8 — STR vs LTR Indy
 **Hook:** “Not every Indy house should be a short-term rental.”  

@@ -38,15 +38,15 @@ Sandy’s proven format. **Film M2 first** — or use **R05** in Spoken-Reels-In
 
 ---
 
-## M3 — Costa Rica buyers (from US) ☐
+## M3 — Relocating to Indianapolis ☐
 
-**Hook:** 3 mistakes **Costa Rica buyers** make from Indianapolis
+**Hook:** 3 mistakes people make **relocating to Indianapolis**
 
-1. Buying the vacation version — need the Tuesday version  
-2. No local team before wiring money  
-3. Assuming US timelines  
+1. Picking a house before picking a lifestyle — downtown vs Fountain Square vs suburbs  
+2. Visiting only on Sunday afternoon — not your real commute or nighttime street feel  
+3. Falling for photos before checking layout, parking, and what breaks in older Indy stock  
 
-**CTA:** “CR buyers — message me before you get attached to photos.”
+**CTA:** “Moving to Indy? DM me where you're coming from.”
 
 ---
 

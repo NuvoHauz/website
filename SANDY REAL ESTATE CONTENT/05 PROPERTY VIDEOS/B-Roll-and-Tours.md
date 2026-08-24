@@ -1,71 +1,54 @@
-# Property Videos — B-roll & tours
+# Property Videos — B-roll & tours (Indianapolis only)
 
-Vertical 9:16 · 3–8 sec clips · name files: `2026-08-indy-kitchen-pan.mp4`
+Vertical 9:16 · 3–8 sec clips · name files: `2026-08-fountain-square-night.mp4`
 
 ---
 
 ## Property tour formats
 
-### “Would I buy this?” (buyers)
+### "Would I buy this?" (buyers)
 Walk: entry → living → kitchen → beds → yard  
-VO: layout, light, street feel, 3-year exit  
-CTA: “DM me — Indy or Costa Rica”
+CTA: "DM me — buying in Indy?"
 
-### “Would I own this?” (investors)
-Same walk + call out: reno needs, rent tease, ops reality  
-CTA: “Send an address — I’ll pressure-test it”
-
-### Silent beauty + text hook
-B-roll only + on-screen hook from `02 CONTENT IDEAS/Hook-Bank.md`
+### "Would I own this?" (investors)
+Same walk + reno needs, parking, STR vs LTR take  
+CTA: "Got an address? DM me."
 
 ---
 
 ## Indianapolis B-roll
 
-**On the job:** exterior approach · lockbox · room walk · car between showings · notes on phone  
-**Neighborhood:** same block day vs evening · Fountain Square walk · skyline context  
-**Seller prep:** clear counter · open blinds · made bed · before/after one room
-
----
-
-## Costa Rica B-roll (investment angle)
-
-**Diligence:** gate · road access · exterior · drainage · rainy-day drive  
-**Context:** ferry (wide) · local town · sunset only if tied to market/lifestyle point  
-**Operator:** maintenance detail · keys · supply run (no guest faces)
-
-**Do not film:** guest check-ins, welcome books, stay promos on this account.
+**On the job:** exterior approach · lockbox · room walk · car between showings  
+**Neighborhoods:** Fountain Square day/night · Mass Ave · downtown · near-downtown streets  
+**Seller prep:** clear counter · open blinds · made bed · before/after  
+**Investor/Airbnb ops:** towels · supplies · lockbox · maintenance detail (panel, HVAC)
 
 ---
 
 ## Face-to-camera setups
 
 1. Indoor soft light — education hooks  
-2. In-car — hot takes  
-3. Property exterior behind you — neighborhood posts  
-
-Batch 8–10 hooks per outfit/session.
+2. In-car between showings — hot takes  
+3. Property exterior — neighborhood posts  
 
 ---
 
-## Sound banks (10–20 sec)
+## Sound banks
 
 - Indy street ambience  
-- CR rain / birds  
 - Door close + footsteps  
 
 ---
 
-## One shoot day checklist
+## One shoot day
 
-- [ ] 6 talking-head scripts (M2, Y1, B1, S1, I1, I2)  
-- [ ] 15+ B-roll clips at one showing  
-- [ ] 5 car hooks  
-- [ ] Post M2 within 24 hours  
-- [ ] Move scripts To-Record → Recorded
+- [ ] 6 talking-head scripts from `Spoken-Reels-Indy.md`  
+- [ ] 15+ Indy B-roll clips  
+- [ ] Post within 24 hours  
+- [ ] Log in `Posted-Topics.md`
 
 ---
 
 ## Never on screen
 
-Lock codes · client addresses · contracts · guest faces without permission · another agent’s listing without OK
+Lock codes · client addresses · contracts · guest faces without permission

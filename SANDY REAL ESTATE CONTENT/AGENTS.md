@@ -8,7 +8,7 @@
 
 👉 **[`01 BRAND & VOICE/Sandy-Content-Style-Guide.md`](01 BRAND & VOICE/Sandy-Content-Style-Guide.md)**
 
-Conversational · warm · confident · Indy-first · repurpose footage before asking for new shoots · Costa Rica separate unless Sandy combines.
+Conversational · warm · confident · **Indianapolis only** · repurpose footage before asking for new shoots.
 
 ## Reel structure
 
