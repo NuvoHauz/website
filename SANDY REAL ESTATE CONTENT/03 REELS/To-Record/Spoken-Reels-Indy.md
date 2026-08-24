@@ -1,8 +1,11 @@
 # Spoken Reels — Indianapolis (English + Español)
 
-**Structure:** Hook → Value → CTA · **20–45 sec**  
-**Voice:** conversational, confident — read out loud before filming  
-**Skip:** first-time buyer mistakes *(posted)*
+**Style guide:** [`Sandy-Content-Style-Guide.md`](../../01 BRAND & VOICE/Sandy-Content-Style-Guide.md)
+
+**Structure:** HOOK → VALUE → PAYOFF → CTA · **20–45 sec**  
+**Voice:** conversational — read out loud. If it sounds like a brochure, rewrite.  
+**Markets:** Indianapolis first. Costa Rica only when Sandy asks to combine.  
+**Skip posted topics:** first-time buyer mistakes *(on grid)*
 
 Film in order of ⭐ priority.
 

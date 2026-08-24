@@ -1,66 +1,68 @@
 # Caption Templates — conversational
 
+**Style guide:** [`Sandy-Content-Style-Guide.md`](../01%20BRAND%20&%20VOICE/Sandy-Content-Style-Guide.md)
+
 Write like Sandy texts a client. Short lines. No brochure voice.
 
 ---
 
-## Spoken Reel caption (English)
+## Reel caption (English)
 
 ```
-[Hook as first line — same words you said on camera]
+[Hook — same words you said on camera]
 
-[1–2 lines of value — one Indy detail: Fountain Square, turnover, reno, etc.]
+[Value + payoff in 1–2 lines — one Indy detail]
 
-[One CTA]
+[Natural CTA — save, DM, comment, send to a friend]
 
 Sandy Alfaro · Keller Williams · Indianapolis
 ```
 
-**Example (R05):**
+**Example:**
 ```
-Three mistakes I see Indy investors make on their first rental—and I almost made number two.
+Before you fall in love with a house, check this.
 
-Cheapest house on the block. Best-month Airbnb math. No turnover plan. I've hosted here. The spreadsheet isn't the whole story.
+I walk Fountain Square at night on every serious buyer tour — parking, noise, and the street feel completely different after 5 PM.
 
-First investment in Indy? DM me the address.
+Save this before your next showing. Buying in Indy? DM me "BUYER."
 
 Sandy Alfaro · Keller Williams
 ```
 
 ---
 
-## Reel caption (Español)
+## Natural CTAs (rotate — don't always use "contact me")
+
+- Save this before your next showing.
+- Send this to someone house hunting in Indy.
+- Follow for more Indianapolis real estate tips.
+- Buying in Indianapolis? DM me "BUYER."
+- Want me to break down another neighborhood? Tell me which one.
+- Would you have thought to check this?
+- Got an address? DM me — I'll tell you what I'd look at first.
+
+---
+
+## Seller caption
 
 ```
-[Hook en español]
+Your first photo is doing more work than your description.
 
-[1–2 líneas — detalle de Indy]
-
-[CTA]
+Send me 5 phone photos — I'll tell you what's helping and what's hurting. No pitch, just eyes.
 
 Sandy Alfaro · Keller Williams · Indianapolis
 ```
 
 ---
 
-## Seller / listing photos offer
-
-```
-Your photos are doing more work than your description.
-
-Send me 5 phone photos — I'll tell you what's helping and what's hurting. No pitch, just eyes.
-
-DM me 📍 Indianapolis
-```
-
----
-
-## Investor / address offer
+## Investor caption
 
 ```
 If the deal only works on your best month, it's not a deal.
 
-Send me an address you're looking at in Indy. I'll tell you if I'd keep going or walk.
+I host and invest in Indy — I count slow months, turnover, and the stuff that breaks in year two.
+
+Got an address? DM me.
 
 Sandy Alfaro · Keller Williams
 ```
@@ -69,17 +71,6 @@ Sandy Alfaro · Keller Williams
 
 ## Hashtags (3–5 max)
 
-`#IndianapolisRealEstate` `#IndyRealEstate` `#FountainSquare` `#RealEstateInvesting` `#AirbnbHost`
+`#IndianapolisRealEstate` `#IndyRealEstate` `#FountainSquare` `#RealEstateInvesting` `#Relocation`
 
-Skip 30-tag walls.
-
----
-
-## CTA menu
-
-| Audience | CTA |
-|---|---|
-| Buyers | DM me the streets you're looking at |
-| Sellers | Send 5 listing photos |
-| Investors | DM me the address / Comment INVEST |
-| All | Buy, sell, or invest—tell me which |
+Skip 30-tag walls and jargon-heavy captions.

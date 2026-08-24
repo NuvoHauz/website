@@ -4,7 +4,7 @@
 
 When Sandy uploads, the agent replaces `[YOUR CLIP]` placeholders with actual filenames and tightens scripts to match what's on screen.
 
-**Rules:** Hook → Value → CTA · 20–45 sec · conversational · Indy-focused · skip [Posted-Topics](../Posted/Posted-Topics.md)
+**Rules:** HOOK → VALUE → PAYOFF → CTA · conversational · Indy-focused · [`Sandy-Content-Style-Guide.md`](../../01 BRAND & VOICE/Sandy-Content-Style-Guide.md)
 
 ---
 

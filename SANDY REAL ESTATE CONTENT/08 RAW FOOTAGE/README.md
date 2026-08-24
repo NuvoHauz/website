@@ -49,10 +49,11 @@ Examples:
 
 ## What happens next
 
-1. Agent reviews each clip in this folder
-2. Maps clips to **buy · sell · invest** angles
-3. Writes edit plans + spoken scripts in [`../03 REELS/To-Record/From-Your-Footage.md`](../03 REELS/To-Record/From-Your-Footage.md)
-4. Skips topics in [`../03 REELS/Posted/Posted-Topics.md`](../03 REELS/Posted/Posted-Topics.md)
+1. Agent reviews each clip — **repurpose first**, don't ask for new shoots if footage works
+2. Maps clips to buy · sell · invest angles
+3. Builds multiple content ideas per clip (Reel, carousel, Short, Story)
+4. Writes scripts in [`From-Your-Footage.md`](../03%20REELS/To-Record/From-Your-Footage.md) per [`Sandy-Content-Style-Guide.md`](../01%20BRAND%20&%20VOICE/Sandy-Content-Style-Guide.md)
+5. Skips topics in [`Posted-Topics.md`](../03%20REELS/Posted/Posted-Topics.md)
 
 ---
 
