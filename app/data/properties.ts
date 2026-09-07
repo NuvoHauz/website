@@ -24,12 +24,16 @@ export const propertyCollections: PropertyCollectionData[] = [
       },
       {
         key: "cabin1",
-        image: "/images/properties/cozy-cabin.jpg",
+        image:
+          "/images/properties/morpho-house/hero/morpho-house-bedroom-garden-view-built-in-bed.webp",
+        detailPath: "/properties/morpho-house",
         airbnbUrl: "https://www.airbnb.com/rooms/1541419403455876965",
       },
       {
         key: "cabin2",
-        image: "/images/properties/tropical-cabin.jpg",
+        image:
+          "/images/properties/casita-green-iguana/hero/casita-green-iguana-terrace-entrance-unit-2-evening.webp",
+        detailPath: "/properties/casita-green-iguana",
         airbnbUrl: "https://www.airbnb.com/rooms/1447441204879224703",
       },
     ],

@@ -100,11 +100,16 @@ export default function HomePage() {
                     const copy = t.properties[property.key];
 
                     if (property.detailPath) {
+                      const cardButtonLabel =
+                        property.key === "riuHouse"
+                          ? t.buttons.exploreRiuHouse
+                          : t.buttons.viewProperty;
+
                       return (
                         <Link
                           key={property.key}
                           href={property.detailPath}
-                          aria-label={`${t.buttons.exploreRiuHouse}, ${copy.name}`}
+                          aria-label={`${cardButtonLabel}, ${copy.name}`}
                           className="group relative box-border block min-h-[420px] w-full min-w-0 overflow-hidden rounded-2xl shadow-md transition-shadow duration-500 hover:shadow-2xl sm:h-[520px]"
                         >
                           <div className="absolute inset-0 overflow-hidden">
@@ -131,7 +136,7 @@ export default function HomePage() {
                               {copy.description}
                             </p>
                             <span className="mt-5 inline-flex min-h-[44px] w-fit items-center text-sm font-medium tracking-wide text-[#C69C6D] transition-colors duration-300 group-hover:text-white sm:mt-6">
-                              {t.buttons.exploreRiuHouse} &rarr;
+                              {cardButtonLabel} &rarr;
                             </span>
                           </div>
                         </Link>

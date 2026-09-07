@@ -39,3 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# large original property photos (optimized WebP copies are committed)
+public/images/properties/*/incoming/
+.tmp-photo-review/
