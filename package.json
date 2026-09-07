@@ -9,6 +9,7 @@
     "lint": "eslint",
     "test:pricing": "npx tsx --test scripts/test-pricing-engine.test.ts scripts/test-pricing-server.test.ts",
     "test:guest-notifications": "npx tsx --test scripts/test-guest-notifications.test.ts scripts/test-approval-hold.test.ts",
+    "test:bookkeeping": "npx tsx --test scripts/test-bookkeeping.test.ts",
     "test:notifications": "npx tsx --test scripts/test-guest-notifications.test.ts scripts/test-approval-hold.test.ts scripts/test-pricing-engine.test.ts scripts/test-pricing-server.test.ts"
   },
   "dependencies": {
